@@ -4,5 +4,5 @@ export const environment = {
   url: '',  
   apiTest: '',
   nestJs: '',  
-  nestJsLocal: 'http://localhost:3000',
+  nestJsLocal: 'https://nostaxi-nestjs-gqvn1p-c474b7-72-62-45-181.traefik.me',
 };
