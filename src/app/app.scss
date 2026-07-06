@@ -1,0 +1,128 @@
+.app-header {
+	display: flex;
+	flex-direction: column;
+	align-items: flex-start;
+	gap: 8px;
+	padding: 16px 20px;
+	border-radius: 12px;
+	background: linear-gradient(
+		135deg,
+		var(--cv-white) 0%,
+		color-mix(in srgb, var(--cv-yellow) 20%, var(--cv-white) 80%) 100%
+	);
+	border: 1px solid color-mix(in srgb, var(--cv-blue) 20%, var(--cv-white) 80%);
+	margin-bottom: 16px;
+}
+
+.header-flag {
+	width: 44px;
+	height: auto;
+	border-radius: 4px;
+	border: 1px solid color-mix(in srgb, var(--cv-blue) 35%, var(--cv-white) 65%);
+	box-shadow: 0 1px 3px color-mix(in srgb, var(--taxi-black) 18%, transparent 82%);
+}
+
+.main-title {
+	margin: 0;
+	font-size: 2rem;
+	line-height: 1.1;
+	color: var(--cv-blue);
+}
+
+.main-subtitle {
+	margin: 8px 0 0;
+	font-size: 1.1rem;
+	line-height: 1.3;
+	font-weight: 600;
+	color: var(--cv-red);
+}
+
+.vehicle-section {
+	padding: 12px;
+	border-radius: 10px;
+	border: 1px solid color-mix(in srgb, var(--taxi-gray) 30%, var(--taxi-white) 70%);
+	background: var(--taxi-white);
+}
+
+.vehicle-list {
+	list-style: none;
+	margin: 0;
+	padding: 0;
+	display: grid;
+	gap: 8px;
+}
+
+.vehicle-item {
+	display: grid;
+	grid-template-columns: 1fr auto;
+	grid-template-areas:
+		"top top"
+		"left right"
+		"bottom bottom";
+	gap: 6px 12px;
+	align-items: center;
+	padding: 10px 12px;
+	border-radius: 8px;
+	background: linear-gradient(
+		90deg,
+		color-mix(in srgb, var(--taxi-yellow-nyc-1) 24%, var(--taxi-white) 76%) 0%,
+		color-mix(in srgb, var(--taxi-yellow-nyc-2) 18%, var(--taxi-white) 82%) 100%
+	);
+	color: var(--taxi-black);
+	border: 1px solid color-mix(in srgb, var(--taxi-black) 12%, var(--taxi-white) 88%);
+}
+
+.item-top {
+	grid-area: top;
+	display: flex;
+	align-items: center;
+	gap: 8px;
+	font-weight: 700;
+	color: var(--cv-blue);
+}
+
+.item-icon {
+	width: 18px;
+	height: 18px;
+	object-fit: contain;
+}
+
+.item-left {
+	grid-area: left;
+	font-weight: 600;
+}
+
+.item-right {
+	grid-area: right;
+	justify-self: end;
+	font-weight: 600;
+}
+
+.item-bottom {
+	grid-area: bottom;
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	gap: 10px;
+	font-size: 0.9rem;
+	color: color-mix(in srgb, var(--taxi-black) 70%, var(--taxi-gray) 30%);
+	border-top: 1px solid color-mix(in srgb, var(--taxi-black) 12%, var(--taxi-white) 88%);
+	padding-top: 6px;
+}
+
+.call-button {
+	border: 1px solid color-mix(in srgb, var(--cv-blue) 30%, var(--cv-white) 70%);
+	background: var(--cv-blue);
+	color: var(--cv-white);
+	font-weight: 600;
+	font-size: 0.85rem;
+	padding: 6px 10px;
+	border-radius: 999px;
+	cursor: pointer;
+}
+
+.call-button:hover {
+	background: color-mix(in srgb, var(--cv-blue) 85%, var(--cv-red) 15%);
+}
+
+

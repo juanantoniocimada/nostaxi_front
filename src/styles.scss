@@ -1,1 +1,31 @@
-/* You can add global styles to this file, and also import other style files */
+
+
+// =======================
+// BANDERA CABO VERDE
+// =======================
+$cv-blue: #003893;
+$cv-red: #CF2027;
+$cv-white: #FFFFFF;
+$cv-yellow: #F7D116;
+
+// =======================
+// TAXI COLORS
+// =======================
+$taxi-yellow-nyc-1: #FFD300;
+$taxi-yellow-nyc-2: #F7C600;
+$taxi-black: #000000;
+$taxi-white: #FFFFFF;
+$taxi-gray: #6E6E6E;
+
+:root {
+	--cv-blue: #{$cv-blue};
+	--cv-red: #{$cv-red};
+	--cv-white: #{$cv-white};
+	--cv-yellow: #{$cv-yellow};
+	--taxi-yellow-nyc-1: #{$taxi-yellow-nyc-1};
+	--taxi-yellow-nyc-2: #{$taxi-yellow-nyc-2};
+	--taxi-black: #{$taxi-black};
+	--taxi-white: #{$taxi-white};
+	--taxi-gray: #{$taxi-gray};
+}
+

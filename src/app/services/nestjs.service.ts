@@ -15,7 +15,7 @@ export class NestJSService {
     : environment.nestJsLocal;
   private _http = inject(HttpClient);
 
-  public getVehicles(): Observable<any> {
+  getVehicles(): Observable<any> {
     const url = `${this._apiUrl}/vehicles`;
     return this._http.get(url)
   }
