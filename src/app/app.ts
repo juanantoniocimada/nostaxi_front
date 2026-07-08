@@ -1,4 +1,4 @@
-import { Component, inject, OnInit, signal, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, inject, OnInit, signal, ViewChild } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
 import { NestJSService } from './services/nestjs.service';
 import { CommonModule } from '@angular/common';
@@ -19,7 +19,7 @@ import { busDivIcon, stopDisabledDivIcon, stopDivIcon, tileLayerUrl, userDivIcon
   templateUrl: './app.html',
   styleUrls: ['./app.scss']
 })
-export class App implements OnInit {
+export class App implements OnInit, AfterViewInit {
   @ViewChild(MapComponent) mapComponent?: MapComponent;
 
   protected readonly title = signal('Nostaxi');
@@ -54,6 +54,10 @@ export class App implements OnInit {
   ];
 
   ngOnInit() {
+
+  }
+
+  ngAfterViewInit() {
     this.getVehicles();
     
     this.mapComponent?.colocarBus(
@@ -68,7 +72,7 @@ export class App implements OnInit {
       });
 
      this.mapComponent?.pintarRuta(this.stops);
-    }, 0);
+    }, 1);
   }
 
   getVehicles() {

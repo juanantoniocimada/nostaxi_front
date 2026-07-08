@@ -88,13 +88,13 @@ export class MapComponent implements OnInit, OnDestroy {
 
     if (this.map) {
 
-      // setTimeout(() => {
+      setTimeout(() => {
       const routingContainer = document.querySelector('.leaflet-routing-container') as HTMLElement;
 
       if (routingContainer) {
         routingContainer.style.display = 'none'; // Ocultar el panel
       }
-      // }, 0);
+      }, 10);
 
       this.mapContainer = document.getElementById('map')!;
 
@@ -133,7 +133,7 @@ export class MapComponent implements OnInit, OnDestroy {
     setTimeout(() => {
       this.map.invalidateSize();
       this.calculateTotalTiles();
-    }, 100);
+    }, 10);
 
     this.tileLayer = L.tileLayer(this.mapTileUrl).addTo(this.map);
     this.tileLayer.on('tileload', () => {
@@ -193,7 +193,7 @@ export class MapComponent implements OnInit, OnDestroy {
   }
 
   logicaAccionesBotonesPopup(marker: L.Marker, stop: any, data: any[]): void {
-    // setTimeout(() => {
+    setTimeout(() => {
     const popupElement = marker.getPopup()?.getElement();
     if (!popupElement) return;
 
@@ -210,7 +210,7 @@ export class MapComponent implements OnInit, OnDestroy {
         this.lineClick.emit({ stop, line });
       };
     });
-    // }, 0);
+    }, 10);
   }
 
   moveMarkerSmoothly(marker: L.Marker, toLat: number, toLng: number, durationMs = 600): void {
