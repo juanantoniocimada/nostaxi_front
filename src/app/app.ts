@@ -33,8 +33,8 @@ export class App implements OnInit, AfterViewInit {
   vehicles: any = [];
   nestjsService = inject(NestJSService);
 
-  latitude: number = 16.889925012664918;
-  longitude: number = -24.987106709197644;
+  latitude: number = 0;
+  longitude: number = 0;
 
   stops: any = [
     {
@@ -69,7 +69,7 @@ export class App implements OnInit, AfterViewInit {
       });
 
       // this.mapComponent?.pintarRuta(this.stops);
-    }, 1);
+    }, 10);
   }
 
   getLocation() {
