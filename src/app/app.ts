@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, inject, OnInit, signal, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, inject, OnDestroy, OnInit, signal, ViewChild } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
 import { NestJSService } from './services/nestjs.service';
 import { CommonModule } from '@angular/common';
@@ -19,7 +19,7 @@ import { busDivIcon, stopDisabledDivIcon, stopDivIcon, tileLayerUrl, userDivIcon
   templateUrl: './app.html',
   styleUrls: ['./app.scss']
 })
-export class App implements OnInit, AfterViewInit {
+export class App implements OnInit, AfterViewInit, OnDestroy {
   @ViewChild(MapComponent) mapComponent?: MapComponent;
 
   protected readonly title = signal('Nostaxi');
@@ -35,6 +35,8 @@ export class App implements OnInit, AfterViewInit {
 
   latitude: number = 0;
   longitude: number = 0;
+  hasLocation = false;
+  locationWatchId: number | null = null;
 
   stops: any = [
     {
@@ -54,41 +56,41 @@ export class App implements OnInit, AfterViewInit {
   ];
 
   ngOnInit() {
-
+    this.getLocation()
   }
 
   ngAfterViewInit() {
+    // this.getVehicles();
 
-    this.getLocation()
-
-    this.getVehicles();
-
-    setTimeout(() => {
-      this.stops.forEach((el: any) => {
-        // this.mapComponent?.pintarParada(el);
-      });
+    // setTimeout(() => {
+      // this.stops.forEach((el: any) => {
+      // this.mapComponent?.pintarParada(el);
+      //   });
 
       // this.mapComponent?.pintarRuta(this.stops);
-    }, 10);
+    //  }, 10);
   }
 
   getLocation() {
+    if (this.locationWatchId !== null) {
+      return;
+    }
 
     if (!navigator.geolocation) {
       console.error('El navegador no soporta geolocalización');
       return;
     }
 
-    navigator.geolocation.watchPosition(
+    this.locationWatchId = navigator.geolocation.watchPosition(
       (position) => {
 
         this.latitude = position.coords.latitude;
         this.longitude = position.coords.longitude;
+        this.hasLocation = true;
 
-        this.mapComponent?.colocarBus(
-          this.latitude ?? this.latitude,
-          this.longitude ?? this.longitude,
-        );
+        setTimeout(() => {
+          this.mapComponent?.colocarBus(this.latitude, this.longitude);
+        }, 0);
 
         console.log('Latitud:', this.latitude);
         console.log('Longitud:', this.longitude);
@@ -103,6 +105,13 @@ export class App implements OnInit, AfterViewInit {
         maximumAge: 0
       }
     );
+  }
+
+  ngOnDestroy(): void {
+    if (this.locationWatchId !== null) {
+      navigator.geolocation.clearWatch(this.locationWatchId);
+      this.locationWatchId = null;
+    }
   }
 
   getVehicles() {

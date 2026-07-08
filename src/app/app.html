@@ -13,13 +13,14 @@
 </div>
 
 <div>
-  {{ latitude }} <br>
-  {{ longitude }}
+  latitude: {{ latitude }} <br>
+  longitude: {{ longitude }}
 </div>
 
 <!-- Map Section -->
   <div class="map-section">
-    <app-map 
+    <app-map
+      *ngIf="hasLocation"
       [mapTileUrl]="tileLayerUrl"
       [center]="[latitude, longitude]"
       [routeColor]="routeColor"
@@ -31,6 +32,8 @@
       (lineClick)="lineClick($event)"
     >
     </app-map>
+
+    <div *ngIf="!hasLocation">Obteniendo ubicacion...</div>
   </div>
 
 
