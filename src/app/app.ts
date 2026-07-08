@@ -58,21 +58,51 @@ export class App implements OnInit, AfterViewInit {
   }
 
   ngAfterViewInit() {
-    this.getVehicles();
-    
-    this.mapComponent?.colocarBus(
-      this.latitude ?? this.latitude,
-      this.longitude ?? this.longitude,
-    );
 
+    this.getLocation()
+
+    this.getVehicles();
 
     setTimeout(() => {
       this.stops.forEach((el: any) => {
-         this.mapComponent?.pintarParada(el);
+        // this.mapComponent?.pintarParada(el);
       });
 
-     this.mapComponent?.pintarRuta(this.stops);
+      // this.mapComponent?.pintarRuta(this.stops);
     }, 1);
+  }
+
+  getLocation() {
+
+    if (!navigator.geolocation) {
+      console.error('El navegador no soporta geolocalización');
+      return;
+    }
+
+    navigator.geolocation.watchPosition(
+      (position) => {
+
+        this.latitude = position.coords.latitude;
+        this.longitude = position.coords.longitude;
+
+        this.mapComponent?.colocarBus(
+          this.latitude ?? this.latitude,
+          this.longitude ?? this.longitude,
+        );
+
+        console.log('Latitud:', this.latitude);
+        console.log('Longitud:', this.longitude);
+
+      },
+      (error) => {
+        console.error('Error obteniendo ubicación:', error.message);
+      },
+      {
+        enableHighAccuracy: true, // intenta usar GPS si está disponible
+        timeout: 10000,
+        maximumAge: 0
+      }
+    );
   }
 
   getVehicles() {
@@ -81,7 +111,7 @@ export class App implements OnInit, AfterViewInit {
         console.log('Vehicles:', data);
         this.vehicles = data['data'];
         console.log(this.vehicles);
-        
+
       },
       error: (error) => {
         console.error('Error fetching vehicles:', error);
@@ -99,5 +129,5 @@ export class App implements OnInit, AfterViewInit {
     this.mapComponent?.openStopPopupDesdeFuera(html, $event, []);
   }
 
-  lineClick($event: any) : void {}
+  lineClick($event: any): void { }
 }

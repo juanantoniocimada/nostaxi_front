@@ -70,7 +70,7 @@ export class MapComponent implements OnInit, OnDestroy {
   }
 
   creationMap(zoom: number, zoomControl: boolean) {
-    
+
 
     this.map = L.map('map', {
       center: [this.center[0], this.center[1]
@@ -89,11 +89,11 @@ export class MapComponent implements OnInit, OnDestroy {
     if (this.map) {
 
       setTimeout(() => {
-      const routingContainer = document.querySelector('.leaflet-routing-container') as HTMLElement;
+        const routingContainer = document.querySelector('.leaflet-routing-container') as HTMLElement;
 
-      if (routingContainer) {
-        routingContainer.style.display = 'none'; // Ocultar el panel
-      }
+        if (routingContainer) {
+          routingContainer.style.display = 'none'; // Ocultar el panel
+        }
       }, 10);
 
       this.mapContainer = document.getElementById('map')!;
@@ -194,22 +194,22 @@ export class MapComponent implements OnInit, OnDestroy {
 
   logicaAccionesBotonesPopup(marker: L.Marker, stop: any, data: any[]): void {
     setTimeout(() => {
-    const popupElement = marker.getPopup()?.getElement();
-    if (!popupElement) return;
+      const popupElement = marker.getPopup()?.getElement();
+      if (!popupElement) return;
 
-    popupElement.querySelectorAll<HTMLElement>('[data-line-index]').forEach((button) => {
-      button.onclick = (event) => {
-        event.preventDefault();
-        event.stopPropagation();
+      popupElement.querySelectorAll<HTMLElement>('[data-line-index]').forEach((button) => {
+        button.onclick = (event) => {
+          event.preventDefault();
+          event.stopPropagation();
 
-        const lineIndex = Number(button.dataset['lineIndex']);
-        const line = data?.[lineIndex];
+          const lineIndex = Number(button.dataset['lineIndex']);
+          const line = data?.[lineIndex];
 
-        if (!line) return;
+          if (!line) return;
 
-        this.lineClick.emit({ stop, line });
-      };
-    });
+          this.lineClick.emit({ stop, line });
+        };
+      });
     }, 10);
   }
 
