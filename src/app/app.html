@@ -1,40 +1,53 @@
 <div class="app-header">
 
   <h1 class="main-title">
-    {{ title() }}  <img
-    class="header-flag"
-    src="https://upload.wikimedia.org/wikipedia/commons/thumb/3/38/Flag_of_Cape_Verde.svg/330px-Flag_of_Cape_Verde.svg.png"
-    alt="Cape Verde flag"
-  />
+    Nos
+    <img class="header-flag"
+      src="https://upload.wikimedia.org/wikipedia/commons/thumb/3/38/Flag_of_Cape_Verde.svg/330px-Flag_of_Cape_Verde.svg.png"
+      alt="Cape Verde flag" />
+    taxi
   </h1>
   <h2 class="main-subtitle">
     O futuro do táxi em Cabo Verde.
   </h2>
 </div>
 
-<div>
-  latitude: {{ latitude }} <br>
-  longitude: {{ longitude }}
-</div>
+    longitude: {{ longitude }}
+    latitude: {{ latitude }} <br>
+
+
+<mat-card class="material-proof-card" appearance="outlined">
+  <mat-card-content class="material-proof-content">
+
+
+    <mat-form-field appearance="outline" class="material-proof-field">
+      <mat-label>
+      </mat-label>
+      <input  matInput type="text" [value]="address" readonly />
+    </mat-form-field>
+
+      <mat-form-field appearance="outline" class="material-proof-field">
+        <mat-label>voy a</mat-label>
+        <input matInput type="text" />
+      </mat-form-field>
+
+    <button mat-flat-button color="primary" type="button">
+      <mat-icon>check_circle</mat-icon>
+      Buscar taxi
+    </button>
+  </mat-card-content>
+</mat-card>
+
 
 <!-- Map Section -->
-  <div class="map-section">
-    <app-map
-      *ngIf="hasLocation"
-      [mapTileUrl]="tileLayerUrl"
-      [center]="[latitude, longitude]"
-      [routeColor]="routeColor"
-      [user]="userDivIcon"
-      [bus]="bus"
-      [stop]="stop"
-      [stopDisabled]="stopDisabled"
-      (stopClick)="stopClick($event)"
-      (lineClick)="lineClick($event)"
-    >
-    </app-map>
+<div class="map-section">
+  <app-map *ngIf="hasLocation" [mapTileUrl]="tileLayerUrl" [center]="[latitude, longitude]" [routeColor]="routeColor"
+    [user]="userDivIcon" [bus]="bus" [stop]="stop" [stopDisabled]="stopDisabled" (stopClick)="stopClick($event)"
+    (lineClick)="lineClick($event)">
+  </app-map>
 
-    <div *ngIf="!hasLocation">Obteniendo ubicacion...</div>
-  </div>
+  <div *ngIf="!hasLocation">Obteniendo ubicacion...</div>
+</div>
 
 
 <!--

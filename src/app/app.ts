@@ -3,6 +3,11 @@ import { RouterOutlet } from '@angular/router';
 import { NestJSService } from './services/nestjs.service';
 import { CommonModule } from '@angular/common';
 import { HttpClient, HttpClientModule } from '@angular/common/http';
+import { MatButtonModule } from '@angular/material/button';
+import { MatCardModule } from '@angular/material/card';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatIconModule } from '@angular/material/icon';
+import { MatInputModule } from '@angular/material/input';
 import { MapComponent } from './components/map/map.component';
 import { busDivIcon, stopDisabledDivIcon, stopDivIcon, tileLayerUrl, userDivIcon } from './utils/map.utils';
 
@@ -12,6 +17,11 @@ import { busDivIcon, stopDisabledDivIcon, stopDivIcon, tileLayerUrl, userDivIcon
     RouterOutlet,
     CommonModule,
     HttpClientModule,
+    MatButtonModule,
+    MatCardModule,
+    MatFormFieldModule,
+    MatIconModule,
+    MatInputModule,
     MapComponent
   ],
   providers: [NestJSService],
@@ -22,8 +32,6 @@ import { busDivIcon, stopDisabledDivIcon, stopDivIcon, tileLayerUrl, userDivIcon
 export class App implements OnInit, AfterViewInit, OnDestroy {
   @ViewChild(MapComponent) mapComponent?: MapComponent;
 
-  protected readonly title = signal('Nostaxi');
-
   tileLayerUrl = tileLayerUrl;
   bus = busDivIcon;
   stop = stopDivIcon;
@@ -32,6 +40,8 @@ export class App implements OnInit, AfterViewInit, OnDestroy {
   routeColor = '#FF0000';
   vehicles: any = [];
   nestjsService = inject(NestJSService);
+
+  address: string = '';
 
   latitude: number = 0;
   longitude: number = 0;
@@ -80,6 +90,7 @@ export class App implements OnInit, AfterViewInit, OnDestroy {
       console.error('El navegador no soporta geolocalización');
       return;
     }
+    
 
     this.locationWatchId = navigator.geolocation.watchPosition(
       (position) => {
@@ -94,6 +105,8 @@ export class App implements OnInit, AfterViewInit, OnDestroy {
 
         console.log('Latitud:', this.latitude);
         console.log('Longitud:', this.longitude);
+
+        this.getAddressFromCoordinates(this.latitude, this.longitude)
 
       },
       (error) => {
@@ -112,6 +125,30 @@ export class App implements OnInit, AfterViewInit, OnDestroy {
       navigator.geolocation.clearWatch(this.locationWatchId);
       this.locationWatchId = null;
     }
+  }
+
+  // https://nominatim.openstreetmap.org/reverse?lat=${lat}&lon=${lng}&format=json
+  getAddressFromCoordinates(lat: number, lng: number): Promise<string> {
+    const url = `https://nominatim.openstreetmap.org/reverse?lat=${lat}&lon=${lng}&format=json`;
+
+    return fetch(url)
+      .then(response => response.json())
+      .then(data => {
+
+        console.log(data.display_name);
+        
+        this.address = data.display_name;
+
+        if (data && data.display_name) {
+          return data.display_name;
+        } else {
+          throw new Error('No se pudo obtener la dirección');
+        }
+      })
+      .catch(error => {
+        console.error('Error al obtener la dirección:', error);
+        throw error;
+      });
   }
 
   getVehicles() {
