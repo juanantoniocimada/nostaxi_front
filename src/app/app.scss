@@ -3,8 +3,8 @@
   flex-direction: column;
   align-items: flex-start;
   background-color: var(--cv-white);
-  padding: 16px 20px;
-  margin-bottom: 16px;
+  padding-left: 16px;
+  padding-top: 16px;
   width: 100%;
   border-bottom: 1px solid gray;
   background-color: color-mix(in srgb, var(--cv-white) 90%, var(--cv-blue) 10%);
@@ -14,12 +14,12 @@
   width: 44px;
   height: auto;
   border-radius: 4px;
-  border: 1px solid color-mix(in srgb, var(--cv-blue) 35%, var(--cv-white) 65%);
-  box-shadow: 0 1px 3px color-mix(in srgb, var(--taxi-black) 18%, transparent 82%);
 }
 
 .main-title {
-  font-family: Verdana, Geneva, Tahoma, sans-serif;
+  border: 3px solid color-mix(in srgb, var(--cv-blue) 30%, var(--cv-white) 70%);
+  border-radius: 10px;
+  padding: 3px 8px;
   margin: 0;
   font-size: 2rem;
   line-height: 1.1;
@@ -28,9 +28,10 @@
 
 .main-subtitle {
   margin: 8px 0 0;
-  font-size: 1.1rem;
+  font-size: 0.9rem;
   line-height: 1.3;
   font-weight: 600;
+  font-family: Arial, Helvetica, sans-serif;
   color: var(--cv-red);
 }
 
@@ -134,4 +135,13 @@
 
 .call-button:hover {
   background: color-mix(in srgb, var(--cv-blue) 85%, var(--cv-red) 15%);
+}
+
+.map-instruction {
+  // border: 1px solid gainsboro;
+  border-radius: 5px;
+  font-size: 0.9rem;
+  color: var(--cv-blue);
+  margin-bottom: 8px;
+  // text-align: center;
 }

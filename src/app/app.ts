@@ -1,15 +1,15 @@
-import { AfterViewInit, Component, inject, OnDestroy, OnInit, signal, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, inject, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
 import { NestJSService } from './services/nestjs.service';
 import { CommonModule } from '@angular/common';
-import { HttpClient, HttpClientModule } from '@angular/common/http';
+import { HttpClientModule } from '@angular/common/http';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
 import { MapComponent } from './components/map/map.component';
-import { busDivIcon, stopDisabledDivIcon, stopDivIcon, tileLayerUrl, userDivIcon } from './utils/map.utils';
+import { busDivIcon, destinationDivIcon, stopDisabledDivIcon, stopDivIcon, tileLayerUrl, userDivIcon } from './utils/map.utils';
 
 @Component({
   selector: 'app-root',
@@ -34,17 +34,27 @@ export class App implements OnInit, AfterViewInit, OnDestroy {
 
   tileLayerUrl = tileLayerUrl;
   bus = busDivIcon;
+  destination: any = destinationDivIcon;
   stop = stopDivIcon;
   userDivIcon = userDivIcon;
   stopDisabled = stopDisabledDivIcon;
+
   routeColor = '#FF0000';
   vehicles: any = [];
   nestjsService = inject(NestJSService);
 
+  debugMode = false;
+  showSelects = true;
+
   address: string = '';
+  addressDestination: string = '';
 
   latitude: number = 0;
   longitude: number = 0;
+
+  latitudeDestination: number = 0;
+  longitudeDestination: number = 0;
+
   hasLocation = false;
   locationWatchId: number | null = null;
 
@@ -90,7 +100,6 @@ export class App implements OnInit, AfterViewInit, OnDestroy {
       console.error('El navegador no soporta geolocalización');
       return;
     }
-    
 
     this.locationWatchId = navigator.geolocation.watchPosition(
       (position) => {
@@ -106,7 +115,7 @@ export class App implements OnInit, AfterViewInit, OnDestroy {
         console.log('Latitud:', this.latitude);
         console.log('Longitud:', this.longitude);
 
-        this.getAddressFromCoordinates(this.latitude, this.longitude)
+        this.getAddressFromCoordinates(this.latitude, this.longitude, false)
 
       },
       (error) => {
@@ -128,7 +137,7 @@ export class App implements OnInit, AfterViewInit, OnDestroy {
   }
 
   // https://nominatim.openstreetmap.org/reverse?lat=${lat}&lon=${lng}&format=json
-  getAddressFromCoordinates(lat: number, lng: number): Promise<string> {
+  getAddressFromCoordinates(lat: number, lng: number, isDestination: boolean = false): Promise<string> {
     const url = `https://nominatim.openstreetmap.org/reverse?lat=${lat}&lon=${lng}&format=json`;
 
     return fetch(url)
@@ -137,7 +146,12 @@ export class App implements OnInit, AfterViewInit, OnDestroy {
 
         console.log(data.display_name);
         
-        this.address = data.display_name;
+        if (isDestination) {
+          this.addressDestination = data.display_name;
+        } else {
+          this.address = data.display_name;
+        }
+        
 
         if (data && data.display_name) {
           return data.display_name;
@@ -163,6 +177,15 @@ export class App implements OnInit, AfterViewInit, OnDestroy {
         console.error('Error fetching vehicles:', error);
       }
     });
+  }
+
+  mapClick($event: any): void {
+    console.log('Map clicked at:', $event);
+
+    this.latitudeDestination = $event.latitude;
+    this.longitudeDestination = $event.longitude;
+
+    this.getAddressFromCoordinates($event.latitude, $event.longitude, true)
   }
 
   stopClick($event: any): void {

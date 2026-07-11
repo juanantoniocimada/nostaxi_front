@@ -21,9 +21,11 @@ export class MapComponent implements OnInit, OnDestroy {
   @Input() bus = {};
   @Input() stop? = {};
   @Input() stopDisabled? = {};
+  @Input() destination? = {};
 
   @Output() stopClick = new EventEmitter<any>();
   @Output() lineClick = new EventEmitter<any>();
+  @Output() mapClick = new EventEmitter<any>();
 
   markersByStopId = new Map<number, L.Marker>()
 
@@ -33,10 +35,14 @@ export class MapComponent implements OnInit, OnDestroy {
   map!: L.Map;
   userMarker: L.Marker | undefined;
   busMarker: L.Marker | undefined;
+  destinationMarker: L.Marker | undefined;
 
   tilesLoaded = 0;
   totalTiles = 0;
   watchId: string | null = null;
+
+  selectedLat!: number;
+  selectedLon!: number;
 
   get routeStyles() {
     return [
@@ -47,6 +53,7 @@ export class MapComponent implements OnInit, OnDestroy {
       }
     ];
   }
+  
 
   get routeLineOptions() {
     return {
@@ -56,21 +63,19 @@ export class MapComponent implements OnInit, OnDestroy {
     };
   }
 
-
   ngOnInit() {
     this.initializeMap();
   }
 
   async initializeMap() {
 
-    const zoom = 13;
+    const zoom = 20;
     const zoomControl = false;
 
     this.creationMap(zoom, zoomControl);
   }
 
   creationMap(zoom: number, zoomControl: boolean) {
-
 
     this.map = L.map('map', {
       center: [this.center[0], this.center[1]
@@ -133,6 +138,20 @@ export class MapComponent implements OnInit, OnDestroy {
     setTimeout(() => {
       this.map.invalidateSize();
       this.calculateTotalTiles();
+
+
+      this.map.on('click', (e: L.LeafletMouseEvent) => {
+        this.selectedLat = e.latlng.lat;
+        this.selectedLon = e.latlng.lng;
+
+        console.log(this.selectedLat, this.selectedLon);
+        
+        this.colocarUser(this.selectedLat, this.selectedLon);
+
+        this.mapClick.emit({ latitude: this.selectedLat, longitude: this.selectedLon });
+
+      });
+
     }, 10);
 
     this.tileLayer = L.tileLayer(this.mapTileUrl).addTo(this.map);
@@ -239,6 +258,15 @@ export class MapComponent implements OnInit, OnDestroy {
 
       // this.asignarPopup({ coords: [latitude, longitude] }, null, this.userMarker);      
 
+    }
+  }
+
+  colocarDestination(latitude: number, longitude: number) {
+    if (this.destinationMarker) {
+      this.moveMarkerSmoothly(this.destinationMarker, latitude, longitude);
+    } else {
+      this.destinationMarker = L.marker([latitude, longitude], { icon: this.createIonIconDivIcon(this.destination) })
+        .addTo(this.map);
     }
   }
 
