@@ -177,8 +177,10 @@ export class App implements OnInit, AfterViewInit, OnDestroy {
   mapClick($event: any): void {
     console.log('Map clicked at:', $event);
 
-    this.latitudeDestination = $event.latitude;
-    this.longitudeDestination = $event.longitude;
+    // this.latitudeDestination = $event.latitude;
+    // this.longitudeDestination = $event.longitude;
+
+    this.mapComponent?.colocarDestination($event.latitude, $event.longitude);
 
     this.getAddressFromCoordinates($event.latitude, $event.longitude, true)
   }

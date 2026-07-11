@@ -26,6 +26,9 @@
     border-radius: 4px;" (click)="showSelects = !showSelects">
       Ver só o mapa
     </button>
+
+    {{ address }}
+    {{ addressDestination }}
     
   </div>
 
@@ -57,11 +60,11 @@
   <div style="background-color: orange ;">
     <div>posicion donde ir </div>
     <div>
-      longitude: 
+      longitude: {{ longitudeDestination }}
     </div>
 
     <div>
-      latitude: 
+      latitude: {{ latitudeDestination }}
     </div>
   </div>
 

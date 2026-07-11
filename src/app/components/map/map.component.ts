@@ -144,10 +144,6 @@ export class MapComponent implements OnInit, OnDestroy {
         this.selectedLat = e.latlng.lat;
         this.selectedLon = e.latlng.lng;
 
-        console.log(this.selectedLat, this.selectedLon);
-        
-        this.colocarUser(this.selectedLat, this.selectedLon);
-
         this.mapClick.emit({ latitude: this.selectedLat, longitude: this.selectedLon });
 
       });
