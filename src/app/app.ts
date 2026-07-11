@@ -109,11 +109,8 @@ export class App implements OnInit, AfterViewInit, OnDestroy {
         this.hasLocation = true;
 
         setTimeout(() => {
-          this.mapComponent?.colocarBus(this.latitude, this.longitude);
+          this.mapComponent?.colocarUser(this.latitude, this.longitude);
         }, 0);
-
-        console.log('Latitud:', this.latitude);
-        console.log('Longitud:', this.longitude);
 
         this.getAddressFromCoordinates(this.latitude, this.longitude, false)
 
@@ -143,8 +140,6 @@ export class App implements OnInit, AfterViewInit, OnDestroy {
     return fetch(url)
       .then(response => response.json())
       .then(data => {
-
-        console.log(data.display_name);
         
         if (isDestination) {
           this.addressDestination = data.display_name;
