@@ -1,0 +1,78 @@
+<app-header></app-header>
+
+@if (showSelects) {
+<mat-card class="material-proof-card" appearance="outlined" style="margin-top: 8em;">
+  @if(!hasLocation) {
+  <div>Obtendo localização...</div>
+  }
+
+  @if (debugMode) {
+  <div style="display: flex; flex-direction: row; gap: 16px;">
+    debug section
+
+    <div style="background-color: bisque ;">
+      <div>mi posicion</div>
+      <div>
+        longitude: {{ longitude }}
+      </div>
+
+      <div>
+        latitude: {{ latitude }}
+      </div>
+    </div>
+
+    <div style="background-color: orange ;">
+      <div>posicion donde ir </div>
+      <div>
+        longitude: {{ longitudeDestination }}
+      </div>
+
+      <div>
+        latitude: {{ latitudeDestination }}
+      </div>
+    </div>
+
+  </div>
+  }
+
+  <input class="input-field" matInput type="text" placeholder="Estou em..." [value]="address" readonly />
+
+  <input class="input-field" matInput type="text" placeholder="Selecione o destino no mapa" [value]="addressDestination"
+    readonly />
+
+  <input type="time" class="input-field" [(ngModel)]="pickupTime" />
+
+
+  <div class="material-proof-actions">
+    <button class="btn-outline" (click)="goToConfirmation()">
+      Procurar táxi
+    </button>
+
+    <button class="btn-outline" (click)="debugMode = !debugMode">
+      Debug mode
+    </button>
+
+    <button class="btn-outline" (click)="showSelects = !showSelects">
+      Ver só o mapa
+    </button>
+  </div>
+
+</mat-card>
+
+<!-- Map Section -->
+<div class="map-instruction">
+  <ul>
+    <li>Arraste o mapa com os dedos</li>
+  </ul>
+</div>
+}
+
+<div class="map-section">
+
+  @if (hasLocation) {
+  <app-map [mapTileUrl]="tileLayerUrl" [center]="[latitude, longitude]" [routeColor]="routeColor" [user]="userDivIcon"
+    [bus]="bus" [destination]="destination" [stop]="stop" [stopDisabled]="stopDisabled" (stopClick)="stopClick($event)"
+    (lineClick)="lineClick($event)" (mapClick)="mapClick($event)">
+  </app-map>
+  }
+</div>

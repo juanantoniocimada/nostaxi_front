@@ -1,0 +1,50 @@
+    body {
+      font-family: Arial, sans-serif;
+      background: rgb(238, 238, 238);
+      margin: 0;
+      padding: 20px;
+    }
+
+    .card {
+
+      background: white;
+      max-width: 350px;
+      margin: auto;
+      padding: 20px;
+      border-radius: 10px;
+    }
+
+    h1 {
+      color: #222;
+    }
+
+    h2 {
+      font-size: 18px;
+      margin-top: 20px;
+    }
+
+    img {
+      width: 120px;
+      height: 120px;
+      border-radius: 50%;
+      object-fit: cover;
+    }
+
+    p {
+      font-size: 16px;
+      margin: 10px;
+    }
+
+    .price {
+      font-size: 22px;
+      font-weight: bold;
+    }
+
+    .btn-outline {
+      background-color: transparent;
+      width: 120px;
+      height: 32px;
+      border: 1px solid var(--cv-blue);
+      border-radius: 4px;
+      cursor: pointer;
+    }
