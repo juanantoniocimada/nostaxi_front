@@ -193,10 +193,16 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
   mapClick($event: any): void {
     console.log('Map clicked at:', $event);
 
-    // this.latitudeDestination = $event.latitude;
-    // this.longitudeDestination = $event.longitude;
-
     this.mapComponent?.colocarDestination($event.latitude, $event.longitude);
+
+    const ruta = [
+      [this.latitude, this.longitude],
+      [$event.latitude, $event.longitude ]
+    ];
+
+    setTimeout(() => {
+      this.mapComponent?.pintarRuta(ruta);
+    }, 10);
 
     this.getAddressFromCoordinates($event.latitude, $event.longitude, true)
   }

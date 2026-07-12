@@ -193,7 +193,11 @@ export class MapComponent implements OnInit, OnDestroy {
   }
 
   pintarRuta(stops: any[]) {
-    const waypoints = stops?.map((stop: any) => L.latLng(stop.coords)) ?? [];
+
+    console.log(stops);    
+
+    const waypoints = stops?.map((stop: any) => L.latLng(stop)) ?? [];    
+
     L.Routing.control(this.buildRoutingControlOptions(waypoints)).addTo(this.map);
   }
 
