@@ -44,7 +44,6 @@
 
     <input class="input-field" type="time" class="input-field" [(ngModel)]="pickupTime" />
 
-
     <div class="material-proof-actions">
       <button class="btn-outline" (click)="goToConfirmation()">
         Procurar táxi
@@ -65,20 +64,33 @@
   </div>
   }
 
-  <button style="position: absolute; z-index: 9999; top: 10px; right: 10px;" class="btn-outline" (click)="showSelects = !showSelects">
-  Ver só o mapa
-  </button>
+<button style="position: absolute; top: 50px; right: 0; z-index: 9999; background-color: #003893; color: white;"
+  [matMenuTriggerFor]="menu"
+  >
+  <span>Opciones</span>
+  <mat-icon>expand_more</mat-icon>
+</button>
+
+  <mat-menu #menu="matMenu">
+    <button mat-menu-item (click)="showSelects = !showSelects">
+      Ver só o mapa
+    </button>
+
+    <button mat-menu-item (click)="goToRegisterTaxi()">
+      Sou taxista.
+    </button>
+  </mat-menu>
 
   <div class="map-section">
-    
+
     @if (hasLocation) {
 
     <app-map [mapTileUrl]="tileLayerUrl" [center]="[latitude, longitude]" [routeColor]="routeColor" [user]="userDivIcon"
       [bus]="bus" [destination]="destination" [stop]="stop" [stopDisabled]="stopDisabled"
       (stopClick)="stopClick($event)" (lineClick)="lineClick($event)" (mapClick)="mapClick($event)">
-      
+
     </app-map>
-    
+
     }
   </div>
 </div>

@@ -14,6 +14,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { FormsModule } from '@angular/forms';
 import { ConfirmationComponent } from "../confirmation/confirmation.component";
 import { HeaderComponent } from "../../components/header/header.component";
+import { MatMenu, MatMenuModule } from '@angular/material/menu';
 
 @Component({
   selector: 'app-home',
@@ -30,6 +31,7 @@ import { HeaderComponent } from "../../components/header/header.component";
     MatIconModule,
     MatInputModule,
     MapComponent,
+    MatMenuModule,
     FormsModule,
     ConfirmationComponent,
     HeaderComponent
@@ -190,9 +192,13 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
     });
   }
 
+  goToRegisterTaxi() {
+    this.router.navigate(['/register-taxi']);
+  }
+
   mapClick($event: any): void {
     console.log('Map clicked at:', $event);
-
+    
     this.mapComponent?.colocarDestination($event.latitude, $event.longitude);
 
     const ruta = [
@@ -202,7 +208,7 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
 
     setTimeout(() => {
       this.mapComponent?.pintarRuta(ruta);
-    }, 10);
+    }, 0);
 
     this.getAddressFromCoordinates($event.latitude, $event.longitude, true)
   }

@@ -1,0 +1,30 @@
+<app-header></app-header>
+
+<div class="card" style="margin-top: 8em;">
+
+    <h1>Registrar Táxi</h1>
+
+    <div class="form-group">
+        <label for="licensePlate">Matrícula:</label>
+        <input type="text" id="licensePlate" name="licensePlate" class="input-field" />
+    </div>
+
+    <div class="form-group">
+        <label for="driverName">Nome do Condutor:</label>
+        <input type="text" id="driverName" name="driverName" class="input-field" />
+    </div>
+
+    <div class="form-group">
+        <label for="startTime">Hora de Início:</label>
+        <input type="time" id="startTime" formControlName="startTime" class="input-field" />
+    </div>
+
+    <div class="form-group">
+        <label for="endTime">Hora de Fim:</label>
+        <input type="time" id="endTime" formControlName="endTime" class="input-field" />
+    </div>
+
+    <input type="button" value="Voltar" class="btn-outline" (click)="goBack()" />
+    <input type="button" value="Registrar táxi" class="btn-outline" (click)="registerTaxi()" />
+
+</div>
