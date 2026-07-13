@@ -208,7 +208,7 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
 
     setTimeout(() => {
       this.mapComponent?.pintarRuta(ruta);
-    }, 1000);
+    }, 0);
 
     this.getAddressFromCoordinates($event.latitude, $event.longitude, true)
   }

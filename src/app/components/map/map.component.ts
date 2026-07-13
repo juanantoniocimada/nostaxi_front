@@ -1,8 +1,5 @@
 import * as L from 'leaflet';
 
-(window as any).L = L;
-
-
 import 'leaflet-routing-machine';
 import { Component, EventEmitter, Input, OnDestroy, OnInit, Output, ViewEncapsulation } from '@angular/core';
 import { CommonModule } from '@angular/common';
@@ -199,6 +196,8 @@ export class MapComponent implements OnInit, OnDestroy {
   pintarRuta(stops: any[]) {
 
     console.log(stops);    
+
+    console.log('Routing:', (L as any).Routing);
 
     const waypoints = stops?.map((stop: any) => L.latLng(stop)) ?? [];    
 
