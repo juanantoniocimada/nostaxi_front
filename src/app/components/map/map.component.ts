@@ -198,7 +198,17 @@ export class MapComponent implements OnInit, OnDestroy {
 
     const waypoints = stops?.map((stop: any) => L.latLng(stop)) ?? [];    
 
-    L.Routing.control(this.buildRoutingControlOptions(waypoints)).addTo(this.map);
+    const control = L.Routing.control(this.buildRoutingControlOptions(waypoints));
+
+    control.on('routingerror', (e) => {
+      console.error(e);
+    });
+
+    control.on('routesfound', (e) => {
+      console.log('Ruta encontrada', e);
+    });
+
+    control.addTo(this.map);
   }
 
   openStopPopupDesdeFuera(html: string, stop: any, data: any[]): void {
