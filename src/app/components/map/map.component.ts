@@ -1,4 +1,8 @@
 import * as L from 'leaflet';
+
+(window as any).L = L;
+
+
 import 'leaflet-routing-machine';
 import { Component, EventEmitter, Input, OnDestroy, OnInit, Output, ViewEncapsulation } from '@angular/core';
 import { CommonModule } from '@angular/common';
