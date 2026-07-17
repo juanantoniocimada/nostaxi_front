@@ -2,102 +2,155 @@
 
 <div class="card" style="margin-top: 8em;">
 
-    <h1>Interesse na NOSTAXI.COM</h1>
+  <h1>Interesse na NOSTAXI.COM</h1>
 
-    <p>
-        Faça parte da modernização do serviço de táxis em Cabo Verde através 
-        de uma nova solução digital.
-    </p>
+  <p>
+    Faça parte da modernização do serviço de táxis em Cabo Verde através
+    de uma nova solução digital.
+  </p>
 
-    <p>
-        A NOSTAXI.COM é uma iniciativa privada que pretende modernizar 
-        o serviço de táxis em Cabo Verde através da tecnologia, facilitando 
-        a ligação entre taxistas e passageiros.
-    </p>
+  <p>
+    A NOSTAXI.COM é uma iniciativa privada que pretende modernizar
+    o serviço de táxis em Cabo Verde através da tecnologia, facilitando
+    a ligação entre taxistas e passageiros.
+  </p>
 
-    <div class="form-group">
-        <label for="driverName">Nome do Condutor:</label>
-        <input type="text" id="driverName" name="driverName" class="input-field" />
-    </div>
 
-    <div class="form-group">
-        <label for="driverPhone">WhatsApp do Condutor:</label>
-        <input type="text" id="driverPhone" name="driverPhone" class="input-field" />
-    </div>
+  <div class="form-group">
+    <label for="driverName">Nome do Condutor:</label>
+    <input 
+      type="text" 
+      id="driverName"
+      class="input-field"
+      [(ngModel)]="taxi.nome"
+    />
+  </div>
 
-    <div style="margin-top: 10px;">
-    
-      <select class="input-field" id="ilha" name="ilha" required>
-        <option value="">Selecionar ilha</option>
-        <option value="Santo Antão">Santo Antão</option>
-        <option value="São Vicente" selected>São Vicente</option>
-        <option value="São Nicolau">São Nicolau</option>
-        <option value="Sal">Sal</option>
-        <option value="Boa Vista">Boa Vista</option>
-        <option value="Maio">Maio</option>
-        <option value="Santiago">Santiago</option>
-        <option value="Fogo">Fogo</option>
-        <option value="Brava">Brava</option>
-      </select>
-    </div>
 
-    <p>
+  <div class="form-group">
+    <label for="driverPhone">WhatsApp do Condutor:</label>
+    <input 
+      type="text"
+      id="driverPhone"
+      class="input-field"
+      [(ngModel)]="taxi.whatsapp"
+    />
+  </div>
+
+
+  <div class="form-group">
+
+    <label for="ilha">Ilha onde presta serviço:</label>
+
+    <select 
+      class="input-field"
+      id="ilha"
+      [(ngModel)]="taxi.ilha">
+
+      <option value="Santo Antão">Santo Antão</option>
+      <option value="São Vicente">São Vicente</option>
+      <option value="São Nicolau">São Nicolau</option>
+      <option value="Sal">Sal</option>
+      <option value="Boa Vista">Boa Vista</option>
+      <option value="Maio">Maio</option>
+      <option value="Santiago">Santiago</option>
+      <option value="Fogo">Fogo</option>
+      <option value="Brava">Brava</option>
+
+    </select>
+
+  </div>
+
+
+  <p>
     De que funcionalidades teria interesse em fazer parte durante a fase de teste?
-</p>
+  </p>
 
-<table class="features-table">
-    <tr>
-        <td>
-            <label>
-                <input type="checkbox" value="pedidos">
-                Receber pedidos de passageiros
-            </label>
-        </td>
-        <td>
-            <label>
-                <input type="checkbox" value="aeroporto">
-                Reservas de aeroporto e turistas
-            </label>
-        </td>
-    </tr>
+
+  <table class="features-table">
 
     <tr>
-        <td>
-            <label>
-                <input type="checkbox" value="gps">
-                Localização GPS em tempo real
-            </label>
-        </td>
-        <td>
-            <label>
-                <input type="checkbox" value="tempo">
-                Tempo estimado de chegada
-            </label>
-        </td>
+      <td>
+        <label>
+          <input 
+            type="checkbox"
+            value="pedidos"
+            (change)="toggleFuncionalidade($event)">
+          Receber pedidos de passageiros
+        </label>
+      </td>
+
+      <td>
+        <label>
+          <input 
+            type="checkbox"
+            value="aeroporto"
+            (change)="toggleFuncionalidade($event)">
+          Reservas de aeroporto e turistas
+        </label>
+      </td>
     </tr>
+
 
     <tr>
-        <td>
-            <label>
-                <input type="checkbox" value="pagamentos">
-                Pagamentos digitais
-            </label>
-        </td>
-        <td>
-            <label>
-                <input type="checkbox" value="extras">
-                Serviços adicionais
-            </label>
-        </td>
+      <td>
+        <label>
+          <input 
+            type="checkbox"
+            value="gps"
+            (change)="toggleFuncionalidade($event)">
+          Localização GPS em tempo real
+        </label>
+      </td>
+
+      <td>
+        <label>
+          <input 
+            type="checkbox"
+            value="tempo"
+            (change)="toggleFuncionalidade($event)">
+          Tempo estimado de chegada
+        </label>
+      </td>
     </tr>
-</table>
 
-    <div>
-      <p>
-        Dados utilizados apenas para avaliar interesse e futuros contactos.
-      </p>
-    </div>
 
-  <input type="button" value="Tenho interesse" class="btn-outline" (click)="registerTaxi()" />
+    <tr>
+      <td>
+        <label>
+          <input 
+            type="checkbox"
+            value="pagamentos"
+            (change)="toggleFuncionalidade($event)">
+          Pagamentos digitais
+        </label>
+      </td>
+
+      <td>
+        <label>
+          <input 
+            type="checkbox"
+            value="extras"
+            (change)="toggleFuncionalidade($event)">
+          Serviços adicionais
+        </label>
+      </td>
+    </tr>
+
+  </table>
+
+
+  <p class="legal">
+    Dados utilizados apenas para avaliar interesse e futuros contactos.
+  </p>
+
+
+  <button 
+    type="button"
+    class="btn-outline"
+    (click)="registerTaxi()">
+    Tenho interesse
+  </button>
+
 
 </div>
