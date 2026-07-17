@@ -1,4 +1,5 @@
 import { Component, OnInit, ViewEncapsulation } from '@angular/core';
+import { Router } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { HeaderComponent } from '../../components/header/header.component';
@@ -25,7 +26,7 @@ export class RegisterTaxiComponent implements OnInit {
     funcionalidades: [] as string[]
   };
 
-  constructor(private nestJsService: NestJSService) {}
+  constructor(private nestJsService: NestJSService, private router: Router) {}
 
   ngOnInit() {
   }
@@ -72,11 +73,17 @@ export class RegisterTaxiComponent implements OnInit {
     .subscribe({
       next: (response) => {
         console.log('Guardado correctamente', response);
+
+        this.goToConfirmation();
       },
       error: (error) => {
         console.error('Error:', error);
       }
     });
+  }
+
+  goToConfirmation() {
+    this.router.navigate(['/confirmation']);
   }
 
 }
