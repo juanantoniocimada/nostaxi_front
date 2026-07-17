@@ -19,4 +19,9 @@ export class NestJSService {
     const url = `${this._apiUrl}/vehicles`;
     return this._http.get(url)
   }
+
+  registerTaxi(data: any): Observable<any> {
+    const url = `${this._apiUrl}/register-taxi`;
+    return this._http.post(url, data);
+  }
 }

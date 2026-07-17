@@ -64,22 +64,23 @@
   </div>
   }
 
-<button style="position: absolute; top: 50px; right: 0; z-index: 9999; background-color: #003893; color: white;"
-  [matMenuTriggerFor]="menu"
-  >
-  <span>Opciones</span>
-  <mat-icon>expand_more</mat-icon>
-</button>
+    <button (click)="goToRegisterTaxi()" style="position: absolute; top: 50px; right: 0; z-index: 9999; background-color: #003893; color: white;">
+      <span>Pré-registar Táxi</span>
+    </button>
+
+  <!--
+  <button style="position: absolute; top: 50px; right: 0; z-index: 9999; background-color: #003893; color: white;"
+    []="menu">
+    <span>Opciones</span>
+    <mat-icon>expand_more</mat-icon>
+  </button>
 
   <mat-menu #menu="matMenu">
     <button mat-menu-item (click)="showSelects = !showSelects">
       Ver só o mapa
     </button>
-
-    <button mat-menu-item (click)="goToRegisterTaxi()">
-      Sou taxista.
-    </button>
   </mat-menu>
+  -->
 
   <div class="map-section">
 

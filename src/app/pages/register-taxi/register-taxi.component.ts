@@ -1,7 +1,7 @@
 import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { HeaderComponent } from '../../components/header/header.component';
-
+import { NestJSService } from '../../services/nestjs.service';
 @Component({
   selector: 'app-register-taxi',
   templateUrl: './register-taxi.component.html',
@@ -15,6 +15,8 @@ import { HeaderComponent } from '../../components/header/header.component';
 // register-taxi
 export class RegisterTaxiComponent implements OnInit {
 
+  constructor(private nestJsService: NestJSService) {}
+
   ngOnInit() {
   }
 
@@ -26,7 +28,5 @@ export class RegisterTaxiComponent implements OnInit {
   registerTaxi() {
     // Implement register taxi logic here
   }
-
-
 
 }
