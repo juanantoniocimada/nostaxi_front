@@ -2,6 +2,47 @@
 
 <div class="card" style="margin-top: 8em;">
 
-Obrigado. Entraremos em contacto consigo nos próximos dias.
+    <p>
+        Trip confirmation
+    </p>
+
+    <div style="background-color: lightgray; padding: 1em; margin-bottom: 1em;">
+        <p>
+            Driver details
+        </p>
+        <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS9i-WU44OmgwNMq1vhNFSQJS15W9jVn-Z8G55vuysQCw&s=10" alt="">
+        <p>
+            Davy
+        </p>
+        <p>
+            tel : 5881441
+        </p>
+        <p>
+            car : toyota corolla
+        </p>
+        <p>
+            plate : 1234
+        </p>
+    </div>
+
+    <p>
+        Trip details
+    </p>
+    <p>
+        São Vicente
+    </p>
+    <p>
+        address : {{ trip().address }}
+    </p>
+    <p>
+        addressDestination : {{ trip().addressDestination }}
+    </p>
+    <p>
+        pickupTime : {{ trip().pickupTime }}
+    </p>    
+
+    <button class="btn-outline" (click)="confirm()">
+      confirm
+    </button>
 
 </div>

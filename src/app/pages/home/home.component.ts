@@ -15,6 +15,7 @@ import { FormsModule } from '@angular/forms';
 import { ConfirmationComponent } from "../confirmation/confirmation.component";
 import { HeaderComponent } from "../../components/header/header.component";
 import { MatMenu, MatMenuModule } from '@angular/material/menu';
+import { Trip } from '../../services/trip';
 
 @Component({
   selector: 'app-home',
@@ -66,6 +67,10 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
 
   latitudeDestination: number = 0;
   longitudeDestination: number = 0;
+
+
+  tripService = inject(Trip);
+
 
   hasLocation = false;
   locationWatchId: number | null = null;
@@ -149,6 +154,13 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   goToConfirmation() {
+
+    this.tripService.setTrip({
+      address: this.address,
+      addressDestination: this.addressDestination,
+      pickupTime: this.pickupTime
+    });
+
     this.router.navigate(['/confirmation']);
   }
 

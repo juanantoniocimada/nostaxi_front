@@ -24,4 +24,9 @@ export class NestJSService {
     const url = `${this._apiUrl}/taxi-interest`;
     return this._http.post(url, data);
   }
+
+  confirmTrip(data: any): Observable<any> {
+    const url = `${this._apiUrl}/trips`;
+    return this._http.post(url, data);
+  }
 }
