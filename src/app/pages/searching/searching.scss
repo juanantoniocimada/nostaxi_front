@@ -1,0 +1,68 @@
+.searching-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+
+  p {
+    margin-top: 20px;
+    font-size: 18px;
+    animation: pulse 1.5s infinite;
+  }
+}
+
+.road {
+  width: 250px;
+  height: 60px;
+  position: relative;
+  overflow: hidden;
+  border-bottom: 3px solid #333;
+}
+
+.car {
+  position: absolute;
+  bottom: 5px;
+  left: -50px;
+  font-size: 40px;
+  animation: drive 3s linear infinite;
+}
+
+
+@keyframes drive {
+  0% {
+    left: -50px;
+    transform: scaleX(1);
+  }
+
+  45% {
+    left: 180px;
+    transform: scaleX(1);
+  }
+
+  50% {
+    left: 180px;
+    transform: scaleX(-1);
+  }
+
+  95% {
+    left: -50px;
+    transform: scaleX(-1);
+  }
+
+  100% {
+    left: -50px;
+    transform: scaleX(1);
+  }
+}
+
+
+@keyframes pulse {
+  0%, 100% {
+    opacity: .4;
+  }
+
+  50% {
+    opacity: 1;
+  }
+}

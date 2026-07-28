@@ -39,6 +39,7 @@ export class ConfirmationComponent implements OnInit {
     };
 
     if (tripData) {
+      /*
       this.nestjsService.confirmTrip(exampleTripData).subscribe({
         next: (response) => {
           console.log('Trip confirmed successfully:', response);
@@ -49,6 +50,7 @@ export class ConfirmationComponent implements OnInit {
           alert('Ocorreu um erro ao confirmar a viagem. Por favor, tente novamente.');
         }
       });
+      */
     } else {
       console.error('No trip data available to confirm.');
       alert('Não há dados de viagem disponíveis para confirmar.');

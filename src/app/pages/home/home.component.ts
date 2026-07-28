@@ -153,7 +153,7 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
     }
   }
 
-  goToConfirmation() {
+  search() {
 
     this.tripService.setTrip({
       address: this.address,
@@ -161,7 +161,7 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
       pickupTime: this.pickupTime
     });
 
-    this.router.navigate(['/confirmation']);
+    this.router.navigate(['/searching']);
   }
 
   getAddressFromCoordinates(lat: number, lng: number, isDestination: boolean = false): Promise<string> {

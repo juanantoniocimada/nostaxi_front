@@ -29,4 +29,22 @@ export class NestJSService {
     const url = `${this._apiUrl}/trips`;
     return this._http.post(url, data);
   }
+
+  sendTestPush(data: {
+    token: string;
+    title?: string;
+    message?: string;
+    id?: number;
+  }): Observable<any> {
+
+    const url = `${this._apiUrl}/push/test`;
+
+    return this._http.post(url, data);
+  }
+
+  checkTripStatus(id: number): Observable<{ confirmed: boolean }> {
+    const url = `${this._apiUrl}/trips/status/${id}`;
+    return this._http.get<{ confirmed: boolean }>(url);
+  }
+
 }

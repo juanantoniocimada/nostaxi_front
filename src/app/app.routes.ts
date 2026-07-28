@@ -14,6 +14,10 @@ export const routes: Routes = [
     loadComponent: () => import('./pages/confirmation/confirmation.component').then(m => m.ConfirmationComponent)
   },
   {
+    path: 'searching',
+    loadComponent: () => import('./pages/searching/searching').then(m => m.Searching)
+  },
+  {
     path: 'register-taxi',
     loadComponent: () => import('./pages/register-taxi/register-taxi.component').then(m => m.RegisterTaxiComponent)
   }
