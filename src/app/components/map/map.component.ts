@@ -70,7 +70,7 @@ export class MapComponent implements OnInit, OnDestroy {
 
   async initializeMap() {
 
-    const zoom = 20;
+    const zoom = 15;
     const zoomControl = false;
 
     this.creationMap(zoom, zoomControl);
@@ -285,8 +285,12 @@ export class MapComponent implements OnInit, OnDestroy {
 
   colocarBus(latitude: number, longitude: number) {
     if (this.busMarker) {
+      console.log('asas1');
+      
       this.moveMarkerSmoothly(this.busMarker, latitude, longitude);
     } else {
+      console.log('asas2');
+      
       this.busMarker = L.marker([latitude, longitude],
         { icon: this.createIonIconDivIcon(this.bus) })
         .addTo(this.map);

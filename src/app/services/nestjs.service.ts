@@ -2,7 +2,7 @@
 
 import { HttpClient } from '@angular/common/http';
 import { Injectable, inject } from '@angular/core';
-import { Observable } from 'rxjs';
+import { catchError, Observable, of } from 'rxjs';
 import { environment } from '../../environments/environment';
 
 @Injectable({
@@ -45,6 +45,24 @@ export class NestJSService {
   checkTripStatus(id: number): Observable<{ confirmed: boolean }> {
     const url = `${this._apiUrl}/trips/status/${id}`;
     return this._http.get<{ confirmed: boolean }>(url);
+  }
+
+  getTripLastLocation(tripId: number) {
+    return this._http.get<any>(
+      `${this._apiUrl}/trips/${tripId}/position`
+    ).pipe(
+      catchError((error) => {
+        console.error(
+          'Error obteniendo posición del taxi, usando mock',
+          error
+        );
+
+        return of({
+          latitude: 0.000000000000000,
+          longitude: 0.000000000000000,
+        });
+      })
+    );
   }
 
 }

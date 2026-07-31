@@ -48,3 +48,92 @@
       border-radius: 4px;
       cursor: pointer;
     }
+
+    .map-button {
+      background-color: var(--cv-blue);
+      color: white;
+      border: none;
+      padding: 10px 20px;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+
+    .trip-countdown {
+      font-size: 20px;
+      font-weight: bold;
+      color: red;
+      text-align: center;
+      margin: 20px;
+    }
+
+    .cancel-button {
+      background-color: red;
+      color: white;
+      border: none;
+      padding: 10px 20px;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+
+    .driver-status {
+  width: 100%;
+  max-width: 500px;
+  margin: 30px auto;
+}
+
+.status-card {
+  border-radius: 16px;
+  padding: 24px;
+  color: white;
+  text-align: center;
+  box-shadow: 0 8px 20px rgba(0,0,0,.15);
+
+  .icon {
+    font-size: 48px;
+    margin-bottom: 12px;
+  }
+
+  .title {
+    font-size: 24px;
+    font-weight: 700;
+    margin-bottom: 8px;
+  }
+
+  .subtitle {
+    font-size: 16px;
+    opacity: .9;
+  }
+}
+
+.green {
+  background: #2e7d32;
+}
+
+.orange {
+  background: #ef6c00;
+}
+
+.red {
+  background: #c62828;
+}
+
+.map-button {
+  background-color: gainsboro;
+  padding: 1em;
+  margin-top: 1em;
+  border-radius: 0.5em;
+  text-align: center;
+  cursor: pointer;
+  font-size: 18px;
+  font-weight: 600;
+  color: #333;
+  transition: all 0.2s ease;
+
+  &:hover {
+    background-color: #d0d0d0;
+  }
+
+  &:active {
+    transform: scale(0.98);
+  }
+}

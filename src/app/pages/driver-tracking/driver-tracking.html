@@ -1,0 +1,41 @@
+
+
+@if (departureIn === 0) {
+  <h1 class="status-title green">
+    🚕 Tu viaje ha comenzado
+  </h1>
+}
+
+@if (departureIn === 5) {
+  <h1 class="status-title orange">
+    🚕 Tu viaje comenzará en 5 minutos
+  </h1>
+}
+
+@if (departureIn === 10) {
+  <h1 class="status-title red">
+    🚕 Tu viaje comenzará en 10 minutos
+  </h1>
+}
+
+<div class="map-section">
+
+  @if (hasLocation) {
+
+  <app-map 
+    [mapTileUrl]="tileLayerUrl" 
+    [center]="[latitude, longitude]" 
+    [routeColor]="routeColor" 
+    [user]="userDivIcon"
+    [bus]="bus" 
+    [destination]="destination" 
+    [stop]="stop" 
+    [stopDisabled]="stopDisabled" 
+    (stopClick)="stopClick($event)"
+    (lineClick)="lineClick($event)" 
+    (mapClick)="mapClick($event)"
+  >
+  </app-map>
+
+  }
+</div>

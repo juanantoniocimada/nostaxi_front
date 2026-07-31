@@ -2,47 +2,74 @@
 
 <div class="card" style="margin-top: 8em;">
 
-    <p>
-        Trip confirmation
-    </p>
+  <p>
+    Trip confirmation
+  </p>
 
-    <div style="background-color: lightgray; padding: 1em; margin-bottom: 1em;">
-        <p>
-            Driver details
-        </p>
-        <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS9i-WU44OmgwNMq1vhNFSQJS15W9jVn-Z8G55vuysQCw&s=10" alt="">
-        <p>
-            Davy
-        </p>
-        <p>
-            tel : 5881441
-        </p>
-        <p>
-            car : toyota corolla
-        </p>
-        <p>
-            plate : 1234
-        </p>
+  <div style="background-color: lightgray; padding: 1em; margin-bottom: 1em;">
+    <p>
+      Driver details
+    </p>
+    <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS9i-WU44OmgwNMq1vhNFSQJS15W9jVn-Z8G55vuysQCw&s=10"
+      alt="">
+    <p>
+      Davy
+    </p>
+    <p>
+      tel : 5881441
+    </p>
+    <p>
+      car : toyota corolla
+    </p>
+    <p>
+      plate : 1234
+    </p>
+  </div>
+
+  <p>
+    Trip details
+  </p>
+  <p>
+    São Vicente
+  </p>
+  <p>
+    address : {{ trip().address }}
+  </p>
+  <p>
+    addressDestination : {{ trip().addressDestination }}
+  </p>
+  <p>
+    pickupTime : {{ trip().pickupTime }}
+  </p>
+
+  <div class="driver-status">
+
+    <div class="status-card green" *ngIf="departureIn === 0">
+      <div class="icon">🚖</div>
+      <div class="title">El taxista sale ahora</div>
+      <div class="subtitle">Está iniciando el servicio.</div>
     </div>
 
-    <p>
-        Trip details
-    </p>
-    <p>
-        São Vicente
-    </p>
-    <p>
-        address : {{ trip().address }}
-    </p>
-    <p>
-        addressDestination : {{ trip().addressDestination }}
-    </p>
-    <p>
-        pickupTime : {{ trip().pickupTime }}
-    </p>    
+    <div class="status-card orange" *ngIf="departureIn === 5">
+      <div class="icon">⏱️</div>
+      <div class="title">El taxista sale en 5 minutos</div>
+      <div class="subtitle">Prepárate, llegará muy pronto.</div>
+    </div>
 
-    <button class="btn-outline" (click)="confirm()">
-      confirm
-    </button>
+    <div class="status-card red" *ngIf="departureIn === 10">
+      <div class="icon">🕒</div>
+      <div class="title">El taxista sale en 10 minutos</div>
+      <div class="subtitle">Puedes esperar unos minutos más.</div>
+    </div>
+
+  </div>
+
+  <!-- driver-tracking -->
+  <div
+    (click)="goToDriverTracking()"
+  class="map-button"
+  >
+    ver en el mapa
+  </div>
 
 </div>

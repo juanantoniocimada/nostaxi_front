@@ -42,7 +42,7 @@ export class Searching implements OnInit, OnDestroy {
 
           // Push de prueba
           this.nestjsService.sendTestPush({
-            token: 'cE6z18JbR4G08_QONTFeMm:APA91bGzEIOP1lxWZM0VV9QO6G1YjgexlxK8bcrY58wwXAI-8_nbwzHJ0fG3Hl_uBG_sWbVc3cmnotBWypa3_dNU1XnA0oOUfyLsDx9yx2yc9wgCtG48hCI',
+            token: 'cfVFpyi1SuiVD1eMVYVWeU:APA91bHeYqiD6zvJmaJAPErKu4rHcvGHK-6Vusl-odELSQqN5Xmudw0lArkpE3qtEE-S4Iervr3sugXWm_HraWa0-slbg2GXIwqSmy6HeZyU4qok8MjdLs4',
             title: 'Teste de notificação',
             message: 'Esta é uma notificação de teste enviada do NestJSService.',
             id: response.data.id // Assuming the response contains the trip ID
