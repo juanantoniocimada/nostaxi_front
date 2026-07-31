@@ -1,8 +1,9 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, inject, OnInit, ViewChild } from '@angular/core';
 import { busDivIcon, destinationDivIcon, stopDisabledDivIcon, stopDivIcon, tileLayerUrl, userDivIcon } from '../../utils/map.utils';
 import { MapComponent } from '../../components/map/map.component';
 import { NestJSService } from '../../services/nestjs.service';
 import { Subscription, interval } from 'rxjs';
+import { Trip } from '../../services/trip';
 
 @Component({
   selector: 'app-driver-tracking',
@@ -13,6 +14,7 @@ import { Subscription, interval } from 'rxjs';
 export class DriverTracking implements OnInit {
 
   constructor(private nestJSService: NestJSService) {}
+  tripService = inject(Trip);
 
   @ViewChild(MapComponent) mapComponent?: MapComponent;
 
@@ -37,10 +39,14 @@ export class DriverTracking implements OnInit {
 
   locationPolling?: Subscription;
 
+  idTrip: number = 0;
+
   ngOnInit(): void {
 
     this.latitude = 16.892591887181208;
     this.longitude = -24.985956340660707;
+
+    this.idTrip = this.tripService.trip()?.id || 0;
 
 
     setTimeout(() => {
@@ -49,7 +55,7 @@ export class DriverTracking implements OnInit {
 
  this.locationPolling = interval(5000)
     .subscribe(() => {
-      this.getTaxiPosition();
+      this.getTaxiPosition(this.idTrip); // Replace 1 with the actual taxi ID as needed
     });
 
   }
@@ -74,15 +80,14 @@ export class DriverTracking implements OnInit {
     this.mapComponent?.colocarBus(lat, lon);
   }
 
-getTaxiPosition(): void {
+getTaxiPosition(id: number): void {
 
-  this.nestJSService.getTripLastLocation(1)
+  this.nestJSService.getTripLastLocation(id)
     .subscribe({
       next: (position) => {
 
         this.latitude = position.latitude;
         this.longitude = position.longitude;
-
 
         this.colocarBus(
           this.latitude,

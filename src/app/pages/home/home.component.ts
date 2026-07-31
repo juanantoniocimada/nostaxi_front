@@ -158,7 +158,8 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
     this.tripService.setTrip({
       address: this.address,
       addressDestination: this.addressDestination,
-      pickupTime: this.pickupTime
+      pickupTime: this.pickupTime,
+      id: 0,
     });
 
     this.router.navigate(['/searching']);
