@@ -76,9 +76,9 @@ export class DriverTracking implements OnInit {
 
   }
 
-  colocarBus(lat: number, lon: number): void {
-    this.mapComponent?.colocarBus(lat, lon);
-  }
+colocarBus(lat: number, lon: number): void {
+  this.mapComponent?.colocarBus(lat, lon);
+}
 
 getTaxiPosition(id: number): void {
 
@@ -86,8 +86,10 @@ getTaxiPosition(id: number): void {
     .subscribe({
       next: (position) => {
 
-        this.latitude = position.latitude;
-        this.longitude = position.longitude;
+        this.latitude = position.data.latitude;
+        this.longitude = position.data.longitude;
+
+        console.log(position);
 
         this.colocarBus(
           this.latitude,

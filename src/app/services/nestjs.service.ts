@@ -65,4 +65,19 @@ export class NestJSService {
     );
   }
 
+  getDriver(id: number): Observable<any> {
+    const url = `${this._apiUrl}/taxi-interest/${id}`;
+
+    return this._http.get<any>(url).pipe(
+      catchError((error) => {
+        console.error(
+          'Error obteniendo conductor',
+          error
+        );
+
+        return of(null);
+      })
+    );
+  }
+
 }

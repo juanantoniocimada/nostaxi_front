@@ -12,65 +12,82 @@ import { Trip } from '../../services/trip';
 })
 export class Searching implements OnInit, OnDestroy {
 
-  private nestjsService = inject(NestJSService);
-  private router = inject(Router);
-
-  private pollingSubscription?: Subscription;
+  nestjsService = inject(NestJSService);
+  router = inject(Router);
+  pollingSubscription?: Subscription;
   tripService = inject(Trip);
-  
+
+  token = '';
 
   id: number = 0;
 
   ngOnInit(): void {
-    this.createTrip();
+    this.getDriver(5881441);
   }
-  
-  createTrip() {
 
-      // Example trip data structure
-      const exampleTripData = {
-          "deviceToken": "",
-          "address": "123 Main St",
-          "addressDestination": "456 Elm St",
-          "driverName": "Davy",
-          "plate": "1234",
-          "pickupTime": "10:30",
-          "confirmed": false,
-          "latitude": 0.000000000000000,
-          "longitude": 0.000000000000000,
-      };
+  createTrip(driverData: any) {
 
-      this.nestjsService.confirmTrip(exampleTripData).subscribe({
-        next: (response) => {
+    console.log('Driver data:', driverData);
 
-          console.log(response);
-          
+    this.token = driverData.pushToken;
 
-          this.id = response.data.id; // Assuming the response contains the trip ID
+    // Example trip data structure
+    const exampleTripData = {
+      "deviceToken": "",
+      "address": "123 Main St",
+      "addressDestination": "456 Elm St",
+      "driverName": "Davy",
+      "plate": "1234",
+      "pickupTime": "10:30",
+      "confirmed": false,
+      "latitude": 0.000000000000000,
+      "longitude": 0.000000000000000,
+    };
 
-          this.tripService.setTrip({
-            id: response.data.id,
-          });
-          
-          console.log('Trip confirmed successfully:', response);
-          alert('Viagem confirmada com sucesso!');
+    this.nestjsService.confirmTrip(exampleTripData).subscribe({
+      next: (response) => {
 
-          // Push de prueba
-          this.nestjsService.sendTestPush({
-            token: 'eQK3CbK1SsC8FOXgINTR8G:APA91bEAEop4LuZqlNYF6rEor7xba8ncIBzR8_1oypLrcUIIrIGXFrQcPYQa48iOIO2GAhObkD0fChdhKbfl2ubeBHK6CiiqFBWGhW61XPJXr05OuyHV2EI',
-            title: 'Teste de notificação',
-            message: 'Esta é uma notificação de teste enviada do NestJSService.',
-            id: this.id // Assuming the response contains the trip ID
-          }).subscribe();
+        console.log(response);
 
-          this.startSearching(this.id); // Assuming the response contains the trip ID
-        },
-        error: (error) => {
-          console.error('Error confirming trip:', error);
-          alert('Ocorreu um erro ao confirmar a viagem. Por favor, tente novamente.');
-        }
-      });
-      
+        this.id = response.data.id; // Assuming the response contains the trip ID
+
+        this.tripService.setTrip({
+          id: response.data.id,
+        });
+
+        console.log('Trip confirmed successfully:', response);
+
+        console.log(this.token);
+
+        // Push de prueba
+        this.nestjsService.sendTestPush({
+          token: this.token,
+          title: 'Teste de notificação',
+          message: 'Esta é uma notificação de teste enviada do NestJSService.',
+          id: this.id // Assuming the response contains the trip ID
+        }).subscribe();
+
+        this.startSearching(this.id); // Assuming the response contains the trip ID
+      },
+      error: (error) => {
+        console.error('Error confirming trip:', error);
+        alert('Ocorreu um erro ao confirmar a viagem. Por favor, tente novamente.');
+      }
+    });
+
+  }
+
+  getDriver(id: number) {
+    this.nestjsService.getDriver(id).subscribe({
+      next: (response) => {
+        console.log('Driver info:', response);
+
+        this.createTrip(response.data);
+      },
+      error: (error) => {
+        console.error('Error fetching driver info:', error);
+      }
+    });
   }
 
   startSearching(tripId: number) {
