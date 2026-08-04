@@ -14,7 +14,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { FormsModule } from '@angular/forms';
 import { ConfirmationComponent } from "../confirmation/confirmation.component";
 import { HeaderComponent } from "../../components/header/header.component";
-import { MatMenu, MatMenuModule } from '@angular/material/menu';
+import { MatMenuModule } from '@angular/material/menu';
 import { Trip } from '../../services/trip';
 
 @Component({
@@ -40,7 +40,7 @@ import { Trip } from '../../services/trip';
   providers: [NestJSService],
   encapsulation: ViewEncapsulation.None,
 })
-export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
+export class HomeComponent implements OnInit, OnDestroy {
   @ViewChild(MapComponent) mapComponent?: MapComponent;
 
   tileLayerUrl = tileLayerUrl;
@@ -52,9 +52,11 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
 
   router = inject(Router);
 
-  routeColor = '#FF0000';
-  vehicles: any = [];
+  routeColor = 'blue';
+  
   nestjsService = inject(NestJSService);
+  tripService = inject(Trip);
+
 
   debugMode = false;
   showSelects = true;
@@ -68,47 +70,13 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
   latitudeDestination: number = 0;
   longitudeDestination: number = 0;
 
-
-  tripService = inject(Trip);
-
-
   hasLocation = false;
   locationWatchId: number | null = null;
 
   pickupTime = new Date().toTimeString().slice(0, 5);
 
-  stops: any = [
-    {
-      id_locations: 1,
-      name: 'Stop 1',
-      coords: [16.889925012664918, -24.987106709197644],
-      show2: true,
-      popup: true
-    },
-    {
-      id_locations: 2,
-      name: 'Stop 2',
-      coords: [16.879357915679513, -24.976183333588956],
-      show2: true,
-      popup: true
-    }
-  ];
-
   ngOnInit() {
-
     this.getLocation()
-  }
-
-  ngAfterViewInit() {
-    // this.getVehicles();
-
-    // setTimeout(() => {
-    // this.stops.forEach((el: any) => {
-    // this.mapComponent?.pintarParada(el);
-    //   });
-
-    // this.mapComponent?.pintarRuta(this.stops);
-    //  }, 10);
   }
 
   getLocation() {
@@ -146,15 +114,7 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
     );
   }
 
-  ngOnDestroy(): void {
-    if (this.locationWatchId !== null) {
-      navigator.geolocation.clearWatch(this.locationWatchId);
-      this.locationWatchId = null;
-    }
-  }
-
   search() {
-
     this.tripService.setTrip({
       address: this.address,
       addressDestination: this.addressDestination,
@@ -172,10 +132,14 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
       .then(response => response.json())
       .then(data => {
 
+        console.log(data.address); 
+        console.log(this.longitudeDestination);
+        console.log(this.latitudeDestination);  
+
         if (isDestination) {
           this.addressDestination = data.display_name;
         } else {
-          this.address = data.display_name;
+         this.address = data.display_name;
         }
 
 
@@ -189,20 +153,6 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
         console.error('Error al obtener la dirección:', error);
         throw error;
       });
-  }
-
-  getVehicles() {
-    this.nestjsService.getVehicles().subscribe({
-      next: (data) => {
-        console.log('Vehicles:', data);
-        this.vehicles = data['data'];
-        console.log(this.vehicles);
-
-      },
-      error: (error) => {
-        console.error('Error fetching vehicles:', error);
-      }
-    });
   }
 
   goToRegisterTaxi() {
@@ -237,4 +187,11 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   lineClick($event: any): void { }
+
+  ngOnDestroy(): void {
+    if (this.locationWatchId !== null) {
+      navigator.geolocation.clearWatch(this.locationWatchId);
+      this.locationWatchId = null;
+    }
+  }
 }

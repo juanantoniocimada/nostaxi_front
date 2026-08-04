@@ -1,4 +1,3 @@
-
 // Include theming for Angular Material with `mat.theme()`.
 // This Sass mixin will define CSS variables that are used for styling Angular Material
 // components according to the Material 3 design spec.
@@ -7,14 +6,12 @@
 @use '@angular/material' as mat;
 
 html {
-  @include mat.theme((
-    color: (
-      primary: mat.$azure-palette,
-      tertiary: mat.$blue-palette,
-    ),
-    typography: Roboto,
-    density: 0,
-  ));
+  @include mat.theme((color: (primary: mat.$azure-palette,
+        tertiary: mat.$blue-palette,
+      ),
+      typography: Roboto,
+      density: 0,
+    ));
 }
 
 body {
@@ -53,17 +50,38 @@ $taxi-white: #FFFFFF;
 $taxi-gray: #6E6E6E;
 
 :root {
-	--cv-blue: #{$cv-blue};
-	--cv-red: #{$cv-red};
-	--cv-white: #{$cv-white};
-	--cv-yellow: #{$cv-yellow};
-	--taxi-yellow-nyc-1: #{$taxi-yellow-nyc-1};
-	--taxi-yellow-nyc-2: #{$taxi-yellow-nyc-2};
-	--taxi-black: #{$taxi-black};
-	--taxi-white: #{$taxi-white};
-	--taxi-gray: #{$taxi-gray};
+  --cv-blue: #{$cv-blue};
+  --cv-red: #{$cv-red};
+  --cv-white: #{$cv-white};
+  --cv-yellow: #{$cv-yellow};
+  --taxi-yellow-nyc-1: #{$taxi-yellow-nyc-1};
+  --taxi-yellow-nyc-2: #{$taxi-yellow-nyc-2};
+  --taxi-black: #{$taxi-black};
+  --taxi-white: #{$taxi-white};
+  --taxi-gray: #{$taxi-gray};
 }
 
 
-html, body { height: 100%; }
-body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+html,
+body {
+  height: 100%;
+}
+
+body {
+  margin: 0;
+  font-family: Roboto, "Helvetica Neue", sans-serif;
+}
+
+.btn-outline {
+  box-sizing: border-box;
+  background-color: var(--cv-blue);
+  width: 120px;
+  font-size: larger;
+  color: aliceblue;
+  height: 32px;
+  border: 1px solid gainsboro;
+  border-radius: 4px;
+  width: 100%;
+  text-align: center;
+  cursor: pointer;
+}

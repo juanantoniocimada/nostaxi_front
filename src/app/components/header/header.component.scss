@@ -35,3 +35,12 @@
   font-size: 0.9rem;
   color: var(--cv-blue);
 }
+
+.btn-outline {
+  position: absolute;
+  top: 50px;
+  right: 0;
+  z-index: 9999;
+  background-color: #003893;
+  color: white;
+}

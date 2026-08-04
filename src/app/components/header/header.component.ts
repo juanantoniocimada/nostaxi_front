@@ -14,4 +14,9 @@ export class HeaderComponent implements OnInit {
 
   ngOnInit() {
   }
+
+goToRegisterTaxi() {
+  window.location.href = '/register-taxi';
+}
+
 }

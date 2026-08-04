@@ -1,6 +1,6 @@
 <app-header></app-header>
 
-<div style="">
+<div>
 
   @if (showSelects) {
   <mat-card class="material-proof-card" appearance="outlined" style="margin-top: 8em;">
@@ -8,50 +8,18 @@
     <div>Obtendo localização...</div>
     }
 
-    @if (debugMode) {
-    <div style="display: flex; flex-direction: row; gap: 16px;">
-      debug section
-
-      <div style="background-color: bisque ;">
-        <div>mi posicion</div>
-        <div>
-          longitude: {{ longitude }}
-        </div>
-
-        <div>
-          latitude: {{ latitude }}
-        </div>
-      </div>
-
-      <div style="background-color: orange ;">
-        <div>posicion donde ir </div>
-        <div>
-          longitude: {{ longitudeDestination }}
-        </div>
-
-        <div>
-          latitude: {{ latitudeDestination }}
-        </div>
-      </div>
-
-    </div>
-    }
-
     <input class="input-field" matInput type="text" placeholder="Estou em..." [value]="address" readonly />
 
     <input class="input-field" matInput type="text" placeholder="Selecione o destino no mapa"
       [value]="addressDestination" readonly />
 
-    <input class="input-field" type="time" class="input-field" [(ngModel)]="pickupTime" />
+    <input class="input-field" type="datetime-local" name="pickupTime" id="pickupTime" [(ngModel)]="pickupTime" />
 
     <div class="material-proof-actions">
       <button class="btn-outline" (click)="search()">
         Procurar táxi
-      </button>
+      </button> 
 
-      <button class="btn-outline" (click)="debugMode = !debugMode">
-        Debug mode
-      </button>
     </div>
 
   </mat-card>
@@ -63,25 +31,6 @@
     </ul>
   </div>
   }
-
-  <button (click)="goToRegisterTaxi()"
-    style="position: absolute; top: 50px; right: 0; z-index: 9999; background-color: #003893; color: white;">
-    <span>Pré-registar Táxi</span>
-  </button>
-
-  <!--
-  <button style="position: absolute; top: 50px; right: 0; z-index: 9999; background-color: #003893; color: white;"
-    []="menu">
-    <span>Opciones</span>
-    <mat-icon>expand_more</mat-icon>
-  </button>
-
-  <mat-menu #menu="matMenu">
-    <button mat-menu-item (click)="showSelects = !showSelects">
-      Ver só o mapa
-    </button>
-  </mat-menu>
-  -->
 
   <div class="map-section">
 

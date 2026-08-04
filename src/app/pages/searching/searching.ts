@@ -124,6 +124,11 @@ export class Searching implements OnInit, OnDestroy {
 
   }
 
+  cancel() {
+    this.stopSearching();
+    this.router.navigate(['/home']);
+  }
+
   stopSearching() {
     this.pollingSubscription?.unsubscribe();
   }
