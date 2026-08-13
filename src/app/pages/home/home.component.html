@@ -10,8 +10,18 @@
 
     <input class="input-field" matInput type="text" placeholder="Estou em..." [value]="address" readonly />
 
-    <input class="input-field" matInput type="text" placeholder="Selecione o destino no mapa"
-      [value]="addressDestination" readonly />
+    <input 
+        (input)="onDestinationInput($event)"
+      class="input-field" matInput type="text" placeholder="Selecione o destino no mapa"
+      [value]="addressDestination" />
+
+      <ul>
+        @for (suggestion of destinationSuggestions; track suggestion) {
+          <li (click)="selectDestinationSuggestion(suggestion)">
+            {{ suggestion.tags.name }}
+          </li>
+        }
+      </ul>
 
     <input class="input-field" type="datetime-local" name="pickupTime" id="pickupTime" [(ngModel)]="pickupTime" />
 

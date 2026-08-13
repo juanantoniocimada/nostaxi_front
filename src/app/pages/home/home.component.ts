@@ -36,7 +36,7 @@ import { Trip } from '../../services/trip';
     FormsModule,
     ConfirmationComponent,
     HeaderComponent
-],
+  ],
   providers: [NestJSService],
   encapsulation: ViewEncapsulation.None,
 })
@@ -53,10 +53,11 @@ export class HomeComponent implements OnInit, OnDestroy {
   router = inject(Router);
 
   routeColor = 'blue';
-  
+
   nestjsService = inject(NestJSService);
   tripService = inject(Trip);
 
+  destinationSuggestions: any[] = [];
 
   debugMode = false;
   showSelects = true;
@@ -74,6 +75,7 @@ export class HomeComponent implements OnInit, OnDestroy {
   locationWatchId: number | null = null;
 
   pickupTime = new Date().toTimeString().slice(0, 5);
+  destinationSearchTimeout: any;
 
   ngOnInit() {
     this.getLocation()
@@ -101,6 +103,7 @@ export class HomeComponent implements OnInit, OnDestroy {
         }, 0);
 
         this.getAddressFromCoordinates(this.latitude, this.longitude, false)
+        // this.getAddressFromOverpass(this.latitude, this.longitude, false);
 
       },
       (error) => {
@@ -132,14 +135,15 @@ export class HomeComponent implements OnInit, OnDestroy {
       .then(response => response.json())
       .then(data => {
 
-        console.log(data.address); 
+        console.log("data.address");
+        console.log(data.address);
         console.log(this.longitudeDestination);
-        console.log(this.latitudeDestination);  
+        console.log(this.latitudeDestination);
 
         if (isDestination) {
-          this.addressDestination = data.display_name;
+          // this.addressDestination = data.display_name;
         } else {
-         this.address = data.display_name;
+          // this.address = data.display_name;
         }
 
 
@@ -155,18 +159,75 @@ export class HomeComponent implements OnInit, OnDestroy {
       });
   }
 
+  /*
+  getAddressFromOverpass(
+    lat: number,
+    lng: number,
+    isDestination: boolean = false
+  ): Promise<string> {
+
+    const query = `
+    [out:json][timeout:10];
+
+    way(around:100, ${lat}, ${lng})
+      ["highway"]
+      ["name"];
+
+    out center;
+  `;
+
+    return fetch('https://overpass-api.de/api/interpreter', {
+      method: 'POST',
+      body: new URLSearchParams({
+        data: query
+      })
+    })
+      .then(response => {
+        if (!response.ok) {
+          throw new Error(`Error Overpass: ${response.status}`);
+        }
+
+        return response.json();
+      })
+      .then(data => {
+
+        console.log('Resultado Overpass:', data);
+
+        if (!data.elements || data.elements.length === 0) {
+          throw new Error('No se encontró ninguna calle');
+        }
+
+        const street = data.elements[0]?.tags?.name;
+
+        if (!street) {
+          throw new Error('No se encontró el nombre de la calle');
+        }
+
+        console.log('Calle encontrada:', street);
+
+        if (isDestination) {
+          // this.addressDestination = street;
+        } else {
+          // this.address = street;
+        }
+
+        return street;
+      });
+  }
+  */
+
   goToRegisterTaxi() {
     this.router.navigate(['/register-taxi']);
   }
 
   mapClick($event: any): void {
     console.log('Map clicked at:', $event);
-    
+
     this.mapComponent?.colocarDestination($event.latitude, $event.longitude);
 
     const ruta = [
       [this.latitude, this.longitude],
-      [$event.latitude, $event.longitude ]
+      [$event.latitude, $event.longitude]
     ];
 
     setTimeout(() => {
@@ -174,6 +235,66 @@ export class HomeComponent implements OnInit, OnDestroy {
     }, 0);
 
     this.getAddressFromCoordinates($event.latitude, $event.longitude, true)
+  }
+
+  onDestinationInput(event: any): void {
+
+    const text = event.target.value.trim();
+
+    console.log('Destination input changed:', text);
+
+    clearTimeout(this.destinationSearchTimeout);
+
+    if (text.length < 2) {
+      return;
+    }
+
+    this.destinationSearchTimeout = setTimeout(() => {
+
+      console.log('Buscando:', text);
+
+      this.searchPlacesOverpass(text);
+
+    }, 500);
+}
+
+  searchPlacesOverpass(text: string): Promise<any[]> {
+
+    const query = `
+    [out:json][timeout:60];
+
+    nwr(16.80,-25.10,16.95,-24.85)
+      ["name"~"${text}",i];
+
+    out center;
+  `;
+
+  const url = 'https://overpass.private.coffee/api/interpreter';
+
+    return fetch(url, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/x-www-form-urlencoded'
+      },
+      body: new URLSearchParams({
+        data: query
+      })
+    })
+      .then(response => {
+        if (!response.ok) {
+          throw new Error(`Overpass error: ${response.status}`);
+        }
+
+        return response.json();
+      })
+      .then(data => {
+
+        console.log('Resultados Overpass:', data.elements);
+
+        this.destinationSuggestions = data.elements;
+
+        return data.elements;
+      });
   }
 
   stopClick($event: any): void {
@@ -187,6 +308,10 @@ export class HomeComponent implements OnInit, OnDestroy {
   }
 
   lineClick($event: any): void { }
+
+  selectDestinationSuggestion(suggestion: any): void {
+
+  }
 
   ngOnDestroy(): void {
     if (this.locationWatchId !== null) {
