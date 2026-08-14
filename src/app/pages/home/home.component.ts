@@ -159,63 +159,6 @@ export class HomeComponent implements OnInit, OnDestroy {
       });
   }
 
-  /*
-  getAddressFromOverpass(
-    lat: number,
-    lng: number,
-    isDestination: boolean = false
-  ): Promise<string> {
-
-    const query = `
-    [out:json][timeout:10];
-
-    way(around:100, ${lat}, ${lng})
-      ["highway"]
-      ["name"];
-
-    out center;
-  `;
-
-    return fetch('https://overpass-api.de/api/interpreter', {
-      method: 'POST',
-      body: new URLSearchParams({
-        data: query
-      })
-    })
-      .then(response => {
-        if (!response.ok) {
-          throw new Error(`Error Overpass: ${response.status}`);
-        }
-
-        return response.json();
-      })
-      .then(data => {
-
-        console.log('Resultado Overpass:', data);
-
-        if (!data.elements || data.elements.length === 0) {
-          throw new Error('No se encontró ninguna calle');
-        }
-
-        const street = data.elements[0]?.tags?.name;
-
-        if (!street) {
-          throw new Error('No se encontró el nombre de la calle');
-        }
-
-        console.log('Calle encontrada:', street);
-
-        if (isDestination) {
-          // this.addressDestination = street;
-        } else {
-          // this.address = street;
-        }
-
-        return street;
-      });
-  }
-  */
-
   goToRegisterTaxi() {
     this.router.navigate(['/register-taxi']);
   }
@@ -260,6 +203,7 @@ export class HomeComponent implements OnInit, OnDestroy {
 
   searchPlacesOverpass(text: string): Promise<any[]> {
 
+    
     const query = `
     [out:json][timeout:60];
 
@@ -269,7 +213,7 @@ export class HomeComponent implements OnInit, OnDestroy {
     out center;
   `;
 
-  const url = 'https://overpass.private.coffee/api/interpreter';
+  const url = 'https://overpass-api.de/api/interpreter';
 
     return fetch(url, {
       method: 'POST',
