@@ -8,27 +8,49 @@
     <div>Obtendo localização...</div>
     }
 
-    <input class="input-field" matInput type="text" placeholder="Estou em..." [value]="address" readonly />
+    <input class="input-field" matInput type="text" placeholder="Estou em..." [value]="address" />
 
+    <!--
     <input 
         (input)="onDestinationInput($event)"
       class="input-field" matInput type="text" placeholder="Selecione o destino no mapa"
       [value]="addressDestination" />
+    -->
 
-      <ul>
-        @for (suggestion of destinationSuggestions; track suggestion) {
-          <li (click)="selectDestinationSuggestion(suggestion)">
-            {{ suggestion.tags.name }}
-          </li>
-        }
-      </ul>
+    <!--
+        <ul>
+          @for (suggestion of destinationSuggestions; track suggestion) {
+            <li (click)="selectDestinationSuggestion(suggestion)">
+              {{ suggestion.tags.name }}
+            </li>s
+          }
+        </ul>
+
+    -->
+
+
+    <input class="input-field" matInput type="text" placeholder="Selecione o destino" [(ngModel)]="addressDestination"
+      [matAutocomplete]="destinationAuto" (input)="onDestinationInput($event)" />
+
+    <mat-autocomplete #destinationAuto="matAutocomplete">
+
+      @for (suggestion of destinationSuggestions; track suggestion.tags.name) {
+
+      <mat-option [value]="suggestion">
+        {{ suggestion.tags.name }}
+      </mat-option>
+
+      }
+
+    </mat-autocomplete>
+
 
     <input class="input-field" type="datetime-local" name="pickupTime" id="pickupTime" [(ngModel)]="pickupTime" />
 
     <div class="material-proof-actions">
       <button class="btn-outline" (click)="search()">
         Procurar táxi
-      </button> 
+      </button>
 
     </div>
 

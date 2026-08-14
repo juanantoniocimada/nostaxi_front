@@ -16,6 +16,7 @@ import { ConfirmationComponent } from "../confirmation/confirmation.component";
 import { HeaderComponent } from "../../components/header/header.component";
 import { MatMenuModule } from '@angular/material/menu';
 import { Trip } from '../../services/trip';
+import { MatAutocompleteModule } from '@angular/material/autocomplete';
 
 @Component({
   selector: 'app-home',
@@ -35,7 +36,8 @@ import { Trip } from '../../services/trip';
     MatMenuModule,
     FormsModule,
     ConfirmationComponent,
-    HeaderComponent
+    HeaderComponent,
+    MatAutocompleteModule
   ],
   providers: [NestJSService],
   encapsulation: ViewEncapsulation.None,
@@ -58,6 +60,121 @@ export class HomeComponent implements OnInit, OnDestroy {
   tripService = inject(Trip);
 
   destinationSuggestions: any[] = [];
+
+  /*
+  mockPlaces = [
+    {
+      name: 'Praia da Laginha',
+      lat: 16.8901,
+      lon: -24.9982
+    },
+        {
+      name: 'Praia da Laginha',
+      lat: 16.8901,
+      lon: -24.9982
+    },
+        {
+      name: 'Praia da Laginha',
+      lat: 16.8901,
+      lon: -24.9982
+    },
+        {
+      name: 'Praia da Laginha',
+      lat: 16.8901,
+      lon: -24.9982
+    },
+        {
+      name: 'Praia da Laginha',
+      lat: 16.8901,
+      lon: -24.9982
+    },
+        {
+      name: 'Praia da Laginha',
+      lat: 16.8901,
+      lon: -24.9982
+    },
+        {
+      name: 'Praia da Laginha',
+      lat: 16.8901,
+      lon: -24.9982
+    },
+        {
+      name: 'Praia da Laginha',
+      lat: 16.8901,
+      lon: -24.9982
+    },
+        {
+      name: 'Praia da Laginha',
+      lat: 16.8901,
+      lon: -24.9982
+    },
+        {
+      name: 'Praia da Laginha',
+      lat: 16.8901,
+      lon: -24.9982
+    },
+        {
+      name: 'Praia da Laginha',
+      lat: 16.8901,
+      lon: -24.9982
+    },
+        {
+      name: 'Praia da Laginha',
+      lat: 16.8901,
+      lon: -24.9982
+    },
+        {
+      name: 'Praia da Laginha',
+      lat: 16.8901,
+      lon: -24.9982
+    },
+        {
+      name: 'Praia da Laginha',
+      lat: 16.8901,
+      lon: -24.9982
+    },
+        {
+      name: 'Praia da Laginha',
+      lat: 16.8901,
+      lon: -24.9982
+    },
+        {
+      name: 'Praia da Laginha',
+      lat: 16.8901,
+      lon: -24.9982
+    },
+        {
+      name: 'Praia da Laginha',
+      lat: 16.8901,
+      lon: -24.9982
+    },
+    {
+      name: 'Hotel Mindelo',
+      lat: 16.8895,
+      lon: -24.9912
+    },
+    {
+      name: 'Lazareto',
+      lat: 16.9012,
+      lon: -25.0123
+    },
+    {
+      name: 'Praça Nova',
+      lat: 16.8881,
+      lon: -24.9885
+    },
+    {
+      name: 'Porto Grande',
+      lat: 16.8898,
+      lon: -24.9871
+    },
+    {
+      name: 'Mercado Municipal',
+      lat: 16.8874,
+      lon: -24.9918
+    }
+  ];
+  */
 
   debugMode = false;
   showSelects = true;
@@ -182,8 +299,10 @@ export class HomeComponent implements OnInit, OnDestroy {
 
   onDestinationInput(event: any): void {
 
-    const text = event.target.value.trim();
-
+    const text = (event.target as HTMLInputElement)
+    .value
+    .toLowerCase()
+    .trim();
     console.log('Destination input changed:', text);
 
     clearTimeout(this.destinationSearchTimeout);
@@ -199,11 +318,32 @@ export class HomeComponent implements OnInit, OnDestroy {
       this.searchPlacesOverpass(text);
 
     }, 500);
-}
+  }
+
+    /*
+    onDestinationInput(event: Event) {
+
+    const text = (event.target as HTMLInputElement)
+    .value
+    .toLowerCase()
+    .trim();
+
+    if (text.length < 2) {
+    this.destinationSuggestions = [];
+    return;
+    }
+
+    this.destinationSuggestions = this.destinationSuggestions.filter(place =>
+    place.name.toLowerCase().includes(text)
+    );
+
+    }
+    */
+
 
   searchPlacesOverpass(text: string): Promise<any[]> {
 
-    
+
     const query = `
     [out:json][timeout:60];
 
@@ -213,7 +353,7 @@ export class HomeComponent implements OnInit, OnDestroy {
     out center;
   `;
 
-  const url = 'https://overpass-api.de/api/interpreter';
+    const url = 'https://overpass-api.de/api/interpreter';
 
     return fetch(url, {
       method: 'POST',
@@ -237,6 +377,10 @@ export class HomeComponent implements OnInit, OnDestroy {
 
         this.destinationSuggestions = data.elements;
 
+        this.destinationSuggestions = this.destinationSuggestions.filter(place =>
+          place.name.toLowerCase().includes(text)
+        );
+
         return data.elements;
       });
   }
@@ -251,6 +395,8 @@ export class HomeComponent implements OnInit, OnDestroy {
     this.mapComponent?.openStopPopupDesdeFuera(html, $event, []);
   }
 
+  
+  
   lineClick($event: any): void { }
 
   selectDestinationSuggestion(suggestion: any): void {
