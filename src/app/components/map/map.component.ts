@@ -275,6 +275,12 @@ export class MapComponent implements OnInit, OnDestroy {
   }
 
   colocarDestination(latitude: number, longitude: number) {
+
+    console.log('colocarDestination');
+    console.log(latitude);
+    console.log(longitude);
+
+
     if (this.destinationMarker) {
       this.moveMarkerSmoothly(this.destinationMarker, latitude, longitude);
     } else {

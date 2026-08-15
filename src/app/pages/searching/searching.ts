@@ -14,11 +14,9 @@ export class Searching implements OnInit, OnDestroy {
 
   nestjsService = inject(NestJSService);
   router = inject(Router);
-  pollingSubscription?: Subscription;
   tripService = inject(Trip);
-
+  pollingSubscription?: Subscription;
   token = '';
-
   id: number = 0;
 
   ngOnInit(): void {
@@ -26,8 +24,6 @@ export class Searching implements OnInit, OnDestroy {
   }
 
   createTrip(driverData: any) {
-
-    console.log('Driver data:', driverData);
 
     this.token = driverData.pushToken;
 
@@ -47,17 +43,11 @@ export class Searching implements OnInit, OnDestroy {
     this.nestjsService.confirmTrip(exampleTripData).subscribe({
       next: (response) => {
 
-        console.log(response);
-
         this.id = response.data.id; // Assuming the response contains the trip ID
 
         this.tripService.setTrip({
           id: response.data.id,
         });
-
-        console.log('Trip confirmed successfully:', response);
-
-        console.log(this.token);
 
         // Push de prueba
         this.nestjsService.sendTestPush({
@@ -71,16 +61,13 @@ export class Searching implements OnInit, OnDestroy {
       },
       error: (error) => {
         console.error('Error confirming trip:', error);
-        alert('Ocorreu um erro ao confirmar a viagem. Por favor, tente novamente.');
       }
     });
-
   }
 
   getDriver(id: number) {
     this.nestjsService.getDriver(id).subscribe({
       next: (response) => {
-        console.log('Driver info:', response);
 
         this.createTrip(response.data);
       },
@@ -101,11 +88,7 @@ export class Searching implements OnInit, OnDestroy {
       .subscribe({
         next: (trip: any) => {
 
-          console.log('Estado viaje:', trip);
-
           if (trip?.data.confirmed) {
-
-            console.log('Taxi aceptado', trip);
 
             this.router.navigate([
               '/confirmation'
@@ -121,7 +104,6 @@ export class Searching implements OnInit, OnDestroy {
           console.error('Error buscando taxi', err);
         }
       });
-
   }
 
   cancel() {

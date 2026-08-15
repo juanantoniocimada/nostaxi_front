@@ -1,5 +1,4 @@
-import { AfterViewInit, Component, OnDestroy, OnInit, ViewChild, ViewEncapsulation, inject } from '@angular/core';
-import { RouterOutlet } from '@angular/router';
+import { Component, OnDestroy, OnInit, ViewChild, ViewEncapsulation, inject } from '@angular/core';
 import { HttpClientModule } from '@angular/common/http';
 import { MatCardModule } from '@angular/material/card';
 import { MatFormFieldModule } from '@angular/material/form-field';
@@ -12,11 +11,12 @@ import { MapComponent } from '../../components/map/map.component';
 import { busDivIcon, destinationDivIcon, stopDisabledDivIcon, stopDivIcon, tileLayerUrl, userDivIcon } from '../../utils/map.utils';
 import { MatButtonModule } from '@angular/material/button';
 import { FormsModule } from '@angular/forms';
-import { ConfirmationComponent } from "../confirmation/confirmation.component";
 import { HeaderComponent } from "../../components/header/header.component";
 import { MatMenuModule } from '@angular/material/menu';
 import { Trip } from '../../services/trip';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
+import { Overpass } from '../../services/overpass';
+import { Nominatim } from '../../services/nominatim';
 
 @Component({
   selector: 'app-home',
@@ -24,7 +24,6 @@ import { MatAutocompleteModule } from '@angular/material/autocomplete';
   styleUrls: ['./home.component.scss'],
   standalone: true,
   imports: [
-    RouterOutlet,
     CommonModule,
     HttpClientModule,
     MatButtonModule,
@@ -35,7 +34,6 @@ import { MatAutocompleteModule } from '@angular/material/autocomplete';
     MapComponent,
     MatMenuModule,
     FormsModule,
-    ConfirmationComponent,
     HeaderComponent,
     MatAutocompleteModule
   ],
@@ -45,6 +43,12 @@ import { MatAutocompleteModule } from '@angular/material/autocomplete';
 export class HomeComponent implements OnInit, OnDestroy {
   @ViewChild(MapComponent) mapComponent?: MapComponent;
 
+  router = inject(Router);
+  nestjsService = inject(NestJSService);
+  tripService = inject(Trip);
+  overpassService = inject(Overpass);
+  nominatimService = inject(Nominatim);
+
   tileLayerUrl = tileLayerUrl;
   bus = busDivIcon;
   destination: any = destinationDivIcon;
@@ -52,142 +56,21 @@ export class HomeComponent implements OnInit, OnDestroy {
   userDivIcon = userDivIcon;
   stopDisabled = stopDisabledDivIcon;
 
-  router = inject(Router);
+  loadingDestinationSuggestions = false;
 
   routeColor = 'blue';
 
-  nestjsService = inject(NestJSService);
-  tripService = inject(Trip);
-
   destinationSuggestions: any[] = [];
-
-  /*
-  mockPlaces = [
-    {
-      name: 'Praia da Laginha',
-      lat: 16.8901,
-      lon: -24.9982
-    },
-        {
-      name: 'Praia da Laginha',
-      lat: 16.8901,
-      lon: -24.9982
-    },
-        {
-      name: 'Praia da Laginha',
-      lat: 16.8901,
-      lon: -24.9982
-    },
-        {
-      name: 'Praia da Laginha',
-      lat: 16.8901,
-      lon: -24.9982
-    },
-        {
-      name: 'Praia da Laginha',
-      lat: 16.8901,
-      lon: -24.9982
-    },
-        {
-      name: 'Praia da Laginha',
-      lat: 16.8901,
-      lon: -24.9982
-    },
-        {
-      name: 'Praia da Laginha',
-      lat: 16.8901,
-      lon: -24.9982
-    },
-        {
-      name: 'Praia da Laginha',
-      lat: 16.8901,
-      lon: -24.9982
-    },
-        {
-      name: 'Praia da Laginha',
-      lat: 16.8901,
-      lon: -24.9982
-    },
-        {
-      name: 'Praia da Laginha',
-      lat: 16.8901,
-      lon: -24.9982
-    },
-        {
-      name: 'Praia da Laginha',
-      lat: 16.8901,
-      lon: -24.9982
-    },
-        {
-      name: 'Praia da Laginha',
-      lat: 16.8901,
-      lon: -24.9982
-    },
-        {
-      name: 'Praia da Laginha',
-      lat: 16.8901,
-      lon: -24.9982
-    },
-        {
-      name: 'Praia da Laginha',
-      lat: 16.8901,
-      lon: -24.9982
-    },
-        {
-      name: 'Praia da Laginha',
-      lat: 16.8901,
-      lon: -24.9982
-    },
-        {
-      name: 'Praia da Laginha',
-      lat: 16.8901,
-      lon: -24.9982
-    },
-        {
-      name: 'Praia da Laginha',
-      lat: 16.8901,
-      lon: -24.9982
-    },
-    {
-      name: 'Hotel Mindelo',
-      lat: 16.8895,
-      lon: -24.9912
-    },
-    {
-      name: 'Lazareto',
-      lat: 16.9012,
-      lon: -25.0123
-    },
-    {
-      name: 'Praça Nova',
-      lat: 16.8881,
-      lon: -24.9885
-    },
-    {
-      name: 'Porto Grande',
-      lat: 16.8898,
-      lon: -24.9871
-    },
-    {
-      name: 'Mercado Municipal',
-      lat: 16.8874,
-      lon: -24.9918
-    }
-  ];
-  */
 
   debugMode = false;
   showSelects = true;
 
   address: string = '';
   addressDestination: string = '';
-
   latitude: number = 0;
   longitude: number = 0;
-
   latitudeDestination: number = 0;
   longitudeDestination: number = 0;
-
   hasLocation = false;
   locationWatchId: number | null = null;
 
@@ -219,7 +102,7 @@ export class HomeComponent implements OnInit, OnDestroy {
           this.mapComponent?.colocarUser(this.latitude, this.longitude);
         }, 0);
 
-        this.getAddressFromCoordinates(this.latitude, this.longitude, false)
+        this.getAddressFromCoordinates(this.latitude, this.longitude);
         // this.getAddressFromOverpass(this.latitude, this.longitude, false);
 
       },
@@ -235,6 +118,21 @@ export class HomeComponent implements OnInit, OnDestroy {
   }
 
   search() {
+
+    /*
+      enviar todo esto al taxista
+    */
+    console.log('posicion usuario');  
+    console.log(this.address);
+    console.log(this.latitude);
+    console.log(this.longitude);
+
+    console.log("direccion destino usuario solicitada");
+    console.log(this.addressDestination);
+    console.log(this.latitudeDestination);
+    console.log(this.longitudeDestination);
+
+
     this.tripService.setTrip({
       address: this.address,
       addressDestination: this.addressDestination,
@@ -245,34 +143,14 @@ export class HomeComponent implements OnInit, OnDestroy {
     this.router.navigate(['/searching']);
   }
 
-  getAddressFromCoordinates(lat: number, lng: number, isDestination: boolean = false): Promise<string> {
-    const url = `https://nominatim.openstreetmap.org/reverse?lat=${lat}&lon=${lng}&format=json`;
-
-    return fetch(url)
-      .then(response => response.json())
-      .then(data => {
-
-        console.log("data.address");
-        console.log(data.address);
-        console.log(this.longitudeDestination);
-        console.log(this.latitudeDestination);
-
-        if (isDestination) {
-          // this.addressDestination = data.display_name;
-        } else {
-          // this.address = data.display_name;
-        }
-
-
-        if (data && data.display_name) {
-          return data.display_name;
-        } else {
-          throw new Error('No se pudo obtener la dirección');
-        }
+  getAddressFromCoordinates(lat: number, lng: number): void {
+    this.nominatimService.getAddressFromCoordinates(lat, lng)
+      .then(address => {
+        // this.addressDestination = address;
+        this.address = address;
       })
       .catch(error => {
-        console.error('Error al obtener la dirección:', error);
-        throw error;
+        console.error('Error obteniendo dirección desde Nominatim:', error);
       });
   }
 
@@ -280,21 +158,33 @@ export class HomeComponent implements OnInit, OnDestroy {
     this.router.navigate(['/register-taxi']);
   }
 
-  mapClick($event: any): void {
-    console.log('Map clicked at:', $event);
-
-    this.mapComponent?.colocarDestination($event.latitude, $event.longitude);
+  buildRoute(
+    latitude: number,
+    longitude: number
+  ) {
+    this.mapComponent?.colocarDestination(latitude, longitude);
 
     const ruta = [
       [this.latitude, this.longitude],
-      [$event.latitude, $event.longitude]
+      [latitude, longitude]
     ];
 
     setTimeout(() => {
       this.mapComponent?.pintarRuta(ruta);
     }, 0);
 
-    this.getAddressFromCoordinates($event.latitude, $event.longitude, true)
+    this.latitudeDestination = latitude;
+    this.longitudeDestination = longitude;
+
+  }
+
+  mapClick($event: any): void {
+
+
+    console.log('Click en el mapa:', $event);
+
+    this.buildRoute($event.latitude, $event.longitude);
+    this.getAddressFromCoordinates($event.latitude, $event.longitude);
   }
 
   onDestinationInput(event: any): void {
@@ -303,7 +193,6 @@ export class HomeComponent implements OnInit, OnDestroy {
     .value
     .toLowerCase()
     .trim();
-    console.log('Destination input changed:', text);
 
     clearTimeout(this.destinationSearchTimeout);
 
@@ -312,95 +201,44 @@ export class HomeComponent implements OnInit, OnDestroy {
     }
 
     this.destinationSearchTimeout = setTimeout(() => {
-
-      console.log('Buscando:', text);
-
       this.searchPlacesOverpass(text);
-
     }, 500);
   }
 
-    /*
-    onDestinationInput(event: Event) {
+  searchPlacesOverpass(text: string): void {
 
-    const text = (event.target as HTMLInputElement)
-    .value
-    .toLowerCase()
-    .trim();
-
-    if (text.length < 2) {
-    this.destinationSuggestions = [];
-    return;
-    }
-
-    this.destinationSuggestions = this.destinationSuggestions.filter(place =>
-    place.name.toLowerCase().includes(text)
-    );
-
-    }
-    */
-
-
-  searchPlacesOverpass(text: string): Promise<any[]> {
-
-
-    const query = `
-    [out:json][timeout:60];
-
-    nwr(16.80,-25.10,16.95,-24.85)
-      ["name"~"${text}",i];
-
-    out center;
-  `;
-
-    const url = 'https://overpass-api.de/api/interpreter';
-
-    return fetch(url, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/x-www-form-urlencoded'
-      },
-      body: new URLSearchParams({
-        data: query
-      })
-    })
-      .then(response => {
-        if (!response.ok) {
-          throw new Error(`Overpass error: ${response.status}`);
-        }
-
-        return response.json();
-      })
+    this.loadingDestinationSuggestions = true;
+    
+    this.overpassService.searchPlaces(text)
+      .then(response => response.json())
       .then(data => {
 
-        console.log('Resultados Overpass:', data.elements);
+        this.loadingDestinationSuggestions = false;
 
         this.destinationSuggestions = data.elements;
 
         this.destinationSuggestions = this.destinationSuggestions.filter(place =>
-          place.name.toLowerCase().includes(text)
+          place.tags && place.tags.name && place.tags.name.toLowerCase().includes(text)
         );
-
-        return data.elements;
+      })
+      .catch(error => {
+        console.error('Error al buscar lugares en Overpass:', error);
+      })
+      .finally(() => {
+        this.loadingDestinationSuggestions = false;
       });
   }
 
   stopClick($event: any): void {
-    const html = `
-      <div style="display: flex; flex-direction: column; gap: 8px;">
-        <div style="font-weight: bold;">${$event.name}</div>
-      </div>
-    `;
 
-    this.mapComponent?.openStopPopupDesdeFuera(html, $event, []);
   }
-
-  
   
   lineClick($event: any): void { }
 
-  selectDestinationSuggestion(suggestion: any): void {
+  selectDestination(suggestion: any): void {
+    this.addressDestination = suggestion.tags.name;
 
+    this.buildRoute(suggestion.lat, suggestion.lon);
   }
 
   ngOnDestroy(): void {
