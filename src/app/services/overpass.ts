@@ -10,13 +10,13 @@ export class Overpass {
   searchPlaces(text: string): Promise<any> {
 
     const query = `
-    [out:json][timeout:60];
+      [out:json][timeout:15];
 
-    nwr(16.80,-25.10,16.95,-24.85)
-      ["name"~"${text}",i];
+      nwr(16.80,-25.10,16.95,-24.85)
+        ["name"~"${text.replace(/"/g, '\\"')}",i];
 
-    out center;
-  `;
+      out center 20;
+`;
 
     return fetch(this.url, {
       method: 'POST',

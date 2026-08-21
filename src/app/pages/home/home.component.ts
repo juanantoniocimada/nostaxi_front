@@ -9,6 +9,7 @@ import { NestJSService } from '../../services/nestjs.service';
 import { CommonModule } from '@angular/common';
 import { MapComponent } from '../../components/map/map.component';
 import { busDivIcon, destinationDivIcon, stopDisabledDivIcon, stopDivIcon, tileLayerUrl, userDivIcon } from '../../utils/map.utils';
+import { Google } from '../../services/google';
 import { MatButtonModule } from '@angular/material/button';
 import { FormsModule } from '@angular/forms';
 import { HeaderComponent } from "../../components/header/header.component";
@@ -37,17 +38,22 @@ import { Nominatim } from '../../services/nominatim';
     HeaderComponent,
     MatAutocompleteModule
   ],
-  providers: [NestJSService],
+  providers: [NestJSService, Trip, Overpass, Nominatim, Google],
   encapsulation: ViewEncapsulation.None,
 })
 export class HomeComponent implements OnInit, OnDestroy {
   @ViewChild(MapComponent) mapComponent?: MapComponent;
+  
+  errorMessages: string[] = [
+    
+  ];
 
   router = inject(Router);
   nestjsService = inject(NestJSService);
   tripService = inject(Trip);
   overpassService = inject(Overpass);
   nominatimService = inject(Nominatim);
+  placesService = inject(Google);
 
   tileLayerUrl = tileLayerUrl;
   bus = busDivIcon;
@@ -78,7 +84,15 @@ export class HomeComponent implements OnInit, OnDestroy {
   destinationSearchTimeout: any;
 
   ngOnInit() {
+    // this.google()
     this.getLocation()
+  }
+
+  google() {
+    this.placesService.searchPlaces('DALLAS')
+      .subscribe(result => {
+        console.log(result);
+      });
   }
 
   getLocation() {
@@ -87,6 +101,7 @@ export class HomeComponent implements OnInit, OnDestroy {
     }
 
     if (!navigator.geolocation) {
+      this.errorMessages.push('El navegador no soporta geolocalización');
       console.error('El navegador no soporta geolocalización');
       return;
     }
@@ -108,6 +123,7 @@ export class HomeComponent implements OnInit, OnDestroy {
       },
       (error) => {
         console.error('Error obteniendo ubicación:', error.message);
+        this.errorMessages.push('Error obteniendo ubicación:');
       },
       {
         enableHighAccuracy: true, // intenta usar GPS si está disponible
@@ -151,6 +167,7 @@ export class HomeComponent implements OnInit, OnDestroy {
       })
       .catch(error => {
         console.error('Error obteniendo dirección desde Nominatim:', error);
+        this.errorMessages.push('Error obteniendo dirección desde Nominatim: ');
       });
   }
 
@@ -179,8 +196,6 @@ export class HomeComponent implements OnInit, OnDestroy {
   }
 
   mapClick($event: any): void {
-
-
     console.log('Click en el mapa:', $event);
 
     this.buildRoute($event.latitude, $event.longitude);
@@ -196,13 +211,46 @@ export class HomeComponent implements OnInit, OnDestroy {
 
     clearTimeout(this.destinationSearchTimeout);
 
-    if (text.length < 2) {
+    if (text.length < 3) {
+      this.destinationSuggestions = [];
+      this.loadingDestinationSuggestions = false;
       return;
     }
 
+    this.loadingDestinationSuggestions = true;
+
     this.destinationSearchTimeout = setTimeout(() => {
-      this.searchPlacesOverpass(text);
+      this.searchPlacesGoogle(text);
     }, 500);
+  }
+
+  searchPlacesGoogle(text: string): void {
+
+
+    this.placesService.searchPlaces(text)
+      .subscribe((response: any) => {
+        this.loadingDestinationSuggestions = false;
+
+        const suggestions = Array.isArray(response?.suggestions)
+          ? response.suggestions
+          : [];
+
+        this.destinationSuggestions = suggestions.map((item: any) => ({
+          placePrediction: {
+            place: item?.placePrediction?.place,
+            placeId: item?.placePrediction?.placeId,
+            text: {
+              text: item?.placePrediction?.text?.text || '',
+              matches: item?.placePrediction?.text?.matches || [],
+            },
+          },
+        }));
+      }, (error: any) => {
+        console.error('Error al buscar lugares en Google Places:', error);
+        this.errorMessages.push('Error al buscar lugares en Google Places: ');
+        this.loadingDestinationSuggestions = false;
+      });
+
   }
 
   searchPlacesOverpass(text: string): void {
@@ -223,6 +271,7 @@ export class HomeComponent implements OnInit, OnDestroy {
       })
       .catch(error => {
         console.error('Error al buscar lugares en Overpass:', error);
+        this.errorMessages.push('Error al buscar lugares en Overpass: ');
       })
       .finally(() => {
         this.loadingDestinationSuggestions = false;
@@ -236,9 +285,8 @@ export class HomeComponent implements OnInit, OnDestroy {
   lineClick($event: any): void { }
 
   selectDestination(suggestion: any): void {
-    this.addressDestination = suggestion.tags.name;
-
-    this.buildRoute(suggestion.lat, suggestion.lon);
+    const selectedText = suggestion?.placePrediction?.text?.text || '';
+    this.addressDestination = selectedText;
   }
 
   ngOnDestroy(): void {
