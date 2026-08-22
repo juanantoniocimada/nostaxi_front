@@ -21,12 +21,30 @@ export class ConfirmationComponent implements OnInit {
   nestjsService = inject(NestJSService);
   router = inject(Router);
 
+  driverData: any = null;
+  tripData: any = null;
+
   departureIn: number | null = 0;   // Sale ya
   // departureIn: 5;                // Sale en 5 min
   // departureIn: 10;               // Sale en 10 min
 
   ngOnInit() {
     console.log('Trip data:', this.trip());
+    this.getDriver(5881441); 
+    this.getTrip(157);
+  }
+
+  getDriver(id: number) {
+    this.nestjsService.getDriver(id).subscribe({
+      next: (response) => {
+
+        console.log('Driver info:', response); 
+        this.driverData = response.data;
+      },
+      error: (error) => {
+        console.error('Error fetching driver info:', error);
+      }
+    });
   }
   
   goToDriverTracking() {
@@ -35,37 +53,18 @@ export class ConfirmationComponent implements OnInit {
 
     this.router.navigate(['/driver-tracking']);
   }
-
-  confirm() {
-    const tripData = this.trip();
-
-    // Example trip data structure
-    const exampleTripData = {
-        "deviceToken": "cE6z18JbR4G08_QONTFeMm:APA91bGzEIOP1lxWZM0VV9QO6G1YjgexlxK8bcrY58wwXAI-8_nbwzHJ0fG3Hl_uBG_sWbVc3cmnotBWypa3_dNU1XnA0oOUfyLsDx9yx2yc9wgCtG48hCI",
-        "address": "123 Main St",
-        "addressDestination": "456 Elm St",
-        "driverName": "Davy",
-        "plate": "1234",
-        "pickupTime": "10:30",
-        "confirmed": false
-    };
-
-    if (tripData) {
-      /*
-      this.nestjsService.confirmTrip(exampleTripData).subscribe({
-        next: (response) => {
-          console.log('Trip confirmed successfully:', response);
-          alert('Viagem confirmada com sucesso!');
-        },
-        error: (error) => {
-          console.error('Error confirming trip:', error);
-          alert('Ocorreu um erro ao confirmar a viagem. Por favor, tente novamente.');
-        }
-      });
-      */
-    } else {
-      console.error('No trip data available to confirm.');
-      alert('Não há dados de viagem disponíveis para confirmar.');
-    }  
+  
+  // 157
+  getTrip(id: number) {
+    this.nestjsService.getTrip(id).subscribe({
+      next: (response) => {
+        console.log('Trip info:', response);
+        this.tripData = response;
+      },
+      error: (error) => {
+        console.error('Error fetching trip info:', error);
+      }
+    });
   }
+
 }

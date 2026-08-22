@@ -30,6 +30,11 @@ export class NestJSService {
     return this._http.post(url, data);
   }
 
+  getTrip(id: number): Observable<any> {
+    const url = `${this._apiUrl}/trips/${id}`;
+    return this._http.get(url);
+  }
+
   sendTestPush(data: {
     token: string;
     title?: string;

@@ -38,7 +38,7 @@ import { Nominatim } from '../../services/nominatim';
     HeaderComponent,
     MatAutocompleteModule
   ],
-  providers: [NestJSService, Trip, Overpass, Nominatim, Google],
+  providers: [NestJSService, Overpass, Nominatim, Google],
   encapsulation: ViewEncapsulation.None,
 })
 export class HomeComponent implements OnInit, OnDestroy {
@@ -138,20 +138,40 @@ export class HomeComponent implements OnInit, OnDestroy {
     /*
       enviar todo esto al taxista
     */
+    // posiicion origen usuario
+    // userOriginPosition
+    // user_origin_pos
+
     console.log('posicion usuario');  
+    
+    // user_origin_pos_name
     console.log(this.address);
     console.log(this.latitude);
+    // user_origin_pos_lat
     console.log(this.longitude);
+    // user_origin_pos_lng
 
+    // posiicion destino usuario
+    // user_destination_pos
     console.log("direccion destino usuario solicitada");
+
+    // user_destination_pos_name
     console.log(this.addressDestination);
+    // user_destination_pos_lat
     console.log(this.latitudeDestination);
+    // user_destination_pos_lng
     console.log(this.longitudeDestination);
 
 
     this.tripService.setTrip({
       address: this.address,
-      addressDestination: this.addressDestination,
+      addressDestination: this.addressDestination ? this.addressDestination : '',
+      userOriginPosName: this.address,
+      userOriginPosLat: this.latitude,
+      userOriginPosLng: this.longitude,
+      userDestinationPosName: this.addressDestination,
+      userDestinationPosLat: this.latitudeDestination,
+      userDestinationPosLng: this.longitudeDestination,
       pickupTime: this.pickupTime,
       id: 0,
     });
@@ -224,6 +244,29 @@ export class HomeComponent implements OnInit, OnDestroy {
     }, 500);
   }
 
+  getPlaceLocation(suggestion: any): void {
+
+    const placeId = suggestion?.placePrediction?.placeId;
+    this.placesService.getPlaceLocation(placeId)
+      .subscribe((response: any) => {
+
+        const lat = response?.location?.latitude;
+        const lng = response?.location?.longitude;
+
+        
+        this.addressDestination = suggestion?.placePrediction?.text?.text || '';
+        this.latitudeDestination = lat;
+        this.longitudeDestination = lng;
+
+
+        console.log('GPS:', lat, lng);
+
+      }, (error: any) => {
+        console.error('Error obteniendo las coordenadas:', error);
+      });
+
+  }  
+
   searchPlacesGoogle(text: string): void {
 
 
@@ -285,8 +328,7 @@ export class HomeComponent implements OnInit, OnDestroy {
   lineClick($event: any): void { }
 
   selectDestination(suggestion: any): void {
-    const selectedText = suggestion?.placePrediction?.text?.text || '';
-    this.addressDestination = selectedText;
+    this.getPlaceLocation(suggestion);
   }
 
   ngOnDestroy(): void {

@@ -11,7 +11,7 @@ export class Google {
 
   private readonly apiKey = '';
 
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient) { }
 
   searchPlaces(text: string) {
 
@@ -43,5 +43,18 @@ export class Google {
 
     return this.http.post(this.url, body, { headers });
   }
-  
+
+  getPlaceLocation(placeId: string) {
+
+    const headers = new HttpHeaders({
+      'X-Goog-Api-Key': this.apiKey,
+      'X-Goog-FieldMask': 'location'
+    });
+
+    return this.http.get(
+      `https://places.googleapis.com/v1/places/${placeId}`,
+      { headers }
+    );
+  }
+
 }

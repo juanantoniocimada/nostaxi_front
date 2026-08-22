@@ -23,9 +23,22 @@ export class Searching implements OnInit, OnDestroy {
     this.getDriver(5881441);
   }
 
-  createTrip(driverData: any) {
+  async createTrip(driverData: any) {
 
     this.token = driverData.pushToken;
+
+    const tripData = await this.tripService.getTrip();
+
+    console.log('Trip data in createTrip:', tripData);
+
+        /*
+    userOriginPosName
+    userOriginPosLat
+    userOriginPosLng
+    userDestinationPosName
+    userDestinationPosLat
+    userDestinationPosLng
+        */
 
     // Example trip data structure
     const exampleTripData = {
@@ -35,9 +48,15 @@ export class Searching implements OnInit, OnDestroy {
       "driverName": "Davy",
       "plate": "1234",
       "pickupTime": "10:30",
-      "confirmed": false,
       "latitude": 0.000000000000000,
       "longitude": 0.000000000000000,
+      "userOriginPosName": tripData?.userOriginPosName,
+      "userOriginPosLat": tripData?.userOriginPosLat,
+      "userOriginPosLng": tripData?.userOriginPosLng,
+      "userDestinationPosName": tripData?.userDestinationPosName,
+      "userDestinationPosLat": tripData?.userDestinationPosLat,
+      "userDestinationPosLng": tripData?.userDestinationPosLng,
+      "confirmed": false
     };
 
     this.nestjsService.confirmTrip(exampleTripData).subscribe({
@@ -45,7 +64,10 @@ export class Searching implements OnInit, OnDestroy {
 
         this.id = response.data.id; // Assuming the response contains the trip ID
 
+        const currentTrip = this.tripService.getTrip();
+
         this.tripService.setTrip({
+          ...currentTrip,
           id: response.data.id,
         });
 

@@ -10,37 +10,47 @@
     <p>
       Driver details
     </p>
-    <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS9i-WU44OmgwNMq1vhNFSQJS15W9jVn-Z8G55vuysQCw&s=10"
-      alt="">
+
+    <img [src]="driverData?.photo" alt="">
+
     <p>
-      Davy
+      name : {{ driverData?.driverName }}
     </p>
     <p>
-      tel : 5881441
+      tel : {{ driverData?.driverPhone }}
     </p>
     <p>
-      car : toyota corolla
+      car : {{ driverData?.vehicleModel }}
     </p>
     <p>
-      plate : 1234
+      plate : {{ driverData?.vehiclePlate }}
+    </p>
+    <p>
+      isla : {{ driverData?.island }}
     </p>
   </div>
 
   <p>
     Trip details
   </p>
-  <p>
-    São Vicente
-  </p>
-  <p>
-    address : {{ trip().address }}
-  </p>
-  <p>
-    addressDestination : {{ trip().addressDestination }}
-  </p>
-  <p>
-    pickupTime : {{ trip().pickupTime }}
-  </p>
+
+  <div style="background-color: #f5f5f5; padding: 1em; border-radius: 0.5em; margin-bottom: 1em;">
+    <p><strong>📍 Origen</strong></p>
+    <p>{{ tripData?.data?.userOriginPosName }}</p>
+    <p>
+      Lat: {{ tripData?.data?.userOriginPosLat }} |
+      Lng: {{ tripData?.data?.userOriginPosLng }}
+    </p>
+  </div>
+
+  <div style="background-color: #f5f5f5; padding: 1em; border-radius: 0.5em; margin-bottom: 1em;">
+    <p><strong>🏁 Destino</strong></p>
+    <p>{{ tripData?.data?.userDestinationPosName }}</p>
+    <p>
+      Lat: {{ tripData?.data?.userDestinationPosLat }} |
+      Lng: {{ tripData?.data?.userDestinationPosLng }}
+    </p>
+  </div>
 
   <div class="driver-status">
 
