@@ -195,21 +195,9 @@ export class MapComponent implements OnInit, OnDestroy {
 
   pintarRuta(stops: any[]) {
 
-    console.log(stops);    
-
-    console.log('Routing:', (L as any).Routing);
-
     const waypoints = stops?.map((stop: any) => L.latLng(stop)) ?? [];    
 
     const control = L.Routing.control(this.buildRoutingControlOptions(waypoints));
-
-    control.on('routingerror', (e) => {
-      console.error(e);
-    });
-
-    control.on('routesfound', (e) => {
-      console.log('Ruta encontrada', e);
-    });
 
     control.addTo(this.map);
   }
@@ -276,11 +264,6 @@ export class MapComponent implements OnInit, OnDestroy {
 
   colocarDestination(latitude: number, longitude: number) {
 
-    console.log('colocarDestination');
-    console.log(latitude);
-    console.log(longitude);
-
-
     if (this.destinationMarker) {
       this.moveMarkerSmoothly(this.destinationMarker, latitude, longitude);
     } else {
@@ -291,11 +274,9 @@ export class MapComponent implements OnInit, OnDestroy {
 
   colocarBus(latitude: number, longitude: number) {
     if (this.busMarker) {
-      console.log('asas1');
       
       this.moveMarkerSmoothly(this.busMarker, latitude, longitude);
     } else {
-      console.log('asas2');
       
       this.busMarker = L.marker([latitude, longitude],
         { icon: this.createIonIconDivIcon(this.bus) })

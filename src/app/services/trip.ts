@@ -6,16 +6,22 @@ import { Injectable, signal } from '@angular/core';
 export class Trip {
 
   trip = signal<any>(null);
+  assignedDriver = signal<any>(null);
 
   getTrip() {
     return this.trip();
   }
 
   setTrip(data: any) {
-
-    console.log('Setting trip data:', data);
-
     this.trip.set(data);
+  }
+
+  setAssignedDriver(data: any) {
+    this.assignedDriver.set(data);
+  }
+
+  getAssignedDriver() {
+    return this.assignedDriver();
   }
 
 }

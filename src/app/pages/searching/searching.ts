@@ -20,7 +20,7 @@ export class Searching implements OnInit, OnDestroy {
   id: number = 0;
 
   ngOnInit(): void {
-    this.getDriver(5881441);
+    this.getAssignedDriver(5881441);
   }
 
   async createTrip(driverData: any) {
@@ -28,17 +28,26 @@ export class Searching implements OnInit, OnDestroy {
     this.token = driverData.pushToken;
 
     const tripData = await this.tripService.getTrip();
+    const assignedDriver = driverData;
+
+    this.tripService.setAssignedDriver(assignedDriver);
+
+    console.log('Assigned driver data:', assignedDriver);
 
     console.log('Trip data in createTrip:', tripData);
 
-        /*
-    userOriginPosName
-    userOriginPosLat
-    userOriginPosLng
-    userDestinationPosName
-    userDestinationPosLat
-    userDestinationPosLng
-        */
+    /*
+    borrar estos campos
+
+    "deviceToken": "",
+    "address": "123 Main St",
+    "addressDestination": "456 Elm St",
+    "driverName": "Davy",
+    "plate": "1234",
+    "pickupTime": "10:30",
+    "latitude": 0.000000000000000,
+    "longitude": 0.000000000000000,
+    */
 
     // Example trip data structure
     const exampleTripData = {
@@ -83,18 +92,19 @@ export class Searching implements OnInit, OnDestroy {
       },
       error: (error) => {
         console.error('Error confirming trip:', error);
+        this.cancel();
       }
     });
   }
-
-  getDriver(id: number) {
-    this.nestjsService.getDriver(id).subscribe({
+  // conseguir driver asignado  
+  getAssignedDriver(id: number) {
+    this.nestjsService.getAssignedDriver(id).subscribe({
       next: (response) => {
-
         this.createTrip(response.data);
       },
       error: (error) => {
         console.error('Error fetching driver info:', error);
+        this.cancel();
       }
     });
   }
@@ -124,6 +134,7 @@ export class Searching implements OnInit, OnDestroy {
         },
         error: (err) => {
           console.error('Error buscando taxi', err);
+          this.cancel();
         }
       });
   }

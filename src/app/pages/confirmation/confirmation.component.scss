@@ -67,64 +67,70 @@
     }
 
     .driver-status {
-  width: 100%;
-  max-width: 500px;
-  margin: 30px auto;
-}
+      width: 100%;
+      max-width: 500px;
+      margin: 30px auto;
+    }
 
-.status-card {
-  border-radius: 16px;
-  padding: 24px;
-  color: white;
-  text-align: center;
-  box-shadow: 0 8px 20px rgba(0,0,0,.15);
+    .status-card {
+      border-radius: 16px;
+      padding: 24px;
+      color: white;
+      text-align: center;
+      box-shadow: 0 8px 20px rgba(0, 0, 0, .15);
 
-  .icon {
-    font-size: 48px;
-    margin-bottom: 12px;
-  }
+      .icon {
+        font-size: 48px;
+        margin-bottom: 12px;
+      }
 
-  .title {
-    font-size: 24px;
-    font-weight: 700;
-    margin-bottom: 8px;
-  }
+      .title {
+        font-size: 24px;
+        font-weight: 700;
+        margin-bottom: 8px;
+      }
 
-  .subtitle {
-    font-size: 16px;
-    opacity: .9;
-  }
-}
+      .subtitle {
+        font-size: 16px;
+        opacity: .9;
+      }
+    }
 
-.green {
-  background: #2e7d32;
-}
+    .green {
+      background: #2e7d32;
+    }
 
-.orange {
-  background: #ef6c00;
-}
+    .orange {
+      background: #ef6c00;
+    }
 
-.red {
-  background: #c62828;
-}
+    .red {
+      background: #c62828;
+    }
 
-.map-button {
-  background-color: gainsboro;
-  padding: 1em;
-  margin-top: 1em;
-  border-radius: 0.5em;
-  text-align: center;
-  cursor: pointer;
-  font-size: 18px;
-  font-weight: 600;
-  color: #333;
-  transition: all 0.2s ease;
+    .map-button {
+      background-color: gainsboro;
+      padding: 1em;
+      margin-top: 1em;
+      border-radius: 0.5em;
+      text-align: center;
+      cursor: pointer;
+      font-size: 18px;
+      font-weight: 600;
+      color: #333;
+      transition: all 0.2s ease;
 
-  &:hover {
-    background-color: #d0d0d0;
-  }
+      &:hover {
+        background-color: #d0d0d0;
+      }
 
-  &:active {
-    transform: scale(0.98);
-  }
-}
+      &:active {
+        transform: scale(0.98);
+      }
+    }
+
+    .driver-info {
+      background-color: lightgray; 
+      padding: 1em; 
+      margin-bottom: 1em;
+    }

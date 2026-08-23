@@ -84,15 +84,7 @@ export class HomeComponent implements OnInit, OnDestroy {
   destinationSearchTimeout: any;
 
   ngOnInit() {
-    // this.google()
     this.getLocation()
-  }
-
-  google() {
-    this.placesService.searchPlaces('DALLAS')
-      .subscribe(result => {
-        console.log(result);
-      });
   }
 
   getLocation() {
@@ -118,8 +110,6 @@ export class HomeComponent implements OnInit, OnDestroy {
         }, 0);
 
         this.getAddressFromCoordinates(this.latitude, this.longitude);
-        // this.getAddressFromOverpass(this.latitude, this.longitude, false);
-
       },
       (error) => {
         console.error('Error obteniendo ubicación:', error.message);
@@ -134,34 +124,6 @@ export class HomeComponent implements OnInit, OnDestroy {
   }
 
   search() {
-
-    /*
-      enviar todo esto al taxista
-    */
-    // posiicion origen usuario
-    // userOriginPosition
-    // user_origin_pos
-
-    console.log('posicion usuario');  
-    
-    // user_origin_pos_name
-    console.log(this.address);
-    console.log(this.latitude);
-    // user_origin_pos_lat
-    console.log(this.longitude);
-    // user_origin_pos_lng
-
-    // posiicion destino usuario
-    // user_destination_pos
-    console.log("direccion destino usuario solicitada");
-
-    // user_destination_pos_name
-    console.log(this.addressDestination);
-    // user_destination_pos_lat
-    console.log(this.latitudeDestination);
-    // user_destination_pos_lng
-    console.log(this.longitudeDestination);
-
 
     this.tripService.setTrip({
       address: this.address,
@@ -182,7 +144,6 @@ export class HomeComponent implements OnInit, OnDestroy {
   getAddressFromCoordinates(lat: number, lng: number): void {
     this.nominatimService.getAddressFromCoordinates(lat, lng)
       .then(address => {
-        // this.addressDestination = address;
         this.address = address;
       })
       .catch(error => {
@@ -216,7 +177,6 @@ export class HomeComponent implements OnInit, OnDestroy {
   }
 
   mapClick($event: any): void {
-    console.log('Click en el mapa:', $event);
 
     this.buildRoute($event.latitude, $event.longitude);
     this.getAddressFromCoordinates($event.latitude, $event.longitude);
@@ -256,10 +216,9 @@ export class HomeComponent implements OnInit, OnDestroy {
         
         this.addressDestination = suggestion?.placePrediction?.text?.text || '';
         this.latitudeDestination = lat;
-        this.longitudeDestination = lng;
+        this.longitudeDestination = lng
 
-
-        console.log('GPS:', lat, lng);
+        this.buildRoute(lat, lng);
 
       }, (error: any) => {
         console.error('Error obteniendo las coordenadas:', error);
