@@ -20,12 +20,14 @@ export class Searching implements OnInit, OnDestroy {
   id: number = 0;
 
   ngOnInit(): void {
-    this.getAssignedDriver(5881441);
+    this.getAssignedDriver(55555);
   }
 
   async createTrip(driverData: any) {
 
     this.token = driverData.pushToken;
+
+    console.log('Driver data received:', driverData);
 
     const tripData = await this.tripService.getTrip();
     const assignedDriver = driverData;
