@@ -1,5 +1,7 @@
-import { Component, OnInit, ViewEncapsulation } from '@angular/core';
+import { Component, inject, OnInit, ViewEncapsulation } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { MatProgressBarModule } from '@angular/material/progress-bar';
+import { Loading } from '../../services/loading';
 
 @Component({
   selector: 'app-header',
@@ -7,16 +9,18 @@ import { CommonModule } from '@angular/common';
   styleUrls: ['./header.component.scss'],
   standalone: true,
   providers: [],
-  imports: [CommonModule],
+  imports: [CommonModule, MatProgressBarModule],
   encapsulation: ViewEncapsulation.ShadowDom,
 })
 export class HeaderComponent implements OnInit {
 
+  loading = inject(Loading);
+
   ngOnInit() {
+
   }
 
-goToRegisterTaxi() {
-  window.location.href = '/register-taxi';
-}
-
+  get isLoading() {
+    return this.loading.getLoading();
+  }
 }

@@ -12,15 +12,18 @@
   </div>
 
   <div class="header-actions">
-    <button (click)="goToRegisterTaxi()" class="btn-outline">
-      <span>Pré-registar Táxi</span>
-    </button>
 
+    <!--
     <button class="btn-outline">
       <span>
-        about
+        exit
       </span>
     </button>
+    -->
+  </div>
+
+  <div class="loading-indicator">
+    <mat-progress-bar *ngIf="isLoading" mode="indeterminate"></mat-progress-bar>
   </div>
 
 </div>

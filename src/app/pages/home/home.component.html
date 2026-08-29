@@ -10,44 +10,65 @@
 
   @if (showSelects) {
   <mat-card class="material-proof-card" style="margin-top: 8em;">
-    @if(!hasLocation) {
-    <div>Obtendo localização...</div>
-    } @else {
-    <div>Localização obtida</div>
-    }
 
 
-    <p *ngIf="loadingDestinationSuggestions">Carregando sugestões...</p>
-    <p style="color: red;" *ngIf="!loadingDestinationSuggestions && destinationSuggestions.length === 0">Nenhuma
-      sugestão encontrada.</p>
-    <p *ngIf="!loadingDestinationSuggestions && destinationSuggestions.length > 0">Sugestões encontradas: {{
-      destinationSuggestions.length }}</p>
+    <h1>Hola , {{ user?.name }}!</h1>
+    <h2>Bem-vindo ao NosTaxi</h2>
 
-    <input class="input-field" matInput type="text" [matAutocomplete]="destinationAuto"
-      placeholder="Selecione o destino" [(ngModel)]="addressDestination" (input)="onDestinationInput($event)" />
-
-    <mat-autocomplete #destinationAuto="matAutocomplete" (optionSelected)="selectDestination($event.option.value)">
-      @for (suggestion of destinationSuggestions; track suggestion.placePrediction.placeId) {
-      <mat-option [value]="suggestion">
-        {{ suggestion.placePrediction.text.text }}
-      </mat-option>
+    <!--
+      @if(!hasLocation) {
+      <div>Obtendo localização...</div>
+      } @else {
+      <div>Localização obtida</div>
       }
-    </mat-autocomplete>
 
-    <input class="input-field" type="datetime-local" name="pickupTime" id="pickupTime" [(ngModel)]="pickupTime" />
 
-    <button class="btn-outline" (click)="search()">
+      <p *ngIf="loadingDestinationSuggestions">Carregando sugestões...</p>
+      <p style="color: red;" *ngIf="!loadingDestinationSuggestions && destinationSuggestions.length === 0">Nenhuma
+        sugestão encontrada.</p>
+      <p *ngIf="!loadingDestinationSuggestions && destinationSuggestions.length > 0">Sugestões encontradas: {{
+        destinationSuggestions.length }}</p>
+
+      <input class="input-field" matInput type="text" [matAutocomplete]="destinationAuto"
+        placeholder="Selecione o destino" [(ngModel)]="addressDestination" (input)="onDestinationInput($event)" />
+
+      <mat-autocomplete #destinationAuto="matAutocomplete" (optionSelected)="selectDestination($event.option.value)">
+        @for (suggestion of destinationSuggestions; track suggestion.tags.name) {
+        <mat-option [value]="suggestion">
+          {{ suggestion.tags.name }}
+        </mat-option>
+        }
+      </mat-autocomplete>
+    -->
+
+    <p>
+      Quando queres o táxi?
+    </p>
+
+    <div class="pickup-row">
+      <div class="pickup-input">
+        <input class="input-field" type="datetime-local" name="pickupTime" id="pickupTime" [(ngModel)]="pickupTime" />
+      </div>
+      <div class="pickup-now">
+        <button class="btn-outline" (click)="pickupNow()">Ahora</button>
+      </div>
+    </div>
+
+    <button class="primary-action" (click)="search()">
       Procurar táxi
     </button>
 
   </mat-card>
+
+  }
+
+  <!--
 
   <div class="map-instruction">
     <ul>
       <li>Arraste o mapa com os dedos</li>
     </ul>
   </div>
-  }
 
   <div class="map-section">
 
@@ -61,6 +82,8 @@
 
     }
   </div>
+  -->
+
 </div>
 
 <div class="error-message" *ngIf="errorMessages && errorMessages.length > 0">

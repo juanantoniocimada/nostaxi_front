@@ -1,0 +1,9 @@
+<app-header></app-header>
+
+<div class="page-content">
+    <input class="input-field" matInput type="text" placeholder="Phone Number" [(ngModel)]="phoneNumber" />
+    <input class="input-field" matInput type="password" placeholder="Password" [(ngModel)]="password" />
+
+    <button class="btn-outline" (click)="login()">Login</button>
+    <button class="btn-outline" (click)="register()">Register</button>
+</div>

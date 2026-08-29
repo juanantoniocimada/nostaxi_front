@@ -1,0 +1,11 @@
+<app-header></app-header>
+
+<div class="page-content">
+    <input class="input-field" matInput type="text" placeholder="Name" [(ngModel)]="name" />
+    <input class="input-field" matInput type="tel" placeholder="Phone Number" [(ngModel)]="phoneNumber" />
+    <input class="input-field" matInput type="password" placeholder="Password" [(ngModel)]="password" />
+    <input class="input-field" matInput type="password" placeholder="Confirm Password" [(ngModel)]="password2" />
+
+    <button class="btn-outline" (click)="register()">Register</button>
+</div>
+

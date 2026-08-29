@@ -20,8 +20,13 @@ export class NestJSService {
     return this._http.get(url)
   }
 
-  registerTaxiInterest(data: any): Observable<any> {
-    const url = `${this._apiUrl}/taxi-interest`;
+  login(data: any): Observable<any> {
+    const url = `${this._apiUrl}/users/login`;
+    return this._http.post(url, data);
+  }
+
+  register(data: any): Observable<any> {
+    const url = `${this._apiUrl}/users/register`;
     return this._http.post(url, data);
   }
 

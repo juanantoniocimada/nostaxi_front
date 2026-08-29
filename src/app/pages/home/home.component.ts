@@ -18,6 +18,7 @@ import { Trip } from '../../services/trip';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { Overpass } from '../../services/overpass';
 import { Nominatim } from '../../services/nominatim';
+import { User } from '../../services/user';
 
 @Component({
   selector: 'app-home',
@@ -35,12 +36,12 @@ import { Nominatim } from '../../services/nominatim';
     MapComponent,
     MatMenuModule,
     FormsModule,
-    HeaderComponent,
+    HeaderComponent, 
     MatAutocompleteModule
   ],
   providers: [NestJSService, Overpass, Nominatim, Google],
-  encapsulation: ViewEncapsulation.None,
 })
+
 export class HomeComponent implements OnInit, OnDestroy {
   @ViewChild(MapComponent) mapComponent?: MapComponent;
   
@@ -62,9 +63,13 @@ export class HomeComponent implements OnInit, OnDestroy {
   userDivIcon = userDivIcon;
   stopDisabled = stopDisabledDivIcon;
 
+  userService = inject(User);
+  
   loadingDestinationSuggestions = false;
 
   routeColor = 'blue';
+
+  name: string = 'VERONICA';
 
   destinationSuggestions: any[] = [];
 
@@ -80,15 +85,30 @@ export class HomeComponent implements OnInit, OnDestroy {
   hasLocation = false;
   locationWatchId: number | null = null;
 
+  user: any = null;
+
   pickupTime = new Date().toTimeString().slice(0, 5);
   destinationSearchTimeout: any;
 
+  // Set pickup time to current local datetime (format: YYYY-MM-DDTHH:MM)
+  pickupNow(): void {
+    const now = new Date();
+    const pad = (n: number) => String(n).padStart(2, '0');
+    const local = `${now.getFullYear()}-${pad(now.getMonth() + 1)}-${pad(now.getDate())}T${pad(now.getHours())}:${pad(now.getMinutes())}`;
+    this.pickupTime = local;
+  }
+
   ngOnInit() {
+
+    this.user =
+    this.userService.getUserData();
+
     this.getLocation()
   }
 
   getLocation() {
     if (this.locationWatchId !== null) {
+      this.errorMessages.push('no se puede obtener la ubicación, ya que ya se está obteniendo');
       return;
     }
 

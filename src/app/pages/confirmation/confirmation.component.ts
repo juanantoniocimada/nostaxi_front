@@ -17,7 +17,6 @@ import { Router } from '@angular/router';
 export class ConfirmationComponent implements OnInit {
   
   tripService = inject(Trip);
-
   nestjsService = inject(NestJSService);
   router = inject(Router);
 

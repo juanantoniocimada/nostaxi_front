@@ -114,13 +114,49 @@
   // text-align: center;
 }
 
-.input-field {
-  margin-bottom: 12px;
-  width: 90%;
-  padding: 8px;
-  font-size: 0.9rem;
-  border-radius: 4px;
+/* Pickup time row */
+.pickup-row {
+  display: flex;
+  gap: 0.5em;
+  align-items: center;
+}
+
+.pickup-input {
+  flex: 1;
+}
+
+.pickup-now {
+  width: 110px;
+  text-align: center;
+}
+
+.btn-outline {
+  background: transparent;
   border: 1px solid color-mix(in srgb, var(--cv-blue) 30%, var(--cv-white) 70%);
+  padding: 8px 12px;
+  border-radius: 6px;
+  cursor: pointer;
+  color: var(--cv-blue);
+  font-weight: 600;
+}
+
+.btn-outline:hover {
+  background: color-mix(in srgb, var(--cv-blue) 8%, var(--cv-white) 92%);
+}
+
+/* Primary action button (search) */
+.primary-action {
+  background: var(--cv-blue);
+  color: var(--cv-white);
+  border: none;
+  padding: 10px 14px;
+  border-radius: 6px;
+  cursor: pointer;
+  font-weight: 700;
+}
+
+.primary-action:hover {
+  opacity: 0.95;
 }
 
 .error-message {
