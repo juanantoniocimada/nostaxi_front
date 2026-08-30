@@ -41,13 +41,6 @@ export class Register {
   password2: string = '';
 
   register() {
-    // this.router.navigate(['/home']);
-
-    /*
-      phoneNumber
-      password
-    */
-
     this.nestjsService.register({ 
       name: this.name,
       phoneNumber: this.phoneNumber, 
@@ -55,12 +48,10 @@ export class Register {
     }).subscribe({
       next: (response) => {
         console.log('Register successful:', response);
-        // Handle successful registration, e.g., navigate to login page
         this.router.navigate(['/login']);
       },
       error: (error) => {
         console.error('Register failed:', error);
-        // Handle registration error, e.g., show an error message
       }
     });
   }

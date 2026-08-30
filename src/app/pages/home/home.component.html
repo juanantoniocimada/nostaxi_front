@@ -8,9 +8,13 @@
 
 <div>
 
-  @if (showSelects) {
   <mat-card class="material-proof-card" style="margin-top: 8em;">
 
+    <!--
+    <div class="next-taxi-info">
+
+    </div>
+    -->
 
     <h1>Hola , {{ user?.name }}!</h1>
     <h2>Bem-vindo ao NosTaxi</h2>
@@ -41,16 +45,23 @@
       </mat-autocomplete>
     -->
 
-    <p>
-      Quando queres o táxi?
-    </p>
+    <div style="border: 1px solid #ccc; padding: 1em; border-radius: 0.5em; margin-bottom: 1em;">
+      <p>
+        Quando queres o táxi?
+      </p>
 
-    <div class="pickup-row">
-      <div class="pickup-input">
-        <input class="input-field" type="datetime-local" name="pickupTime" id="pickupTime" [(ngModel)]="pickupTime" />
-      </div>
-      <div class="pickup-now">
-        <button class="btn-outline" (click)="pickupNow()">Ahora</button>
+      <div class="pickup-row">
+
+        <div class="pickup-now">
+          <button class="btn-outline" (click)="pickupNow()">Agora</button>
+        </div>
+
+        <div class="pickup-input">
+          <label for="pickupTime">agendar:</label>
+          <br />
+          <input class="input-field" type="datetime-local" name="pickupTime" id="pickupTime" [(ngModel)]="pickupTime" />
+        </div>
+
       </div>
     </div>
 
@@ -59,8 +70,6 @@
     </button>
 
   </mat-card>
-
-  }
 
   <!--
 

@@ -11,6 +11,7 @@ import { HeaderComponent } from '../../components/header/header.component';
 import { Router } from '@angular/router';
 import { NestJSService } from '../../services/nestjs.service';
 import { User } from '../../services/user';
+import { Loading } from '../../services/loading';
 
 @Component({
   selector: 'app-login',
@@ -35,6 +36,7 @@ export class Login {
   router = inject(Router);
   nestjsService = inject(NestJSService);
   userService = inject(User);
+  loadingService = inject(Loading);
 
   phoneNumber: number | null = null;
   password: string = '';
@@ -42,26 +44,18 @@ export class Login {
   login() {
     // this.router.navigate(['/home']);
 
-    /*
-      phoneNumber
-      password
-    */
+    this.loadingService.setLoading(true);
 
     this.nestjsService.login({ phoneNumber: this.phoneNumber, password: this.password }).subscribe({
       next: (response) => {
         console.log('Login successful:', response);
-        // Handle successful login, e.g., navigate to home page
 
-        /*
-
-      {"data":{"ok":false,"message":"Contraseña incorrecta"}}
-      {"data":{"ok":false,"message":"Usuario no encontrado"}}
-      {"data":{"ok":true,"user":{"id":1,"phoneNumber":"615973369","name":"JOHAN"}}}
-        */
+        this.loadingService.setLoading(false);
 
         if(response && response.data && response.data.ok && response.data.user) {
           
           this.userService.setUserData(response.data.user);
+          console.log('User data set in User service:', this.userService.getUserData());
          
           this.router.navigate(['/home']);
         } else {

@@ -19,6 +19,7 @@ import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { Overpass } from '../../services/overpass';
 import { Nominatim } from '../../services/nominatim';
 import { User } from '../../services/user';
+import { Loading } from '../../services/loading';
 
 @Component({
   selector: 'app-home',
@@ -55,6 +56,7 @@ export class HomeComponent implements OnInit, OnDestroy {
   overpassService = inject(Overpass);
   nominatimService = inject(Nominatim);
   placesService = inject(Google);
+  loadingService = inject(Loading);
 
   tileLayerUrl = tileLayerUrl;
   bus = busDivIcon;
@@ -67,14 +69,11 @@ export class HomeComponent implements OnInit, OnDestroy {
   
   loadingDestinationSuggestions = false;
 
-  routeColor = 'blue';
-
-  name: string = 'VERONICA';
+  // routeColor = 'blue';
 
   destinationSuggestions: any[] = [];
 
   debugMode = false;
-  showSelects = true;
 
   address: string = '';
   addressDestination: string = '';
@@ -100,13 +99,21 @@ export class HomeComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
 
-    this.user =
-    this.userService.getUserData();
+    console.log('User data on init:', this.userService.getUserData());
 
-    this.getLocation()
+    if(this.userService.getUserData() === null) {
+      this.router.navigate(['/']);
+      return;
+    } else {
+      this.user = this.userService.getUserData();
+      this.getLocation()
+
+    }
   }
 
   getLocation() {
+
+
     if (this.locationWatchId !== null) {
       this.errorMessages.push('no se puede obtener la ubicación, ya que ya se está obteniendo');
       return;

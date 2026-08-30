@@ -170,3 +170,12 @@
   border: 1px solid orange;
   
 }
+
+.next-taxi-info {
+  margin-bottom: 16px;
+  padding: 8px;
+  background-color: color-mix(in srgb, var(--cv-blue) 10%, var(--cv-white) 90%);
+  border-radius: 6px;
+  font-size: 0.9rem;
+  color: orange;
+}
