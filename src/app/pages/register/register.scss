@@ -1,0 +1,197 @@
+.page-content {
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  padding: 18px 10px 30px;
+  background: #f5f8fc;
+}
+
+.register-card {
+  width: 100%;
+  max-width: 520px;
+  padding: 20px 15px;
+  background: #fff;
+  border-radius: 14px;
+  box-shadow: 0 3px 14px rgba(0, 56, 147, 0.08);
+}
+
+.register-card h1 {
+  margin: 0 0 6px;
+  font-size: 23px;
+  font-weight: 700;
+  line-height: 1.2;
+  text-align: center;
+  color: #003893;
+}
+
+.subtitle {
+  margin: 0 0 19px;
+  color: #52627a;
+  font-size: 13px;
+  line-height: 1.4;
+  text-align: center;
+}
+
+/* FORMULARIO */
+
+.form-fields {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.form-row {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.field label {
+  font-size: 12px;
+  font-weight: 600;
+  color: #003893;
+}
+
+.input-field {
+  width: 100%;
+  box-sizing: border-box;
+  height: 44px;
+  padding: 0 11px;
+
+  border: 1px solid #c9d6e8;
+  border-radius: 8px;
+
+  background: #fff;
+  color: #1c2b3f;
+
+  font-size: 16px;
+  outline: none;
+}
+
+.input-field::placeholder {
+  color: #9aa9bd;
+}
+
+.input-field:focus {
+  border-color: #003893;
+  box-shadow: 0 0 0 2px rgba(0, 56, 147, 0.10);
+}
+
+/* BENEFICIOS */
+
+.premium-benefits {
+  margin-top: 18px;
+  padding: 13px;
+
+  border: 1px solid #b8c9df;
+  border-radius: 12px;
+
+  background: #f5f8fc;
+}
+
+.premium-badge {
+  display: inline-block;
+
+  padding: 5px 9px;
+  margin-bottom: 5px;
+
+  border-radius: 14px;
+
+  background: #003893;
+  color: #fff;
+
+  font-size: 10px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.3px;
+}
+
+.premium-benefits ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.premium-benefits li {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 7px 0;
+
+  color: #263b55;
+  font-size: 12.5px;
+  line-height: 1.3;
+}
+
+.premium-benefits li + li {
+  border-top: 1px solid #dce5f0;
+}
+
+.benefit-icon {
+  width: 23px;
+  min-width: 23px;
+  text-align: center;
+  font-size: 16px;
+}
+
+/* NOTIFICACIONES */
+
+.notifications {
+  display: flex;
+  flex-direction: column;
+  gap: 7px;
+  margin-top: 15px;
+}
+
+.check-option {
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+
+  padding: 9px;
+
+  border: 1px solid #d7e0ec;
+  border-radius: 8px;
+
+  background: #f8faff;
+
+  font-size: 12px;
+  line-height: 1.35;
+  color: #52627a;
+}
+
+.check-option input {
+  width: 18px;
+  height: 18px;
+  margin: 0;
+  flex-shrink: 0;
+  accent-color: #003893;
+}
+
+.check-option strong {
+  color: #003893;
+}
+
+/* BOTÓN */
+
+.btn-outline {
+  width: 100%;
+  height: 46px;
+
+  margin-top: 18px;
+
+  border: 0;
+  border-radius: 9px;
+
+  background: #003893;
+  color: #fff;
+
+  font-size: 15px;
+  font-weight: 700;
+}

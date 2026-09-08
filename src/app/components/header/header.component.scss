@@ -3,52 +3,92 @@
   flex-direction: column;
   align-items: flex-start;
 
-  background-color: color-mix(in srgb, var(--cv-white) 90%, var(--cv-blue) 10%);
+  background-color: color-mix(
+    in srgb,
+    var(--cv-white) 90%,
+    var(--cv-blue) 10%
+  );
+
   padding: 16px;
   width: 100%;
+
   border-bottom: 1px solid gray;
 
   position: fixed;
   top: 0;
   left: 0;
   z-index: 9999;
+
   box-sizing: border-box;
 }
 
-.header-flag {
-  width: 33px;
-  height: auto;
-  border-radius: 4px;
-}
-
+/* LOGO */
 .main-title {
-  border-bottom: 3px solid color-mix(in srgb, var(--cv-blue) 30%, var(--cv-white) 70%);
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+
+  border-bottom: 3px solid
+    color-mix(in srgb, var(--cv-blue) 30%, var(--cv-white) 70%);
+
   padding: 3px 8px;
   margin: 0;
+
   font-size: 1.4rem;
-  line-height: 1.1;
+  line-height: 1;
+
   color: var(--cv-blue);
+  letter-spacing: -0.5px;
 }
 
+/* NOS */
+.main-title span:first-child {
+  font-weight: 500;
+}
+
+/* TAXI */
+.main-title span:last-child {
+  font-weight: 900;
+  letter-spacing: -0.8px;
+}
+
+/* BANDERA */
+.header-flag {
+  width: 33px;
+  height: 22px;
+
+  object-fit: cover;
+  border-radius: 4px;
+
+  margin: 0 2px;
+
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.15);
+}
+
+/* SUBTÍTULO */
 .main-subtitle {
   width: 100%;
+
   font-size: 0.9rem;
   color: var(--cv-blue);
 }
 
+/* BOTÓN */
 .btn-outline {
   z-index: 9999;
+
   background-color: #003893;
   color: white;
-  
 }
 
+/* ACCIONES */
 .header-actions {
-  // top: 50px;
   right: 0;
   position: absolute;
+
   display: flex;
+  flex-direction: column;
+
   gap: 8px;
   margin-top: 8px;
-  flex-direction: column;
 }

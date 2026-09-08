@@ -10,6 +10,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { HttpClientModule } from '@angular/common/http';
 import { CommonModule } from '@angular/common';
 import { Router } from '@angular/router';
+import { take } from 'rxjs';
 
 @Component({
   selector: 'app-register',
@@ -36,7 +37,7 @@ export class Register {
   nestjsService = inject(NestJSService);
 
   name: string = '';
-  phoneNumber: number | null = null;
+  phoneNumber: string | null = '';
   password: string = '';
   password2: string = '';
 
@@ -45,7 +46,7 @@ export class Register {
       name: this.name,
       phoneNumber: this.phoneNumber, 
       password: this.password 
-    }).subscribe({
+    }).pipe(take(1)).subscribe({
       next: (response) => {
         console.log('Register successful:', response);
         this.router.navigate(['/login']);
