@@ -70,6 +70,10 @@ export class Login {
     });
   }
 
+  registerDriver(): void  {
+    this.router.navigate(['/register-driver']);
+  }
+
   register() {
     this.router.navigate(['/register']);
   }

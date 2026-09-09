@@ -1,6 +1,6 @@
 <div class="app-header">
 
-<div class="main-title">
+<div class="main-title" (click)="goToHome()">
   <span>Nos</span>
   <img
     class="header-flag"
@@ -15,8 +15,11 @@
   </div>
 
   <div class="header-actions">
-
-
+    <button class="btn-outline">
+      <span>
+        logout
+      </span>
+    </button>
   </div>
 
   <div class="loading-indicator">

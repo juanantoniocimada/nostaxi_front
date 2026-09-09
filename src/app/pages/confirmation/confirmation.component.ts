@@ -10,7 +10,7 @@ import { Router } from '@angular/router';
   templateUrl: './confirmation.component.html',
   styleUrls: ['./confirmation.component.scss'],
   standalone: true,
-  providers: [NestJSService],
+  providers: [],
   imports: [CommonModule, HeaderComponent],
   encapsulation: ViewEncapsulation.None,
 })

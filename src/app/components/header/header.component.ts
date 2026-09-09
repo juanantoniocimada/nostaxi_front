@@ -28,6 +28,10 @@ export class HeaderComponent implements OnInit {
     return this.loading.getLoading();
   }
 
+  goToHome(): void {
+    this.router.navigate(['/home']);
+  }
+
   logout() {
     this.userService.logout();
     this.router.navigate(['/']);

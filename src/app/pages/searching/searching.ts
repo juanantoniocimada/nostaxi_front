@@ -20,7 +20,7 @@ export class Searching implements OnInit, OnDestroy {
   id: number = 0;
 
   ngOnInit(): void {
-    this.getAssignedDriver(55555);
+    this.getAssignedDriver(616973369);
   }
 
   async createTrip(driverData: any) {
@@ -122,7 +122,13 @@ export class Searching implements OnInit, OnDestroy {
       .subscribe({
         next: (trip: any) => {
 
+          console.log('asd');
+          
+
           if (trip?.data.confirmed) {
+
+            console.log('confirmed');
+            
 
             this.router.navigate([
               '/confirmation'
