@@ -5,10 +5,9 @@ import { Injectable, signal } from '@angular/core';
 })
 export class Menu {
 
-  menu = signal<any>(null);
+  showMenu = signal(false);
 
-  setMenu(data: any) {
-    this.menu.set(data);
+  toggleMenu(): void {
+    this.showMenu.update(value => !value);
   }
-
 }

@@ -4,6 +4,8 @@ import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { Loading } from '../../services/loading';
 import { User } from '../../services/user';
 import { Router } from '@angular/router';
+import { Menu } from '../../services/menu';
+
 
 @Component({
   selector: 'app-header',
@@ -19,6 +21,7 @@ export class HeaderComponent implements OnInit {
   loading = inject(Loading);
   userService = inject(User);
   router = inject(Router);
+  menu = inject(Menu)
 
   ngOnInit() {
 
@@ -30,6 +33,10 @@ export class HeaderComponent implements OnInit {
 
   goToHome(): void {
     this.router.navigate(['/home']);
+  }
+
+  toggleMenu(): void {
+    this.menu.toggleMenu();
   }
 
   logout() {

@@ -1,5 +1,5 @@
-import { Component } from '@angular/core';
-import { RouterOutlet } from '@angular/router';
+import { Component, inject } from '@angular/core';
+import { Router, RouterOutlet } from '@angular/router';
 import { NestJSService } from './services/nestjs.service';
 import { CommonModule } from '@angular/common';
 import { HttpClientModule } from '@angular/common/http';
@@ -9,6 +9,10 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
 import { FormsModule } from '@angular/forms';
+import { MatSidenavModule } from '@angular/material/sidenav';
+import { MatListModule } from '@angular/material/list';
+import { Menu } from './services/menu';
+
 
 @Component({
   selector: 'app-root',
@@ -21,7 +25,13 @@ import { FormsModule } from '@angular/forms';
     MatFormFieldModule,
     MatIconModule,
     MatInputModule,
-    FormsModule
+    FormsModule,
+    RouterOutlet,
+    MatSidenavModule,
+    MatListModule,
+    MatIconModule,
+    MatButtonModule,
+    
   ],
   providers: [NestJSService],
   standalone: true,
@@ -29,5 +39,14 @@ import { FormsModule } from '@angular/forms';
   styleUrls: ['./app.scss']
 })
 export class App {
- 
+  router = inject(Router);
+  menu = inject(Menu);
+
+  goToHome(): void {
+    this.router.navigate(['/home']);
+  }
+
+  goToTrips(): void {
+    this.router.navigate(['/trips']);
+  }
 }

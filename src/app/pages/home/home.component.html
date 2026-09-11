@@ -96,7 +96,7 @@
 </div>
 
 <div class="error-message" *ngIf="errorMessages && errorMessages.length > 0">
-  @for (errorMessage of errorMessages; track errorMessage) {
+  @for (errorMessage of errorMessages; track $index) {
   <p style="color: gray;">- {{ errorMessage }}</p>
   <hr />
   }

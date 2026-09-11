@@ -75,6 +75,11 @@ export class NestJSService {
     );
   }
 
+  getTrips(): Observable<any> {
+    const url = `${this._apiUrl}/trips`;
+    return this._http.get(url);
+  }
+
   getAssignedDriver(id: number): Observable<any> {
     const url = `${this._apiUrl}/taxi-interest/${id}`;
 

@@ -32,7 +32,6 @@ export class ConfirmationComponent implements OnInit {
   }
   
   goToDriverTracking() {
-
     this.router.navigate(['/driver-tracking']);
   }
   

@@ -74,6 +74,13 @@ export class Login {
     this.router.navigate(['/register-driver']);
   }
 
+  registerEstablishment(): void {
+
+  // path: 'associated-business',
+    // 
+    this.router.navigate(['/associated-business']);
+  }  
+
   register() {
     this.router.navigate(['/register']);
   }
