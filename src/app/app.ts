@@ -31,7 +31,7 @@ import { Menu } from './services/menu';
     MatListModule,
     MatIconModule,
     MatButtonModule,
-    
+
   ],
   providers: [NestJSService],
   standalone: true,
@@ -42,11 +42,12 @@ export class App {
   router = inject(Router);
   menu = inject(Menu);
 
-  goToHome(): void {
-    this.router.navigate(['/home']);
+  goTo(route: string): void {
+
+
+    this.menu.toggleMenu();
+
+    this.router.navigate([route]);
   }
 
-  goToTrips(): void {
-    this.router.navigate(['/trips']);
-  }
 }

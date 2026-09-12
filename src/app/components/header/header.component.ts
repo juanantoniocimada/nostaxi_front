@@ -2,10 +2,10 @@ import { Component, inject, OnInit, ViewEncapsulation } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { Loading } from '../../services/loading';
-import { User } from '../../services/user';
 import { Router } from '@angular/router';
 import { Menu } from '../../services/menu';
-
+import { UserSignal } from '../../services/user';
+import { MatIconModule } from '@angular/material/icon';
 
 @Component({
   selector: 'app-header',
@@ -13,13 +13,17 @@ import { Menu } from '../../services/menu';
   styleUrls: ['./header.component.scss'],
   standalone: true,
   providers: [],
-  imports: [CommonModule, MatProgressBarModule],
+  imports: [
+    CommonModule, 
+    MatProgressBarModule,
+    MatIconModule,
+],
   encapsulation: ViewEncapsulation.ShadowDom,
 })
 export class HeaderComponent implements OnInit {
 
   loading = inject(Loading);
-  userService = inject(User);
+  userService = inject(UserSignal);
   router = inject(Router);
   menu = inject(Menu)
 
@@ -31,8 +35,8 @@ export class HeaderComponent implements OnInit {
     return this.loading.getLoading();
   }
 
-  goToHome(): void {
-    this.router.navigate(['/home']);
+  goTo(route: string): void {
+    this.router.navigate([route]);
   }
 
   toggleMenu(): void {

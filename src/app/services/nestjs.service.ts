@@ -75,7 +75,12 @@ export class NestJSService {
     );
   }
 
-  getTrips(): Observable<any> {
+  // pasar id del usuario asociado al viaje
+  getTrips(user : any): Observable<any> {
+
+    console.log(user);
+    
+
     const url = `${this._apiUrl}/trips`;
     return this._http.get(url);
   }

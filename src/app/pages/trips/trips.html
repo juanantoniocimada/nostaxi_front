@@ -1,11 +1,12 @@
-
-
 <app-header></app-header>
 
-@for (trip of trips; track $index) {
-    <article class="trip">
-        <p><strong>ID:</strong> {{ trip.id }}</p>
-        <p><strong>Conductor:</strong> {{ trip.driverName }}</p>
-        <p><strong>Hora de recogida:</strong> {{ trip.pickupTime }}</p>
-    </article>
-}
+<div style="margin-top: 20%;">
+  @for (trip of trips; track $index) {
+    <mat-card class="trip">
+      <p><strong>ID:</strong> {{ trip.id }}</p>
+      <p><strong>Conductor:</strong> {{ trip.driverName }}</p>
+      <p><strong>Hora de recogida:</strong> {{ trip.pickupTime }}</p>
+    </mat-card>
+    <br>
+  }
+</div>

@@ -18,7 +18,7 @@ import { Trip } from '../../services/trip';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { Overpass } from '../../services/overpass';
 import { Nominatim } from '../../services/nominatim';
-import { User } from '../../services/user';
+import { UserSignal } from '../../services/user';
 import { Loading } from '../../services/loading';
 
 @Component({
@@ -65,7 +65,7 @@ export class HomeComponent implements OnInit, OnDestroy {
   userDivIcon = userDivIcon;
   stopDisabled = stopDisabledDivIcon;
 
-  userService = inject(User);
+  userSignal = inject(UserSignal);
   
   loadingDestinationSuggestions = false;
 
@@ -99,13 +99,13 @@ export class HomeComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
 
-    console.log('User data on init:', this.userService.getUserData());
+    console.log('User data on init:', this.userSignal.getUserData());
 
-    if(this.userService.getUserData() === null) {
+    if(this.userSignal.getUserData() === null) {
       this.router.navigate(['/']);
       return;
     } else {
-      this.user = this.userService.getUserData();
+      this.user = this.userSignal.getUserData();
       this.getLocation()
 
     }

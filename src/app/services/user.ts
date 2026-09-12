@@ -3,7 +3,7 @@ import { Injectable, signal } from '@angular/core';
 @Injectable({
   providedIn: 'root',
 })
-export class User {
+export class UserSignal {
   // initialize signal from localStorage so value survives navigation/reloads
   userData = signal<any>(JSON.parse(localStorage.getItem('user') || 'null'));
 

@@ -1,6 +1,6 @@
 <div class="app-header">
 
-<div class="main-title" (click)="goToHome()">
+<div class="main-title" (click)="goTo('/')">
   <span>Nos</span>
   <img
     class="header-flag"
@@ -11,18 +11,18 @@
 </div>
 
   <div class="main-subtitle">
-    O futuro do táxi em Cabo Verde.
+    O futuro do táxi em Mindelo.
   </div>
 
   <div class="header-actions">
-    <button class="btn-outline">
+    <button class="btn-outline" (click)="goTo('/')">
       <span>
         logout
       </span>
     </button>
     
-    <button (click)="toggleMenu()">
-      toggleMenu
+    <button mat-icon-button (click)="toggleMenu()">
+      <mat-icon>menu</mat-icon>
     </button>
 
   </div>

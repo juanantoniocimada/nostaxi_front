@@ -4,17 +4,17 @@
 
     <mat-nav-list>
 
-      <a mat-list-item (click)="goToHome()">
+      <a mat-list-item (click)="goTo('/home')">
         <mat-icon>home</mat-icon>
         <span>Inicio</span>
       </a>
 
-      <a mat-list-item routerLink="/trips">
+      <a mat-list-item (click)="goTo('/trips')">
         <mat-icon>route</mat-icon>
         <span>Mi perfil</span>
       </a>
 
-      <a mat-list-item (click)="goToTrips()">
+      <a mat-list-item (click)="goTo('/trips')">
         <mat-icon>route</mat-icon>
         <span>Mis viajes</span>
       </a>
@@ -24,14 +24,7 @@
   </mat-sidenav>
 
   <mat-sidenav-content>
-
-
     <router-outlet></router-outlet>
-
-    <button style="right: 0;" mat-icon-button (click)="sidenav.toggle()">
-      <mat-icon>menu</mat-icon>
-    </button>
-
   </mat-sidenav-content>
 
 </mat-sidenav-container>

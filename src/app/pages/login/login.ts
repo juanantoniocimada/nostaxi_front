@@ -10,7 +10,7 @@ import { MatInputModule } from '@angular/material/input';
 import { HeaderComponent } from '../../components/header/header.component';
 import { Router } from '@angular/router';
 import { NestJSService } from '../../services/nestjs.service';
-import { User } from '../../services/user';
+import { UserSignal } from '../../services/user';
 import { Loading } from '../../services/loading';
 
 @Component({
@@ -35,7 +35,7 @@ export class Login {
 
   router = inject(Router);
   nestjsService = inject(NestJSService);
-  userService = inject(User);
+  userService = inject(UserSignal);
   loadingService = inject(Loading);
 
   phoneNumber: number | null = null;
