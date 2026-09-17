@@ -12,6 +12,7 @@ import { FormsModule } from '@angular/forms';
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatListModule } from '@angular/material/list';
 import { Menu } from './services/menu';
+import { MatMenuModule } from "@angular/material/menu";
 
 
 @Component({
@@ -31,8 +32,8 @@ import { Menu } from './services/menu';
     MatListModule,
     MatIconModule,
     MatButtonModule,
-
-  ],
+    MatMenuModule
+],
   providers: [NestJSService],
   standalone: true,
   templateUrl: './app.html',

@@ -1,7 +1,8 @@
 .app-header {
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
   align-items: flex-start;
+  justify-content: space-between;
 
   background-color: color-mix(
     in srgb,
@@ -20,6 +21,11 @@
   z-index: 9999;
 
   box-sizing: border-box;
+}
+
+.logo {
+  display: flex;
+  flex-direction: column;
 }
 
 /* LOGO */
@@ -83,12 +89,10 @@
 
 /* ACCIONES */
 .header-actions {
-  right: 0;
-  position: absolute;
-
   display: flex;
-  flex-direction: column;
-
+  flex-direction: row;
+  align-items: flex-end;
   gap: 8px;
   margin-top: 8px;
+  margin-left: auto;
 }

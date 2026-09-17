@@ -79,7 +79,6 @@ export class NestJSService {
   getTrips(user : any): Observable<any> {
 
     console.log(user);
-    
 
     const url = `${this._apiUrl}/trips`;
     return this._http.get(url);

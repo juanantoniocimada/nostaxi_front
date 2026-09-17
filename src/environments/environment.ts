@@ -1,8 +1,9 @@
 
 export const environment = {
   production: true,
-  url: '',  
+  url: '',
   apiTest: '',
-  nestJs: '',  
-  nestJsLocal: 'https://api.nostaxi.com',
+  nestJs: '',
+  nestJsLocal: 'http://localhost:3000',
+  // nestJsLocal: 'https://api.nostaxi.com',
 };
