@@ -28,7 +28,7 @@ export class HeaderComponent implements OnInit {
   menu = inject(Menu)
 
   ngOnInit() {
-
+    console.log(this.userService.getUserData());
   }
 
   get isLoading() {

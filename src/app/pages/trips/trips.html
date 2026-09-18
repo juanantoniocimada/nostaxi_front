@@ -1,11 +1,37 @@
 <app-header></app-header>
 
 <div style="margin-top: 20%;">
+  hola
+  <p *ngIf="trips && trips.length === 0">No trips available.</p>
+  <p *ngIf="trips && trips.length > 0">Total trips: {{ trips.length }}</p>
   @for (trip of trips; track $index) {
     <mat-card class="trip">
       <p><strong>ID:</strong> {{ trip.id }}</p>
-      <p><strong>Conductor:</strong> {{ trip.driverName }}</p>
-      <p><strong>Hora de recogida:</strong> {{ trip.pickupTime }}</p>
+      <p><strong>Hora de recogida:</strong>
+        {{ trip.pickupTime | date:'dd/MM/yyyy HH:mm' }}
+      </p>
+      
+      <!--
+      <div style="margin-top: 10px; background-color: antiquewhite;">
+        <img width="40" height="40" style="border-radius: 50%;" [src]="trip.user.img" alt="Trip image">
+        <p><strong>Usuario:</strong> {{ trip.user.name }}</p>
+        <p><strong>Teléfono:</strong> {{ trip.user.phoneNumber }}</p>
+      </div>
+      -->
+      
+      <p style="background-color: bisque;"><strong>Origen:</strong> {{ trip.userOriginPosName }}</p>
+      <p style="background-color: burlywood;"><strong>Destino:</strong> {{ trip.userDestinationPosName }}</p>
+      
+      <p style="background-color: greenyellow;"><strong>Estado:</strong> {{ trip.confirmed }}</p>
+
+      <div>
+        <img width="40" height="40" style="border-radius: 50%;" [src]="trip.taxiInterest.photo" alt="Trip image">
+        <p><strong>Taxi:</strong> {{ trip.taxiInterest.driverName }}</p>
+        <p><strong>Teléfono:</strong> {{ trip.taxiInterest.driverPhone }}</p>
+        <p><strong>License Plate:</strong> {{ trip.taxiInterest.vehiclePlate }}</p>
+        <p><strong>Vehicle Model:</strong> {{ trip.taxiInterest.vehicleModel }}</p>
+      </div>
+      
     </mat-card>
     <br>
   }

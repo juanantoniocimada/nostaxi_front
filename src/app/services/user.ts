@@ -22,6 +22,14 @@ export class UserSignal {
 
   logout() {
     localStorage.removeItem('user');
+    
+    console.log('User logged out');
+    this.userData.set(null);
+    console.log(this.getUserData());
+    
+
+    // localStorage.getItem('user');
+
     this.userData.set(null);
   }
   

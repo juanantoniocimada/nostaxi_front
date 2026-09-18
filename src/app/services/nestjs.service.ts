@@ -80,7 +80,8 @@ export class NestJSService {
 
     console.log(user);
 
-    const url = `${this._apiUrl}/trips`;
+    // trips?id=123
+    const url = `${this._apiUrl}/trips?id=${user.id}`;
     return this._http.get(url);
   }
 

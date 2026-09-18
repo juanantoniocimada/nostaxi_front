@@ -16,16 +16,19 @@
   <div class="header-actions">
 
 
-    <div>
-      <img width="50" [src]="userService.getUserData().img" alt="">
-      {{ userService.getUserData().name }}
-    </div>
+    @if (userService.getUserData().name) {
+      <div>
 
-    <button (click)="toggleMenu()" class="btn-outline" (click)="goTo('/')">
-      <span>
-        menu
-      </span>
-    </button>
+        <img width="50" [src]="userService.getUserData().img" alt="">
+        {{ userService.getUserData().name }}
+        <button (click)="toggleMenu()" class="btn-outline">
+          <span>
+            menu
+          </span>
+        </button>
+
+      </div>
+    }
 
   </div>
 

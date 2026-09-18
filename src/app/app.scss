@@ -2,6 +2,16 @@
   height: 100vh;
 }
 
+.profile-item {
+  font-size: medium;
+  font-weight: bold;
+}
+
+.profile-item mat-icon,
+.profile-item span {
+  color: var(--cv-blue);
+}
+
 mat-sidenav {
   width: 250px;
 }

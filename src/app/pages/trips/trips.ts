@@ -3,10 +3,14 @@ import { NestJSService } from '../../services/nestjs.service';
 import { HeaderComponent } from "../../components/header/header.component";
 import { UserSignal } from '../../services/user';
 import { MatCardModule } from '@angular/material/card';
+import { DatePipe } from '@angular/common';
 
 @Component({
   selector: 'app-trips',
-  imports: [HeaderComponent, MatCardModule],
+  imports: [
+    HeaderComponent,
+    MatCardModule,
+    DatePipe],
   templateUrl: './trips.html',
   styleUrl: './trips.scss',
 })
@@ -26,6 +30,10 @@ export class Trips implements OnInit {
 
   // pasar id del usuario asociado al viaje
   getTrips(user: any): void {
+
+
+    
+
     this.nestjsService.getTrips(user).subscribe({
       next: (response) => {
         console.log(response);

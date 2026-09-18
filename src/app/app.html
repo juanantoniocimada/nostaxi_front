@@ -4,34 +4,25 @@
 
     <mat-nav-list>
 
-      <a mat-list-item (click)="goTo('/home')">
+      <a mat-list-item class="profile-item"  (click)="goTo('/home')">
         <mat-icon>home</mat-icon>
         <span>Inicio</span>
       </a>
 
-      <a mat-list-item (click)="goTo('/trips')">
-        <mat-icon>route</mat-icon>
+      <a mat-list-item class="profile-item" (click)="goTo('/trips')">
+        <mat-icon >route</mat-icon>
         <span>Mi perfil</span>
       </a>
 
-      <a mat-list-item (click)="goTo('/trips')">
+      <a mat-list-item class="profile-item" (click)="goTo('/trips')">
         <mat-icon>route</mat-icon>
         <span>Mis viajes</span>
       </a>
 
-      <a mat-list-item (click)="goTo('/')">
+      <a mat-list-item class="profile-item" (click)="logout()">
         <mat-icon>route</mat-icon>
-        <span>exit</span>
+        <span>Salir</span>
       </a>
-
-      <!--
-  <div class="header-actions">
-    <button class="btn-outline" (click)="goTo('/')">
-      <span>
-        logout
-      </span>
-    </button>
-      -->
 
     </mat-nav-list>
 

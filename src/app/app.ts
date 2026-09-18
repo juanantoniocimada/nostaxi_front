@@ -13,6 +13,7 @@ import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatListModule } from '@angular/material/list';
 import { Menu } from './services/menu';
 import { MatMenuModule } from "@angular/material/menu";
+import { UserSignal } from './services/user';
 
 
 @Component({
@@ -42,13 +43,16 @@ import { MatMenuModule } from "@angular/material/menu";
 export class App {
   router = inject(Router);
   menu = inject(Menu);
+  userService = inject(UserSignal);
 
-  goTo(route: string): void {
-
-
+  logout(): void {
+    this.userService.logout();
     this.menu.toggleMenu();
-
-    this.router.navigate([route]);
+    this.router.navigate(['/'])
   }
 
+  goTo(route: string): void {
+    this.menu.toggleMenu();
+    this.router.navigate([route]);
+  }
 }
