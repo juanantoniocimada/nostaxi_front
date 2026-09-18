@@ -2,6 +2,7 @@
 
 <div style="margin-top: 20%;">
   hola
+
   <p *ngIf="trips && trips.length === 0">No trips available.</p>
   <p *ngIf="trips && trips.length > 0">Total trips: {{ trips.length }}</p>
   @for (trip of trips; track $index) {
@@ -10,6 +11,9 @@
       <p><strong>Hora de recogida:</strong>
         {{ trip.pickupTime | date:'dd/MM/yyyy HH:mm' }}
       </p>
+
+      <button style="background-color: aqua;" (click)="getToken()">Get Ecobank Token</button>
+      <button style="background-color: aqua;" (click)="pay()">Pay</button>
       
       <!--
       <div style="margin-top: 10px; background-color: antiquewhite;">
