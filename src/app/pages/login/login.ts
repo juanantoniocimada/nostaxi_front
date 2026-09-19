@@ -11,7 +11,7 @@ import { HeaderComponent } from '../../components/header/header.component';
 import { Router } from '@angular/router';
 import { NestJSService } from '../../services/nestjs.service';
 import { UserSignal } from '../../services/user';
-import { Loading } from '../../services/loading';
+import { LoadingSignal } from '../../services/loading';
 
 @Component({
   selector: 'app-login',
@@ -36,7 +36,7 @@ export class Login {
   router = inject(Router);
   nestjsService = inject(NestJSService);
   userService = inject(UserSignal);
-  loadingService = inject(Loading);
+  loadingService = inject(LoadingSignal);
 
   phoneNumber: number | null = null;
   password: string = '';
@@ -73,6 +73,12 @@ export class Login {
   registerDriver(): void  {
     this.router.navigate(['/register-driver']);
   }
+
+  forgotPassword(): void {
+    this.router.navigate(['/forgot-password']);
+  }
+
+  passwordVisible: boolean = false;
 
   registerEstablishment(): void {
 

@@ -130,19 +130,6 @@
   text-align: center;
 }
 
-.btn-outline {
-  background: transparent;
-  border: 1px solid color-mix(in srgb, var(--cv-blue) 30%, var(--cv-white) 70%);
-  padding: 8px 12px;
-  border-radius: 6px;
-  cursor: pointer;
-  color: var(--cv-blue);
-  font-weight: 600;
-}
-
-.btn-outline:hover {
-  background: color-mix(in srgb, var(--cv-blue) 8%, var(--cv-white) 92%);
-}
 
 /* Primary action button (search) */
 .primary-action {

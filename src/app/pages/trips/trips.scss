@@ -1,0 +1,41 @@
+.trip-card {
+    padding: 0;
+    background: #fff;
+}
+
+.trip-header {
+    display: flex;
+    justify-content: space-between;
+    padding: 16px;
+    background: #f5f5f5;
+}
+
+.trip-header span {
+    color: #666;
+    font-size: 14px;
+}
+
+.trip-section {
+    padding: 12px 16px;
+    border-top: 1px solid #eee;
+}
+
+.trip-section p {
+    margin: 6px 0;
+}
+
+.taxi-info {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-top: 10px;
+}
+
+.taxi-info img {
+    border-radius: 50%;
+    object-fit: cover;
+}
+
+.taxi-info p {
+    margin: 4px 0;
+}

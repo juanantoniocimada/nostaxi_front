@@ -32,7 +32,6 @@ import { take } from 'rxjs';
 })
 export class Register {
 
-
   router = inject(Router);
   nestjsService = inject(NestJSService);
 
@@ -40,6 +39,45 @@ export class Register {
   phoneNumber: string | null = '';
   password: string = '';
   password2: string = '';
+  img: string = '';
+  email: string = '';
+  passwordVisible: boolean = false;
+  
+
+  cameraFile: File | null = null;
+  galleryFile: File | null = null;
+  onCameraChange(event: Event) {
+    const input = event.target as HTMLInputElement;
+    if (input.files && input.files.length > 0) {
+      this.cameraFile = input.files[0];
+    }
+    console.log(this.cameraFile);
+    
+  }
+
+  onGalleryChange(event: Event) {
+    const input = event.target as HTMLInputElement;
+    if (input.files && input.files.length > 0) {
+      this.galleryFile = input.files[0];
+    }
+    console.log(this.galleryFile);
+  }
+
+  checkForm() {
+    return !this.name || !this.phoneNumber || !this.email || !this.password || !this.password2 || !this.comparePasswords();
+  }
+
+  comparePasswords() {
+      if (this.password !== this.password2) {
+        // alert('Passwords do not match!');
+        return false;
+      }
+      return true;
+    }
+
+  changePasswordVisibility() {
+    this.passwordVisible = !this.passwordVisible;
+  }
 
   register() {
     this.nestjsService.register({ 
@@ -57,4 +95,7 @@ export class Register {
     });
   }
 
+  goBack() {
+    this.router.navigate(['/']);
+  }
 }

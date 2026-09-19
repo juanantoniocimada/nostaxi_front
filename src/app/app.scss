@@ -2,14 +2,24 @@
   height: 100vh;
 }
 
+.profile-list { 
+  padding-left: 20px;
+  padding-right: 20px;
+}
+
 .profile-item {
   font-size: medium;
   font-weight: bold;
+  border-bottom: 1px solid gray;
+  border-radius: 0px !important;
 }
 
 .profile-item mat-icon,
-.profile-item span {
+.profile-item svg {
   color: var(--cv-blue);
+}
+.profile-item span {
+  color: gray;
 }
 
 mat-sidenav {

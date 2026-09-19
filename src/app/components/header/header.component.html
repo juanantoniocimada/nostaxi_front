@@ -1,39 +1,27 @@
 <div class="app-header">
 
   <div class="logo">
-    <div class="main-title" (click)="goTo('/')">
-      <span>Nos</span>
-      <img class="header-flag" src="https://icon2.cleanpng.com/20180722/xf/f6493679307ef0c4454bb883826c6f0b.webp"
-        alt="Cape Verde flag" />
-      <span>taxi</span>
-    </div>
-
-    <div class="main-subtitle">
-      O futuro do táxi em Mindelo.
-    </div>
+    <img style="width: 250px;" src="/logo.png" alt="Logo">
   </div>
 
   <div class="header-actions">
 
+    @if (user) {
+    <div>
 
-    @if (userService.getUserData().name) {
-      <div>
+      <img width="70" style="border-radius: 50%;" [src]="user.img" alt="">
+      {{ user.name }}
+      <button (click)="toggleMenu()" class="btn-outline">
+        menu
+      </button>
+      
 
-        <img width="50" [src]="userService.getUserData().img" alt="">
-        {{ userService.getUserData().name }}
-        <button (click)="toggleMenu()" class="btn-outline">
-          <span>
-            menu
-          </span>
-        </button>
-
-      </div>
+    </div>
     }
 
   </div>
 
-  <div class="loading-indicator">
-    <mat-progress-bar *ngIf="isLoading" mode="indeterminate"></mat-progress-bar>
-  </div>
+  <mat-progress-bar *ngIf="loading.getLoading()" mode="indeterminate" style="width: 300px;">
+  </mat-progress-bar>
 
 </div>

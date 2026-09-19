@@ -31,7 +31,6 @@ import { UserSignal } from './services/user';
     RouterOutlet,
     MatSidenavModule,
     MatListModule,
-    MatIconModule,
     MatButtonModule,
     MatMenuModule
 ],

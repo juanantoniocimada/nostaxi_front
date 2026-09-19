@@ -3,18 +3,16 @@ import { Injectable, signal } from '@angular/core';
 @Injectable({
   providedIn: 'root',
 })
-export class Loading {
+export class LoadingSignal {
 
-    loading = signal<any>(null);
+  loading = signal<any>(null);
 
-    getLoading() {
-        return this.loading();
-    }
+  getLoading() {
+    return this.loading();
+  }
 
-    setLoading(data: any) {
-        this.loading.set(data);
-    }
-
-    
+  setLoading(data: any) {
+    this.loading.set(data);
+  }
 
 }

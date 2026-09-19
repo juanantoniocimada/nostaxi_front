@@ -1,104 +1,66 @@
 <app-header></app-header>
 
 <div class="page-content">
-
+  <button (click)="goBack()">Back</button>
   <div class="register-card">
-
-    <!--
-    <h1>🚕 O teu acesso está reservado</h1>
-
-    <p class="subtitle">
-      A Mindelo Taxi está prestes a começar. Tu estarás entre os primeiros.
-    </p>
-
-    -->
-
     <div class="form-fields">
 
       <div class="field">
-        <input class="input-field" matInput type="text" placeholder="Ex.: João Silva" [(ngModel)]="name" />
+        <input class="input-field" matInput type="text" placeholder="João" [(ngModel)]="name" />
       </div>
 
       <div class="field">
-        <label>Telefone</label>
-        <input class="input-field" type="number" value="234242" name="" id="">
-        <!--
-        <input class="input-field" matInput type="tel" placeholder="+" [(ngModel)]="phoneNumber" />
-        -->
+        <input class="input-field" type="number" placeholder="6122324343" name="" id="" [(ngModel)]="phoneNumber">
       </div>
 
       <div class="field">
-        <input class="input-field" matInput type="email" placeholder="O teu email" />
+        <input class="input-field" matInput type="email" placeholder="O teu email" [(ngModel)]="email" />
       </div>
+
+      <div class="field" style="display: flex; flex-direction: column; gap: 8px; border: 1px solid #ccc; padding: 8px;">
+        fotografia tuya
+        
+        <!-- Câmera -->
+        <input (change)="onCameraChange($event)" #cameraInput type="file" accept="image/*" capture="environment" hidden />
+
+        <!-- Galería -->
+        <input (change)="onGalleryChange($event)" #galleryInput type="file" accept="image/*" hidden />
+
+        <!-- Botões para selecionar foto -->
+        <button style="height: 40px; background-color: aliceblue; border: 2px solid #ccc;" (click)="cameraInput.click()">Tirar foto</button>
+        <button style="height: 40px; background-color: aliceblue; border: 2px solid #ccc;" (click)="galleryInput.click()">Escolher da galeria</button>
+
+        <img style="width: 60px; height: 60px; object-fit: cover;"
+          src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSnxZnbZvsXk53T1xlTyr0akcZc7UqplTdw3LQVYKMRzO4SsF9_uRmwgpY&s=10"
+          alt="">
+
+        <input placeholder="Link da imagem" type="text" name="img" id="img" [(ngModel)]="img" >
+
+      </div>
+    
 
       <div class="form-row">
+      
+        <p *ngIf="!comparePasswords()" style="color: red;">Incorrect password</p>
 
         <div class="field">
           <label>Palavra-passe</label>
-          <input class="input-field" matInput type="password" placeholder="" [(ngModel)]="password" />
+          <input (change)="comparePasswords()" class="input-field" matInput [type]="passwordVisible ? 'text' : 'password'" placeholder="" [(ngModel)]="password" />
         </div>
 
         <div class="field">
           <label>Confirmar palavra-passe</label>
-          <input class="input-field" matInput type="password" placeholder="" [(ngModel)]="password2" />
+          <input (change)="comparePasswords()" class="input-field" matInput [type]="passwordVisible ? 'text' : 'password'" placeholder="" [(ngModel)]="password2" />
         </div>
+
+        <button type="button" (click)="changePasswordVisibility()">show password</button>
 
       </div>
 
     </div>
 
-    <!--
-    <div class="premium-benefits">
-
-      <span class="premium-badge">⭐ user premum</span>
-
-      <ul>
-        <li>
-          <span class="benefit-icon">🚕</span>
-          <span>Prioridade nos períodos de maior procura</span>
-        </li>
-
-        <li>
-          <span class="benefit-icon">🎵</span>
-          <span>Prioridade à saída de eventos de alta procura</span>
-        </li>
-
-        <li>
-          <span class="benefit-icon">⭐</span>
-          <span>Preferência por motoristas melhor avaliados</span>
-        </li>
-      </ul>
-
-    </div>
-    -->
-
-    <!--
-    <div class="notifications">
-
-      <label class="check-option">
-        <input type="checkbox">
-        <span>
-          Quero receber um aviso pelo <strong>WhatsApp</strong>
-          quando a Mindelo Taxi estiver disponível.
-        </span>
-      </label>
-
-      <label class="check-option">
-        <input type="checkbox">
-        <span>
-          Quero receber um aviso por <strong>email</strong>
-          quando a Mindelo Taxi estiver disponível.
-        </span>
-      </label>
-
-    </div>
-    -->
-
-
-    <button class="btn-outline" (click)="register()">
+    <button [disabled]="checkForm()" class="btn-outline" (click)="register()">
       Criar a minha conta
     </button>
-
   </div>
-
 </div>

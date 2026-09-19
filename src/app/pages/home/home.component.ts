@@ -19,7 +19,7 @@ import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { Overpass } from '../../services/overpass';
 import { Nominatim } from '../../services/nominatim';
 import { UserSignal } from '../../services/user';
-import { Loading } from '../../services/loading';
+import { LoadingSignal } from '../../services/loading';
 
 @Component({
   selector: 'app-home',
@@ -56,7 +56,7 @@ export class HomeComponent implements OnInit, OnDestroy {
   overpassService = inject(Overpass);
   nominatimService = inject(Nominatim);
   placesService = inject(Google);
-  loadingService = inject(Loading);
+  loadingService = inject(LoadingSignal);
 
   tileLayerUrl = tileLayerUrl;
   bus = busDivIcon;

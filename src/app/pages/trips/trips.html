@@ -1,42 +1,131 @@
+```html
 <app-header></app-header>
 
 <div style="margin-top: 20%;">
-  hola
 
   <p *ngIf="trips && trips.length === 0">No trips available.</p>
   <p *ngIf="trips && trips.length > 0">Total trips: {{ trips.length }}</p>
+
   @for (trip of trips; track $index) {
-    <mat-card class="trip">
-      <p><strong>ID:</strong> {{ trip.id }}</p>
-      <p><strong>Hora de recogida:</strong>
-        {{ trip.pickupTime | date:'dd/MM/yyyy HH:mm' }}
-      </p>
 
-      <button style="background-color: aqua;" (click)="getToken()">Get Ecobank Token</button>
-      <button style="background-color: aqua;" (click)="pay()">Pay</button>
-      
+  <mat-card class="trip-card">
+
+    <mat-expansion-panel>
+
+      <!-- CABECERA -->
+      <mat-expansion-panel-header>
+        <mat-panel-title>
+          {{ trip.taxiInterest.driverName }}
+          <img width="40" height="40" style="border-radius: 50%;" [src]="trip.taxiInterest.photo" alt="Taxi driver">
+        </mat-panel-title>
+
+        <mat-panel-description>
+          {{ trip.pickupTime | date:'dd/MM/yyyy HH:mm' }}
+        </mat-panel-description>
+      </mat-expansion-panel-header>
+
+
       <!--
-      <div style="margin-top: 10px; background-color: antiquewhite;">
-        <img width="40" height="40" style="border-radius: 50%;" [src]="trip.user.img" alt="Trip image">
-        <p><strong>Usuario:</strong> {{ trip.user.name }}</p>
-        <p><strong>Teléfono:</strong> {{ trip.user.phoneNumber }}</p>
-      </div>
-      -->
-      
-      <p style="background-color: bisque;"><strong>Origen:</strong> {{ trip.userOriginPosName }}</p>
-      <p style="background-color: burlywood;"><strong>Destino:</strong> {{ trip.userDestinationPosName }}</p>
-      
-      <p style="background-color: greenyellow;"><strong>Estado:</strong> {{ trip.confirmed }}</p>
+        <button
+          style="background-color: aqua;"
+          (click)="getToken()">
+          Get Ecobank Token
+        </button>
 
-      <div>
-        <img width="40" height="40" style="border-radius: 50%;" [src]="trip.taxiInterest.photo" alt="Trip image">
-        <p><strong>Taxi:</strong> {{ trip.taxiInterest.driverName }}</p>
-        <p><strong>Teléfono:</strong> {{ trip.taxiInterest.driverPhone }}</p>
-        <p><strong>License Plate:</strong> {{ trip.taxiInterest.vehiclePlate }}</p>
-        <p><strong>Vehicle Model:</strong> {{ trip.taxiInterest.vehicleModel }}</p>
+        <button
+          style="background-color: aqua;"
+          (click)="pay()">
+          Pay
+        </button>
+        -->
+
+
+      <!--
+        <div style="margin-top: 10px; background-color: antiquewhite;">
+          <img
+            width="40"
+            height="40"
+            style="border-radius: 50%;"
+            [src]="trip.user.img"
+            alt="Trip image">
+
+          <p><strong>Usuario:</strong> {{ trip.user.name }}</p>
+          <p><strong>Teléfono:</strong> {{ trip.user.phoneNumber }}</p>
+        </div>
+        -->
+
+
+      <!-- TRAYECTO -->
+      <div class="trip-section">
+
+        <p>
+          <strong>Origen:</strong>
+          {{ trip.userOriginPosName }}
+        </p>
+
+        <p>
+          <strong>Destino:</strong>
+          {{ trip.userDestinationPosName }}
+        </p>
+
       </div>
-      
-    </mat-card>
-    <br>
+
+
+      <!-- ESTADO -->
+      <div class="trip-section">
+
+        <p>
+          <strong>Estado:</strong>
+          {{ trip.confirmed ? 'Confirmado' : 'Pendiente' }}
+        </p>
+
+      </div>
+
+
+      <!-- TAXI -->
+      <div class="trip-section taxi">
+
+        <strong>Taxi</strong>
+
+        <div class="taxi-info">
+
+          <img width="70" height="70" [src]="trip.taxiInterest.photo" alt="Taxi">
+
+          <div>
+
+            <p>
+              <strong>Conductor:</strong>
+              {{ trip.taxiInterest.driverName }}
+            </p>
+
+            <p>
+              <strong>Teléfono:</strong>
+              {{ trip.taxiInterest.driverPhone }}
+            </p>
+
+            <p>
+              <strong>Vehículo:</strong>
+              {{ trip.taxiInterest.vehicleModel }}
+            </p>
+
+            <p>
+              <strong>Matrícula:</strong>
+              {{ trip.taxiInterest.vehiclePlate }}
+            </p>
+
+          </div>
+
+        </div>
+
+      </div>
+
+    </mat-expansion-panel>
+
+  </mat-card>
+
+  <br>
+  <br>
+
   }
+
 </div>

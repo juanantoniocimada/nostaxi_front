@@ -1,11 +1,11 @@
 import { Component, inject, OnInit, ViewEncapsulation } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
-import { Loading } from '../../services/loading';
 import { Router } from '@angular/router';
 import { Menu } from '../../services/menu';
 import { UserSignal } from '../../services/user';
 import { MatIconModule } from '@angular/material/icon';
+import { LoadingSignal } from '../../services/loading';
 
 @Component({
   selector: 'app-header',
@@ -16,16 +16,18 @@ import { MatIconModule } from '@angular/material/icon';
   imports: [
     CommonModule, 
     MatProgressBarModule,
-    MatIconModule,
+    MatIconModule
 ],
   encapsulation: ViewEncapsulation.ShadowDom,
 })
 export class HeaderComponent implements OnInit {
 
-  loading = inject(Loading);
+  loading = inject(LoadingSignal);
   userService = inject(UserSignal);
   router = inject(Router);
   menu = inject(Menu)
+
+  user = this.userService.getUserData();
 
   ngOnInit() {
     console.log(this.userService.getUserData());
