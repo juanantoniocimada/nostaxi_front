@@ -86,7 +86,7 @@ export class HomeComponent implements OnInit, OnDestroy {
 
   user: any = null;
 
-  pickupTime = new Date().toTimeString().slice(0, 5);
+  pickupTime = new Date().toISOString().slice(0, 16);
   destinationSearchTimeout: any;
 
   // Set pickup time to current local datetime (format: YYYY-MM-DDTHH:MM)
@@ -153,6 +153,8 @@ export class HomeComponent implements OnInit, OnDestroy {
   search() {
 
     this.tripService.setTrip({
+      user: this.user,
+      taxiInterest: null,
       address: this.address,
       addressDestination: this.addressDestination ? this.addressDestination : '',
       userOriginPosName: this.address,

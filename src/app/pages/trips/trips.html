@@ -3,6 +3,8 @@
 
 <div style="margin-top: 20%;">
 
+  <button (click)="navigateBack()">Back</button>
+
   <p *ngIf="trips && trips.length === 0">No trips available.</p>
   <p *ngIf="trips && trips.length > 0">Total trips: {{ trips.length }}</p>
 
@@ -15,12 +17,27 @@
       <!-- CABECERA -->
       <mat-expansion-panel-header>
         <mat-panel-title>
-          {{ trip.taxiInterest.driverName }}
-          <img width="40" height="40" style="border-radius: 50%;" [src]="trip.taxiInterest.photo" alt="Taxi driver">
+          <p>{{ trip.id }}</p>
+          
+          @if (trip.taxiInterest) {
+          <span>
+            {{ trip.taxiInterest.driverName }}
+            <img width="40" height="40" style="border-radius: 50%;" [src]="trip.taxiInterest.photo" alt="Taxi driver">
+          </span>
+          } @else {
+          sin driver asignado
+          }
+
+
         </mat-panel-title>
 
         <mat-panel-description>
-          {{ trip.pickupTime | date:'dd/MM/yyyy HH:mm' }}
+          {{ trip.pickupTime }}
+
+          <span [ngClass]="trip.confirmed ? 'confirmed' : 'pending'">
+            {{ trip.confirmed ? 'Confirmado' : 'cancelado' }}
+          </span>
+
         </mat-panel-description>
       </mat-expansion-panel-header>
 
@@ -87,7 +104,7 @@
 
         <strong>Taxi</strong>
 
-        <div class="taxi-info">
+        <div class="taxi-info" *ngIf="trip.taxiInterest">
 
           <img width="70" height="70" [src]="trip.taxiInterest.photo" alt="Taxi">
 

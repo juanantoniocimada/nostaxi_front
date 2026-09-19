@@ -1,22 +1,23 @@
 import { Component, inject, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { NestJSService } from '../../services/nestjs.service';
 import { HeaderComponent } from "../../components/header/header.component";
 import { UserSignal } from '../../services/user';
 import { MatCardModule } from '@angular/material/card';
 import { HttpClientModule } from '@angular/common/http';
-import { DatePipe } from '@angular/common';
-import { EcobankService } from '../../services/ecobank';
+import { CommonModule } from '@angular/common';
+// import { EcobankService } from '../../services/ecobank';
 import { MatExpansionModule } from '@angular/material/expansion';
 
 @Component({
   selector: 'app-trips',
-  providers: [EcobankService],
+  //providers: [EcobankService],
   imports: [
     HttpClientModule,
     HeaderComponent,
     MatCardModule,
     MatExpansionModule,
-    DatePipe],
+    CommonModule],
   templateUrl: './trips.html',
   styleUrl: './trips.scss',
 })
@@ -24,8 +25,8 @@ export class Trips implements OnInit {
 
   nestjsService = inject(NestJSService);
   userSignal = inject(UserSignal);
-  ecobankService = inject(EcobankService);
-
+  //ecobankService = inject(EcobankService);
+  router = inject(Router);
 
   trips :any= [];
 
@@ -34,6 +35,10 @@ export class Trips implements OnInit {
     const user = this.userSignal.getUserData();
 
     this.getTrips(user);
+  }
+
+  navigateBack() {
+    this.router.navigate(['/home']);
   }
 
   pay() {

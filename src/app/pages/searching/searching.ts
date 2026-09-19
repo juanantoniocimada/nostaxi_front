@@ -20,7 +20,7 @@ export class Searching implements OnInit, OnDestroy {
   id: number = 0;
 
   ngOnInit(): void {
-    this.getAssignedDriver(616973369);
+    this.getAssignedDriver(5881441);
   }
 
   async createTrip(driverData: any) {
@@ -31,6 +31,8 @@ export class Searching implements OnInit, OnDestroy {
 
     const tripData = await this.tripService.getTrip();
     const assignedDriver = driverData;
+
+    const user = tripData?.user;
 
     this.tripService.setAssignedDriver(assignedDriver);
 
@@ -53,6 +55,8 @@ export class Searching implements OnInit, OnDestroy {
 
     // Example trip data structure
     const exampleTripData = {
+      user: tripData?.user,
+      taxiInterest: tripData?.taxiInterest,
       "deviceToken": "",
       "address": "123 Main St",
       "addressDestination": "456 Elm St",
